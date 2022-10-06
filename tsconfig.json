@@ -2,6 +2,15 @@
 {
   "compileOnSave": false,
   "compilerOptions": {
+    "paths": {
+      "NgxMatDataFilter": [
+        "dist/ngx-mat-data-filter"
+      ],
+      "NgxMaterialComponents": [
+        "dist/ngx-material-components",
+        "dist/ngx-material-components"
+      ]
+    },
     "baseUrl": "./",
     "outDir": "./dist/out-tsc",
     "forceConsistentCasingInFileNames": true,

@@ -1,0 +1,9 @@
+.filter-controls {
+  max-width: 300px;
+  max-height: 400px;
+  overflow: auto;
+
+  & mat-form-field {
+    width: 100%;
+  }
+}
