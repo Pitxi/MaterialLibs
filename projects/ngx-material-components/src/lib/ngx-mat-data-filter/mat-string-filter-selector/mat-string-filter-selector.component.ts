@@ -22,15 +22,25 @@ export class MatStringFilterSelectorComponent
     this.intl.getComparisonItem(DataFilterComparison.NotEqualTo),
     this.intl.getComparisonItem(DataFilterComparison.Contains)
   ];
-  readonly form                                          = this.fBuilder.group({
-                                                                                 comparison: new FormControl(this.data.filter?.comparison ?? this.availableComparisons[0].comparison,
-                                                                                                             {
-                                                                                                               nonNullable: true,
-                                                                                                               validators : [ Validators.required ]
-                                                                                                             }),
-                                                                                 text      : new FormControl<string | null>(this.data.filter?.values[0] ?? null)
-                                                                               });
   readonly placeholder                                   = this.intl.stringFilterPlaceholder;
+  private defaultFilter: DataFilter                      = this.data.defaultFilter ??
+    {
+      comparison: this.availableComparisons[0].comparison,
+      values    : [ null ]
+    };
+  readonly form                                          = this.fBuilder.group({
+                                                                                 comparison: new FormControl<DataFilterComparison>(
+                                                                                   this.data.filter?.comparison ??
+                                                                                   this.defaultFilter.comparison,
+                                                                                   {
+                                                                                     nonNullable: true,
+                                                                                     validators : [ Validators.required ]
+                                                                                   }),
+                                                                                 text      : new FormControl<string | null>(
+                                                                                   this.data.filter?.values[0] ??
+                                                                                   this.defaultFilter.values[0]
+                                                                                 )
+                                                                               });
   private filterChangedSubject                           = new Subject<DataFilter | null>();
   readonly filterChanged$: Observable<DataFilter | null> = this.filterChangedSubject.asObservable();
 
@@ -55,7 +65,14 @@ export class MatStringFilterSelectorComponent
         .pipe(
           distinctUntilChanged(),
           takeUntil(this.unsubscribeControls),
-          map(value => !!value.text ? { comparison: value.comparison, values: [ value.text ] } as DataFilter : null)
+          map(value => {
+            if (value.comparison === this.defaultFilter.comparison &&
+              value.text == this.defaultFilter.values[0]) {
+              return null;
+            }
+
+            return { comparison: value.comparison, values: [ value.text ] } as DataFilter;
+          })
         )
         .subscribe(filter => this.filterChangedSubject.next(filter));
   }

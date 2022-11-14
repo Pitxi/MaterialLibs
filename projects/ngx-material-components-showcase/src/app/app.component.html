@@ -1,5 +1,5 @@
-<span *ngIf="dirtyFilters$ | async as dirtyFilters" [formGroup]="form">
-  <button [color]="dirtyFilters.includes('valueListFilter') ? 'accent' : 'primary'"
+<span [formGroup]="form">
+  <button [color]="!!form.value.valueListFilter ? 'accent' : 'primary'"
           [valueListItems]="valueListFilterItems"
           formControlName="valueListFilter"
           mat-icon-button
@@ -7,19 +7,26 @@
     <mat-icon>filter_list</mat-icon>
   </button>
 
-  <button [color]="dirtyFilters.includes('stringFilter') ? 'accent' : 'primary'"
+  <button [color]="!!form.value.stringFilter ? 'accent' : 'primary'"
           formControlName="stringFilter"
           mat-icon-button
           ngxMatDataFilter="string">
     <mat-icon>filter_list</mat-icon>
   </button>
 
-  <button [color]="dirtyFilters.includes('numberFilter') ? 'accent' : 'primary'"
+  <button [color]="!!form.value.numberFilter ? 'accent' : 'primary'"
           formControlName="numberFilter"
           mat-icon-button
           ngxMatDataFilter="number">
     <mat-icon>filter_list</mat-icon>
   </button>
 
-  <button (click)="resetFilter()" [disabled]="dirtyFilters.length === 0" mat-button>Reset</button>
+  <button [color]="!!form.value.dateFilter ? 'accent' : 'primary'"
+          formControlName="dateFilter"
+          mat-icon-button
+          ngxMatDataFilter="date">
+    <mat-icon>filter_list</mat-icon>
+  </button>
+
+  <button (click)="resetFilter()" [disabled]="(hasFilters$ | async) === false" mat-button>Reset</button>
 </span>

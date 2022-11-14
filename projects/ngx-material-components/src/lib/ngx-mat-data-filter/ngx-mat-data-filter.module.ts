@@ -11,22 +11,26 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatStringFilterSelectorComponent } from './mat-string-filter-selector';
 import { MatInputModule } from '@angular/material/input';
 import { MatNumberFilterSelectorComponent } from './mat-number-filter-selector';
+import { MatDateFilterSelectorComponent } from './mat-date-filter-selector/mat-date-filter-selector.component';
+import { MatDatepickerModule } from '@angular/material/datepicker';
 
 @NgModule({
             declarations: [
               MatDataFilterDirective,
               MatValueListFilterSelectorComponent,
               MatStringFilterSelectorComponent,
-              MatNumberFilterSelectorComponent
+              MatNumberFilterSelectorComponent,
+              MatDateFilterSelectorComponent
             ],
-            imports     : [
-              CommonModule,
-              ReactiveFormsModule,
-              MatCardModule,
-              MatSelectModule,
-              MatCheckboxModule,
-              MatInputModule,
-            ],
+              imports: [
+                  CommonModule,
+                  ReactiveFormsModule,
+                  MatCardModule,
+                  MatSelectModule,
+                  MatCheckboxModule,
+                  MatInputModule,
+                  MatDatepickerModule,
+              ],
             exports     : [
               MatDataFilterDirective,
               MatValueListFilterSelectorComponent

@@ -12,13 +12,25 @@
       <div *ngIf="placeHolders$ | async as placeholders" class="filter-controls">
         <div>
           <mat-form-field appearance="fill">
-            <input [placeholder]="placeholders[0]" formControlName="number1" matInput type="number">
+            <input [matDatepicker]="picker1"
+                   [placeholder]="placeholders[0]"
+                   formControlName="date1"
+                   matInput
+                   type="text">
+            <mat-datepicker-toggle [for]="picker1" matSuffix></mat-datepicker-toggle>
+            <mat-datepicker #picker1></mat-datepicker>
           </mat-form-field>
         </div>
 
         <div *ngIf="placeholders[1] != null">
           <mat-form-field appearance="fill">
-            <input [placeholder]="placeholders[1]" formControlName="number2" matInput type="number">
+            <input [matDatepicker]="picker2"
+                   [placeholder]="placeholders[1]"
+                   formControlName="date2"
+                   matInput
+                   type="text">
+            <mat-datepicker-toggle [for]="picker2" matSuffix></mat-datepicker-toggle>
+            <mat-datepicker #picker2></mat-datepicker>
           </mat-form-field>
         </div>
       </div>

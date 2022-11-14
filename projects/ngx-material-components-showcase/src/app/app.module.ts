@@ -8,6 +8,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { NgxMatDataFilterModule } from '../../../ngx-material-components/src/public-api';
 import { ReactiveFormsModule } from '@angular/forms';
+import { MatNativeDateModule } from '@angular/material/core';
 
 @NgModule({
             declarations: [
@@ -20,9 +21,10 @@ import { ReactiveFormsModule } from '@angular/forms';
                   ReactiveFormsModule,
                   MatButtonModule,
                   MatIconModule,
+                  MatNativeDateModule,
                   NgxMatDataFilterModule
               ],
-            providers   : [],
+            providers   : [ ],
             bootstrap   : [ AppComponent ]
           })
 export class AppModule {

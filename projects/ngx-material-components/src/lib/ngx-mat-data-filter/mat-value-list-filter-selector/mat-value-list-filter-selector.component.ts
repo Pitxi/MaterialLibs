@@ -21,9 +21,16 @@ export class MatValueListFilterSelectorComponent
     this.intl.getComparisonItem(DataFilterComparison.IsOneOf),
     this.intl.getComparisonItem(DataFilterComparison.IsNotOneOf)
   ];
+  readonly valueItems                             = this.data.valueListItems ?? [];
+  private defaultFilter: DataFilter               = this.data.defaultFilter ??
+    {
+      comparison: this.availableComparisons[0].comparison,
+      values    : this.data.valueListItems?.map(v => v.value) ?? []
+    };
   readonly form                                   = this.fBuilder.group({
-                                                                          comparison       : new FormControl(
-                                                                            this.data.filter?.comparison ?? this.availableComparisons[0].comparison,
+                                                                          comparison       : new FormControl<DataFilterComparison>(
+                                                                            this.data.filter?.comparison ??
+                                                                            this.defaultFilter.comparison,
                                                                             {
                                                                               nonNullable: true,
                                                                               validators : [ Validators.required ]
@@ -31,13 +38,12 @@ export class MatValueListFilterSelectorComponent
                                                                           valueItemControls: this.fBuilder.array<FormControl<boolean>>(
                                                                             this.data.valueListItems
                                                                                 ?.map((item) => new FormControl<boolean>(
-                                                                                  this.data.filter?.values.includes(item.value) ?? true,
+                                                                                  (this.data.filter ?? this.defaultFilter).values.includes(item.value) ?? true,
                                                                                   { nonNullable: true }
                                                                                 ))
                                                                             ?? []
                                                                           )
                                                                         });
-  readonly valueItems                             = this.data.valueListItems ?? [];
   private filterChangeSubject                     = new Subject<DataFilter | null>();
   readonly filterChanged$                         = this.filterChangeSubject.asObservable();
   private unsubscribeValueItems: Subject<void> | undefined;
@@ -65,9 +71,11 @@ export class MatValueListFilterSelectorComponent
           distinctUntilChanged(),
           takeUntil(this.unsubscribeControls!),
           map(value => {
-            const values = this.valueItems.filter((item, index) => value.valueItemControls![index]).map(item => item.value);
+            const values = this.valueItems.filter((item, index) => !!value.valueItemControls![index]).map(item => item.value);
 
-            if (values.length === this.valueItems.length) {
+            if (value.comparison === this.defaultFilter.comparison &&
+              values.length === this.defaultFilter.values.length &&
+              values.every(v => this.defaultFilter.values.includes(v))) {
               return null;
             }
 

@@ -12,6 +12,7 @@ import { FILTER_SELECTOR_DATA, FilterSelectorData } from './filter-selector-data
 import { MatStringFilterSelectorComponent } from './mat-string-filter-selector';
 import { MatNumberFilterSelectorComponent } from './mat-number-filter-selector';
 import { DataFilterHelper } from './data-filter-helper';
+import { MatDateFilterSelectorComponent } from './mat-date-filter-selector/mat-date-filter-selector.component';
 
 @Directive({
              selector : '[ngxMatDataFilter]',
@@ -26,6 +27,7 @@ import { DataFilterHelper } from './data-filter-helper';
 export class MatDataFilterDirective implements OnDestroy, ControlValueAccessor {
   @Input() valueListItems: ValueListItem[] = [];
   @Input('ngxMatDataFilter') filterType!: DataFilterType;
+  @Input() defaultFilter: DataFilter | undefined;
 
   private isDropdownOpen                   = false;
   private dataFilter: DataFilter | null    = null;
@@ -63,7 +65,7 @@ export class MatDataFilterDirective implements OnDestroy, ControlValueAccessor {
   private openDropdown(): void {
     let componentType: Type<FilterSelectorBase>;
 
-    const data: FilterSelectorData = { filter: this.dataFilter ?? null };
+    const data: FilterSelectorData = { defaultFilter: this.defaultFilter, filter: this.dataFilter ?? null };
     this.isDropdownOpen            = true;
     this.dropdownUnsubscriber      = new Subject<void>();
 
@@ -75,6 +77,8 @@ export class MatDataFilterDirective implements OnDestroy, ControlValueAccessor {
         componentType = MatNumberFilterSelectorComponent;
         break;
       case 'date':
+        componentType = MatDateFilterSelectorComponent;
+        break;
       case 'value-list':
         componentType       = MatValueListFilterSelectorComponent;
         data.valueListItems = this.valueListItems;

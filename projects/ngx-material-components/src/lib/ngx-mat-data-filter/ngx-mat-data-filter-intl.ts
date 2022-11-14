@@ -30,6 +30,15 @@ export class NgxMatDataFilterIntl {
     }
   }
 
+  getDateFiltersPlaceholders(comparison: DataFilterComparison): string[] {
+    switch (comparison) {
+      case DataFilterComparison.IsInRange:
+        return [ 'From date', 'To date' ];
+      default:
+        return [ 'Date filter' ];
+    }
+  }
+
   getComparisonItem(comparison: DataFilterComparison): ComparisonItem {
     return { comparison, description: this.comparisons[comparison] }
   }
