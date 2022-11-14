@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { FormBuilder, FormControl } from '@angular/forms';
-import { DataFilter, DataFilterComparison, ValueListItem } from '../../../ngx-material-components/src/public-api';
-import { map, startWith } from 'rxjs';
+import { DataFilter, ValueListItem } from '../../../ngx-material-components/src/public-api';
+import { distinctUntilChanged, map, startWith } from 'rxjs';
 
 @Component({
              selector       : 'app-root',
@@ -13,13 +13,8 @@ export class AppComponent {
   readonly form          = this.fBuilder.group({
                                                  valueListFilter: new FormControl<DataFilter | null>(null),
                                                  stringFilter   : new FormControl<DataFilter | null>(null),
-                                                 numberFilter   : new FormControl<DataFilter | null>({
-                                                                                                       comparison: DataFilterComparison.IsInRange,
-                                                                                                       values    : [ 12345, 67890 ]
-                                                                                                     },
-                                                                                                     {
-                                                                                                       nonNullable: true
-                                                                                                     })
+                                                 numberFilter   : new FormControl<DataFilter | null>(null),
+                                                 dateFilter     : new FormControl<DataFilter | null>(null)
                                                });
   readonly formDirty$    = this.form.statusChanges.pipe(map(_ => this.form.dirty));
   readonly dirtyFilters$ = this.form.statusChanges
@@ -38,7 +33,7 @@ export class AppComponent {
   );
 
   constructor(private fBuilder: FormBuilder) {
-    this.form.valueChanges.subscribe(console.log);
+    this.form.valueChanges.pipe(distinctUntilChanged()).subscribe(console.log);
   }
 
   resetFilter() {

@@ -10,7 +10,7 @@
       </mat-form-field>
 
       <div class="filter-controls">
-        <div *ngFor="let item of valueItems$ | async; let i = index"
+        <div *ngFor="let item of valueItems; let i = index"
              formArrayName="valueItemControls">
           <mat-checkbox [formControlName]="i">{{ item.description }}</mat-checkbox>
         </div>

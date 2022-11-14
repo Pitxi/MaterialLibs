@@ -14,7 +14,9 @@ import { DataFilterComparison } from '../data-filter-comparison';
              styleUrls      : [ './mat-string-filter-selector.component.scss' ],
              changeDetection: ChangeDetectionStrategy.OnPush
            })
-export class MatStringFilterSelectorComponent implements FilterSelectorBase, OnInit, OnDestroy {
+export class MatStringFilterSelectorComponent
+  extends FilterSelectorBase
+  implements OnInit, OnDestroy {
   readonly availableComparisons: ComparisonItem[]        = [
     this.intl.getComparisonItem(DataFilterComparison.EqualTo),
     this.intl.getComparisonItem(DataFilterComparison.NotEqualTo),
@@ -31,11 +33,11 @@ export class MatStringFilterSelectorComponent implements FilterSelectorBase, OnI
   readonly placeholder                                   = this.intl.stringFilterPlaceholder;
   private filterChangedSubject                           = new Subject<DataFilter | null>();
   readonly filterChanged$: Observable<DataFilter | null> = this.filterChangedSubject.asObservable();
-  private unsubscribeControls: Subject<void> | undefined;
 
   constructor(@Inject(FILTER_SELECTOR_DATA) private data: FilterSelectorData,
               private intl: NgxMatDataFilterIntl,
               private fBuilder: FormBuilder) {
+    super();
   }
 
   ngOnInit(): void {
@@ -46,7 +48,7 @@ export class MatStringFilterSelectorComponent implements FilterSelectorBase, OnI
     this.unsubscribeFormControls();
   }
 
-  private subscribeFormControls(): void {
+  protected subscribeFormControls(): void {
     this.unsubscribeControls = new Subject<void>();
 
     this.form.valueChanges
@@ -58,7 +60,7 @@ export class MatStringFilterSelectorComponent implements FilterSelectorBase, OnI
         .subscribe(filter => this.filterChangedSubject.next(filter));
   }
 
-  private unsubscribeFormControls(): void {
+  protected unsubscribeFormControls(): void {
     this.unsubscribeControls?.next();
     this.unsubscribeControls?.complete();
   }

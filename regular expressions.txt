@@ -1,0 +1,11 @@
+Chapter icons:
+<div class="image">\s+<img alt="" (src="../Images/image_extract1_3.jpg")/>\s+</div>
+<img class="chapter-icon" \1/>
+
+Drop caps:
+(<h3>.+</h3>\s+)<p class="white2"></p>\s+<p class="noindent"
+\1<p class="noindent has-dropcap"
+
+Glosario:
+\s+<p class="frenchindent">(<em>.+</em>)[:.,]\s*(.+)</p>
+<dt>\1</dt>\n<dd class="mb-1">\2</dd>

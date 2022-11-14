@@ -11,6 +11,7 @@ import { MatValueListFilterSelectorComponent } from './mat-value-list-filter-sel
 import { FILTER_SELECTOR_DATA, FilterSelectorData } from './filter-selector-data';
 import { MatStringFilterSelectorComponent } from './mat-string-filter-selector';
 import { MatNumberFilterSelectorComponent } from './mat-number-filter-selector';
+import { DataFilterHelper } from './data-filter-helper';
 
 @Directive({
              selector : '[ngxMatDataFilter]',
@@ -26,13 +27,13 @@ export class MatDataFilterDirective implements OnDestroy, ControlValueAccessor {
   @Input() valueListItems: ValueListItem[] = [];
   @Input('ngxMatDataFilter') filterType!: DataFilterType;
 
-  private isDropdownOpen          = false;
-  private dataFilter: DataFilter | null | undefined;
-  private isDisabled              = false;
-  private overlayRef              = this.createMatDataFilterOverlay();
-  private dropdownClosingActions$ = merge(this.overlayRef.backdropClick(), this.overlayRef.detachments());
+  private isDropdownOpen                   = false;
+  private dataFilter: DataFilter | null    = null;
+  private oldDatafilter: DataFilter | null = null;
+  private isDisabled                       = false;
+  private overlayRef                       = this.createMatDataFilterOverlay();
+  private dropdownClosingActions$          = merge(this.overlayRef.backdropClick(), this.overlayRef.detachments());
   private dropdownUnsubscriber: Subject<void> | undefined;
-  private filterChanged           = false;
 
   constructor(private overlay: Overlay, private elementRef: ElementRef) {
   }
@@ -53,8 +54,9 @@ export class MatDataFilterDirective implements OnDestroy, ControlValueAccessor {
     this.isDisabled = true;
   }
 
-  writeValue(dataFilter: DataFilter | null | undefined): void {
-    this.dataFilter = dataFilter;
+  writeValue(dataFilter: DataFilter | null): void {
+    this.oldDatafilter = dataFilter;
+    this.dataFilter    = dataFilter;
   }
 
   @HostListener('click')
@@ -87,8 +89,7 @@ export class MatDataFilterDirective implements OnDestroy, ControlValueAccessor {
     componentRef?.instance.filterChanged$
                 .pipe(takeUntil(this.dropdownUnsubscriber))
                 .subscribe(filter => {
-                  this.dataFilter    = filter;
-                  this.filterChanged = true;
+                  this.dataFilter = filter;
 
                   this.propagateTouched();
                 });
@@ -131,10 +132,10 @@ export class MatDataFilterDirective implements OnDestroy, ControlValueAccessor {
       return;
     }
 
-    if (this.filterChanged) {
-      this.propagateChanged(this.dataFilter);
+    if (!DataFilterHelper.compare(this.dataFilter, this.oldDatafilter)) {
+      this.oldDatafilter = this.dataFilter;
 
-      this.filterChanged = false;
+      this.propagateChanged(this.dataFilter);
     }
 
     this.dropdownUnsubscriber?.next();
