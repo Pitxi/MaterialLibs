@@ -13,9 +13,11 @@ import { MatStringFilterSelectorComponent } from './mat-string-filter-selector';
 import { MatNumberFilterSelectorComponent } from './mat-number-filter-selector';
 import { DataFilterHelper } from './data-filter-helper';
 import { MatDateFilterSelectorComponent } from './mat-date-filter-selector/mat-date-filter-selector.component';
+import { DataFilterComparison } from './data-filter-comparison';
 
 @Directive({
              selector : '[ngxMatDataFilter]',
+             exportAs : 'ngxMatDataFilter',
              providers: [
                {
                  provide    : NG_VALUE_ACCESSOR,
@@ -38,6 +40,26 @@ export class MatDataFilterDirective implements OnDestroy, ControlValueAccessor {
   private dropdownUnsubscriber: Subject<void> | undefined;
 
   constructor(private overlay: Overlay, private elementRef: ElementRef) {
+  }
+
+  get filterIsEmpty(): boolean {
+    switch (this.dataFilter?.comparison) {
+      case DataFilterComparison.EqualTo:
+      case DataFilterComparison.NotEqualTo:
+      case DataFilterComparison.Contains:
+      case DataFilterComparison.NotContains:
+      case DataFilterComparison.GreaterThan:
+      case DataFilterComparison.LesserThan:
+        return this.dataFilter.values.length === 0;
+      case DataFilterComparison.IsOneOf:
+        return this.dataFilter.values.length === this.valueListItems.length;
+      case DataFilterComparison.IsNotOneOf:
+        return this.dataFilter.values.length === 0;
+      case DataFilterComparison.IsInRange:
+        return this.dataFilter.values.length < 2;
+    }
+
+    return !this.dataFilter;
   }
 
   ngOnDestroy(): void {
@@ -100,9 +122,7 @@ export class MatDataFilterDirective implements OnDestroy, ControlValueAccessor {
 
     this.dropdownClosingActions$
         .pipe(takeUntil(this.dropdownUnsubscriber))
-        .subscribe(() => {
-          this.closeDropdown();
-        });
+        .subscribe(() => this.closeDropdown());
   }
 
   private propagateChanged = (_: DataFilter | null | undefined): void => {

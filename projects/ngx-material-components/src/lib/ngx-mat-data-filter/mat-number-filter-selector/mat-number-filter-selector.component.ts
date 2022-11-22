@@ -87,12 +87,19 @@ export class MatNumberFilterSelectorComponent
       return null;
     }
 
+    const values = [];
+
+    if (value.number1 != null) {
+      values.push(value.number1);
+
+      if (value.number2 != null) {
+        values.push(value.number2);
+      }
+    }
+
     return {
       comparison: value.comparison ?? this.defaultFilter.comparison,
-      values    : [
-        value.number1,
-        value.number2
-      ]
+      values
     };
   }
 }

@@ -9,22 +9,30 @@ import { MatIconModule } from '@angular/material/icon';
 import { NgxMatDataFilterModule } from '../../../ngx-material-components/src/public-api';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatNativeDateModule } from '@angular/material/core';
+import { MatTableModule } from '@angular/material/table';
+import { HttpClientModule } from '@angular/common/http';
+import { FlexModule } from '@angular/flex-layout';
+import { MatPaginatorModule } from '@angular/material/paginator';
 
 @NgModule({
             declarations: [
               AppComponent
             ],
-              imports: [
-                  BrowserModule,
-                  AppRoutingModule,
-                  BrowserAnimationsModule,
-                  ReactiveFormsModule,
-                  MatButtonModule,
-                  MatIconModule,
-                  MatNativeDateModule,
-                  NgxMatDataFilterModule
-              ],
-            providers   : [ ],
+            imports     : [
+              BrowserModule,
+              AppRoutingModule,
+              BrowserAnimationsModule,
+              HttpClientModule,
+              ReactiveFormsModule,
+              MatButtonModule,
+              MatIconModule,
+              MatNativeDateModule,
+              NgxMatDataFilterModule,
+              MatTableModule,
+              FlexModule,
+              MatPaginatorModule
+            ],
+            providers   : [],
             bootstrap   : [ AppComponent ]
           })
 export class AppModule {

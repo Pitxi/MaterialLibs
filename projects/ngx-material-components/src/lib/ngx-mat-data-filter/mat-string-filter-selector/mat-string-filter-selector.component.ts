@@ -71,7 +71,7 @@ export class MatStringFilterSelectorComponent
               return null;
             }
 
-            return { comparison: value.comparison, values: [ value.text ] } as DataFilter;
+            return { comparison: value.comparison, values: !!value.text ? [ value.text ] : [] } as DataFilter;
           })
         )
         .subscribe(filter => this.filterChangedSubject.next(filter));

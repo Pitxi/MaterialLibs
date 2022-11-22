@@ -91,12 +91,19 @@ export class MatDateFilterSelectorComponent
       return null;
     }
 
+    const values = [];
+
+    if (!!value.date1) {
+      values.push(value.date1);
+
+      if (!!value.date2) {
+        values.push(value.date2);
+      }
+    }
+
     return {
-      comparison: value?.comparison ?? this.defaultFilter.comparison,
-      values    : [
-        value.date1,
-        value.date2
-      ]
+      comparison: value.comparison!,
+      values
     };
   }
 }

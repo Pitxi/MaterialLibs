@@ -11,7 +11,10 @@ export class DataFilterHelper {
         return true;
       }
 
-      return !!filter1 && !!filter2 && filter1.values.length === filter2.values.length && filter1.values.every(v => filter2.values.includes(v));
+      return !!filter1 &&
+        !!filter2 &&
+        filter1.values.length === filter2.values.length &&
+        filter1.values.every((v, index) => filter2.values[index] === v);
     }
 
     return false;
