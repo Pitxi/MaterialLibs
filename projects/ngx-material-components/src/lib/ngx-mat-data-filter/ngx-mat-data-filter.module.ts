@@ -29,7 +29,7 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
                   MatSelectModule,
                   MatCheckboxModule,
                   MatInputModule,
-                  MatDatepickerModule,
+                  MatDatepickerModule
               ],
             exports     : [
               MatDataFilterDirective,

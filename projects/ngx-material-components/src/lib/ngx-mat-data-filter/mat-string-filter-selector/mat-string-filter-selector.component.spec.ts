@@ -1,6 +1,12 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { MatStringFilterSelectorComponent } from './mat-string-filter-selector.component';
+import { ReactiveFormsModule } from '@angular/forms';
+import { FILTER_SELECTOR_DATA } from '../filter-selector-data';
+import { MatInputModule } from '@angular/material/input';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MatSelectModule } from '@angular/material/select';
+import { MatCardModule } from '@angular/material/card';
 
 describe('MatStringFilterSelectorComponent', () => {
   let component: MatStringFilterSelectorComponent;
@@ -8,11 +14,24 @@ describe('MatStringFilterSelectorComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ MatStringFilterSelectorComponent ]
-    })
-    .compileComponents();
+                                           imports     : [
+                                             BrowserAnimationsModule,
+                                             ReactiveFormsModule,
+                                             MatInputModule,
+                                             MatSelectModule,
+                                             MatCardModule
+                                           ],
+                                           declarations: [ MatStringFilterSelectorComponent ],
+                                           providers   : [
+                                             {
+                                               provide : FILTER_SELECTOR_DATA,
+                                               useValue: { filter: null }
+                                             }
+                                           ]
+                                         })
+                 .compileComponents();
 
-    fixture = TestBed.createComponent(MatStringFilterSelectorComponent);
+    fixture   = TestBed.createComponent(MatStringFilterSelectorComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

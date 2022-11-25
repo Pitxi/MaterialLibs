@@ -54,7 +54,7 @@ export class MatDateFilterSelectorComponent
 
   constructor(private fBuilder: FormBuilder,
               private intl: NgxMatDataFilterIntl,
-              @Inject(FILTER_SELECTOR_DATA) private data: FilterSelectorData,) {
+              @Inject(FILTER_SELECTOR_DATA) private data: FilterSelectorData) {
     super();
   }
 
