@@ -3,12 +3,18 @@
   "compileOnSave": false,
   "compilerOptions": {
     "paths": {
+      "@pitxi/ngx-mat-data-filter": [
+        "dist/pitxi/ngx-mat-data-filter"
+      ],
       "NgxMatDataFilter": [
         "dist/ngx-mat-data-filter"
       ],
       "NgxMaterialComponents": [
         "dist/ngx-material-components",
         "dist/ngx-material-components"
+      ],
+      "ngx-mat-data-filter": [
+        "dist/ngx-mat-data-filter"
       ]
     },
     "baseUrl": "./",

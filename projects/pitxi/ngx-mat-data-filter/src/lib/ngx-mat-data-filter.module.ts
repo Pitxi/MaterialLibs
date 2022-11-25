@@ -33,7 +33,10 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
               ],
             exports     : [
               MatDataFilterDirective,
-              MatValueListFilterSelectorComponent
+              MatValueListFilterSelectorComponent,
+              MatStringFilterSelectorComponent,
+              MatNumberFilterSelectorComponent,
+              MatDateFilterSelectorComponent
             ],
             providers   : [
               Overlay,

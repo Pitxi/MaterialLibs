@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Person } from './person';
-import { DataFilter, DataFilterComparison } from '../../../ngx-material-components/src/lib/ngx-mat-data-filter';
+import { DataFilter, DataFilterComparison } from '../../../ngx-mat-data-filter/src/lib';
 import { map, Observable } from 'rxjs';
 
 export interface PersonFilters {

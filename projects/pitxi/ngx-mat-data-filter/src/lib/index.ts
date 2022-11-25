@@ -3,6 +3,7 @@ export * from './mat-data-filter.directive';
 export * from './mat-value-list-filter-selector';
 export * from './mat-string-filter-selector';
 export * from './mat-number-filter-selector';
+export * from './mat-date-filter-selector';
 export * from './data-filter-comparison';
 export * from './ngx-mat-data-filter-intl';
 export * from './data-filter';

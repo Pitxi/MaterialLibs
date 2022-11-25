@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { NgxMatDataFilterModule } from './ngx-mat-data-filter';
+import { NgxMatDataFilterModule } from '@pitxi/ngx-mat-data-filter';
 
 @NgModule({
             declarations: [],

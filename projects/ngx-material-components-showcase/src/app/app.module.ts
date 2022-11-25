@@ -6,13 +6,13 @@ import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
-import { NgxMatDataFilterModule } from '../../../ngx-material-components/src/public-api';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatNativeDateModule } from '@angular/material/core';
 import { MatTableModule } from '@angular/material/table';
 import { HttpClientModule } from '@angular/common/http';
 import { FlexModule } from '@angular/flex-layout';
 import { MatPaginatorModule } from '@angular/material/paginator';
+import { NgxMaterialComponentsModule } from '../../../ngx-material-components/src/public-api';
 
 @NgModule({
             declarations: [
@@ -27,7 +27,7 @@ import { MatPaginatorModule } from '@angular/material/paginator';
               MatButtonModule,
               MatIconModule,
               MatNativeDateModule,
-              NgxMatDataFilterModule,
+              NgxMaterialComponentsModule,
               MatTableModule,
               FlexModule,
               MatPaginatorModule

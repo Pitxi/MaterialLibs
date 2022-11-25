@@ -1,6 +1,5 @@
 import { ChangeDetectionStrategy, Component, OnDestroy, OnInit, QueryList, ViewChildren } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
-import { DataFilter, MatDataFilterDirective, ValueListItem } from '../../../ngx-material-components/src/public-api';
 import {
   BehaviorSubject,
   combineLatest,
@@ -14,6 +13,7 @@ import {
 import { DataService } from './data.service';
 import { PageEvent } from '@angular/material/paginator';
 import { Person } from './person';
+import { DataFilter, MatDataFilterDirective, ValueListItem } from '../../../ngx-mat-data-filter/src/lib';
 
 interface ModelView {
   filtersForm: FormGroup;

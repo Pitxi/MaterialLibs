@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "NgxMaterialComponentsShowcase": {
+    "ngx-material-components-showcase": {
       "projectType": "application",
       "schematics": {
         "@schematics/angular:component": {
@@ -105,28 +105,28 @@
         }
       }
     },
-    "NgxMaterialComponents": {
+    "@pitxi/ngx-material-components": {
       "projectType": "library",
       "schematics": {
         "@schematics/angular:component": {
           "style": "scss"
         }
       },
-      "root": "projects/ngx-material-components",
-      "sourceRoot": "projects/ngx-material-components/src",
+      "root": "projects/pitxi/ngx-material-components",
+      "sourceRoot": "projects/pitxi/ngx-material-components/src",
       "prefix": "ngx",
       "architect": {
         "build": {
           "builder": "@angular-devkit/build-angular:ng-packagr",
           "options": {
-            "project": "projects/ngx-material-components/ng-package.json"
+            "project": "projects/pitxi/ngx-material-components/ng-package.json"
           },
           "configurations": {
             "production": {
-              "tsConfig": "projects/ngx-material-components/tsconfig.lib.prod.json"
+              "tsConfig": "projects/pitxi/ngx-material-components/tsconfig.lib.prod.json"
             },
             "development": {
-              "tsConfig": "projects/ngx-material-components/tsconfig.lib.json"
+              "tsConfig": "projects/pitxi/ngx-material-components/tsconfig.lib.json"
             }
           },
           "defaultConfiguration": "production"
@@ -134,9 +134,40 @@
         "test": {
           "builder": "@angular-devkit/build-angular:karma",
           "options": {
-            "main": "projects/ngx-material-components/src/test.ts",
-            "tsConfig": "projects/ngx-material-components/tsconfig.spec.json",
-            "karmaConfig": "projects/ngx-material-components/karma.conf.js"
+            "main": "projects/pitxi/ngx-material-components/src/test.ts",
+            "tsConfig": "projects/pitxi/ngx-material-components/tsconfig.spec.json",
+            "karmaConfig": "projects/pitxi/ngx-material-components/karma.conf.js"
+          }
+        }
+      }
+    },
+    "@pitxi/ngx-mat-data-filter": {
+      "projectType": "library",
+      "root": "projects/pitxi/ngx-mat-data-filter",
+      "sourceRoot": "projects/pitxi/ngx-mat-data-filter/src",
+      "prefix": "lib",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:ng-packagr",
+          "options": {
+            "project": "projects/pitxi/ngx-mat-data-filter/ng-package.json"
+          },
+          "configurations": {
+            "production": {
+              "tsConfig": "projects/pitxi/ngx-mat-data-filter/tsconfig.lib.prod.json"
+            },
+            "development": {
+              "tsConfig": "projects/pitxi/ngx-mat-data-filter/tsconfig.lib.json"
+            }
+          },
+          "defaultConfiguration": "production"
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "projects/pitxi/ngx-mat-data-filter/src/test.ts",
+            "tsConfig": "projects/pitxi/ngx-mat-data-filter/tsconfig.spec.json",
+            "karmaConfig": "projects/pitxi/ngx-mat-data-filter/karma.conf.js"
           }
         }
       }

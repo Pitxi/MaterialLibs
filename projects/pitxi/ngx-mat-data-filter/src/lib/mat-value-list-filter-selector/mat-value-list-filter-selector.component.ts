@@ -7,6 +7,7 @@ import { ComparisonItem } from '../comparison-item';
 import { DataFilterComparison } from '../data-filter-comparison';
 import { NgxMatDataFilterIntl } from '../ngx-mat-data-filter-intl';
 import { FormBuilder, FormControl, Validators } from '@angular/forms';
+import { ValueListItem } from '..';
 
 @Component({
              selector       : 'ngx-mat-value-list-filter-selector',
@@ -21,7 +22,7 @@ export class MatValueListFilterSelectorComponent
     this.intl.getComparisonItem(DataFilterComparison.IsOneOf),
     this.intl.getComparisonItem(DataFilterComparison.IsNotOneOf)
   ];
-  readonly valueItems                             = this.data.valueListItems ?? [];
+  readonly valueItems: ValueListItem[]            = this.data.valueListItems ?? [];
   private defaultFilter: DataFilter               = this.data.defaultFilter ??
     {
       comparison: this.availableComparisons[0].comparison,
