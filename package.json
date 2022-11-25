@@ -1,6 +1,15 @@
 {
-  "name": "material",
-  "version": "0.0.0",
+  "name": "material-libs",
+  "version": "1.0.0",
+  "description": "Useful libraries for Angular Material",
+  "author": {
+    "name": "Javier Campón",
+    "email": "javiercamponp@gmail.com"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Pitxi/MaterialLibs"
+  },
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
