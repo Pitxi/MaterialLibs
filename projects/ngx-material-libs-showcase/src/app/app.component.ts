@@ -34,21 +34,22 @@ interface ModelView {
            })
 export class AppComponent implements OnInit, OnDestroy {
   @ViewChildren(MatDataFilterDirective) filterComponents!: QueryList<MatDataFilterDirective>;
-  private filtersForm: FormGroup                = this.fBuilder.group({
-                                                                        firstName: new FormControl<DataFilter | null>(null),
-                                                                        lastName : new FormControl<DataFilter | null>(null),
-                                                                        email    : new FormControl<DataFilter | null>(null),
-                                                                        gender   : new FormControl<DataFilter | null>(null),
-                                                                        ipAddress: new FormControl<DataFilter | null>(null),
-                                                                        jobTitle : new FormControl<DataFilter | null>(null),
-                                                                        birthDate: new FormControl<DataFilter | null>(null)
-                                                                      });
-  readonly hasFilters$                          = this.filtersForm.valueChanges
-                                                      .pipe(
-                                                        distinctUntilChanged(),
-                                                        map(filters => Object.values(filters).some(v => v !== null)),
-                                                        startWith(false)
-                                                      );
+  private filtersForm: FormGroup = this.fBuilder.group({
+                                                         firstName: new FormControl<DataFilter | null>(null),
+                                                         lastName : new FormControl<DataFilter | null>(null),
+                                                         email    : new FormControl<DataFilter | null>(null),
+                                                         gender   : new FormControl<DataFilter | null>(null),
+                                                         ipAddress: new FormControl<DataFilter | null>(null),
+                                                         jobTitle : new FormControl<DataFilter | null>(null),
+                                                         birthDate: new FormControl<DataFilter | null>(null)
+                                                       });
+  private hasFilters$            = this.filtersForm.valueChanges
+                                       .pipe(
+                                         startWith(false),
+                                         distinctUntilChanged(),
+                                         map(_ => this.filterComponents?.some(fc => !fc.filterIsEmpty))
+                                       );
+
   private genderValueListItems: ValueListItem[] = [
     { value: 'Male', description: 'Male' },
     { value: 'Female', description: 'Female' },
@@ -112,6 +113,7 @@ export class AppComponent implements OnInit, OnDestroy {
 
   resetFilters() {
     this.filtersForm.reset();
+    console.log(this.filterComponents.get(0));
   }
 
   setPage(event: PageEvent) {
