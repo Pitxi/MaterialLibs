@@ -10,7 +10,6 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { MatNativeDateModule } from '@angular/material/core';
 import { MatTableModule } from '@angular/material/table';
 import { HttpClientModule } from '@angular/common/http';
-import { FlexModule } from '@angular/flex-layout';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { NgxMatDataFilterModule } from '../../../pitxi/ngx-mat-data-filter/src/lib';
 
@@ -29,7 +28,6 @@ import { NgxMatDataFilterModule } from '../../../pitxi/ngx-mat-data-filter/src/l
               MatNativeDateModule,
               NgxMatDataFilterModule,
               MatTableModule,
-              FlexModule,
               MatPaginatorModule
             ],
             providers   : [],
