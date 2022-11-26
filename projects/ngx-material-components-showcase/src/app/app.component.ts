@@ -23,6 +23,7 @@ interface ModelView {
   pageIndex: number;
   pageSize: number;
   rowCount: number;
+  hasFilters: boolean;
 }
 
 @Component({
@@ -81,18 +82,22 @@ export class AppComponent implements OnInit, OnDestroy {
       switchMap(([ filters, { pageIndex, pageSize } ]) => this.data.getData(filters, pageIndex, pageSize))
     );
 
-  readonly mv$: Observable<ModelView> = this.paginatedDataSource$
-                                            .pipe(
-                                              map(paginatedDataSource => ({
-                                                filtersForm         : this.filtersForm,
-                                                genderValueListItems: this.genderValueListItems,
-                                                displayedColumns    : this.displayedColumns,
-                                                dataSource          : paginatedDataSource.data,
-                                                pageIndex           : paginatedDataSource.pageIndex,
-                                                pageSize            : paginatedDataSource.pageSize,
-                                                rowCount            : paginatedDataSource.rowCount
-                                              }))
-                                            );
+  readonly mv$: Observable<ModelView> = combineLatest([
+                                                        this.paginatedDataSource$,
+                                                        this.hasFilters$
+                                                      ])
+    .pipe(
+      map(([ paginatedDataSource, hasFilters ]) => ({
+        filtersForm         : this.filtersForm,
+        genderValueListItems: this.genderValueListItems,
+        displayedColumns    : this.displayedColumns,
+        dataSource          : paginatedDataSource.data,
+        pageIndex           : paginatedDataSource.pageIndex,
+        pageSize            : paginatedDataSource.pageSize,
+        rowCount            : paginatedDataSource.rowCount,
+        hasFilters
+      }))
+    );
 
   constructor(private fBuilder: FormBuilder, private data: DataService) {
   }
@@ -105,7 +110,7 @@ export class AppComponent implements OnInit, OnDestroy {
     this.unsubscribe.complete();
   }
 
-  resetFilter() {
+  resetFilters() {
     this.filtersForm.reset();
   }
 

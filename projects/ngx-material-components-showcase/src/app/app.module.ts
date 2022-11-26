@@ -12,7 +12,7 @@ import { MatTableModule } from '@angular/material/table';
 import { HttpClientModule } from '@angular/common/http';
 import { FlexModule } from '@angular/flex-layout';
 import { MatPaginatorModule } from '@angular/material/paginator';
-import { NgxMaterialComponentsModule } from '../../../pitxi/ngx-material-components/src/lib';
+import { NgxMatDataFilterModule } from '../../../pitxi/ngx-mat-data-filter/src/lib';
 
 @NgModule({
             declarations: [
@@ -27,7 +27,7 @@ import { NgxMaterialComponentsModule } from '../../../pitxi/ngx-material-compone
               MatButtonModule,
               MatIconModule,
               MatNativeDateModule,
-              NgxMaterialComponentsModule,
+              NgxMatDataFilterModule,
               MatTableModule,
               FlexModule,
               MatPaginatorModule

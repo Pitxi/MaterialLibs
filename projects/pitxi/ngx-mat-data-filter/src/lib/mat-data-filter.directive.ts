@@ -12,8 +12,8 @@ import { FILTER_SELECTOR_DATA, FilterSelectorData } from './filter-selector-data
 import { MatStringFilterSelectorComponent } from './mat-string-filter-selector';
 import { MatNumberFilterSelectorComponent } from './mat-number-filter-selector';
 import { DataFilterHelper } from './data-filter-helper';
-import { MatDateFilterSelectorComponent } from './mat-date-filter-selector/mat-date-filter-selector.component';
 import { DataFilterComparison } from './data-filter-comparison';
+import { MatDateFilterSelectorComponent } from './mat-date-filter-selector';
 
 @Directive({
              selector : '[ngxMatDataFilter]',

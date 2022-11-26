@@ -10,6 +10,13 @@
   overflow: auto;
 }
 
+.table-action-area {
+  padding: 1rem;
+  & .mat-icon {
+    margin-right: 0.5rem;
+  }
+}
+
 table {
   width: 100%;
 }

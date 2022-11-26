@@ -105,42 +105,6 @@
         }
       }
     },
-    "@pitxi/ngx-material-components": {
-      "projectType": "library",
-      "schematics": {
-        "@schematics/angular:component": {
-          "style": "scss"
-        }
-      },
-      "root": "projects/pitxi/ngx-material-components",
-      "sourceRoot": "projects/pitxi/ngx-material-components/src",
-      "prefix": "ngx",
-      "architect": {
-        "build": {
-          "builder": "@angular-devkit/build-angular:ng-packagr",
-          "options": {
-            "project": "projects/pitxi/ngx-material-components/ng-package.json"
-          },
-          "configurations": {
-            "production": {
-              "tsConfig": "projects/pitxi/ngx-material-components/tsconfig.lib.prod.json"
-            },
-            "development": {
-              "tsConfig": "projects/pitxi/ngx-material-components/tsconfig.lib.json"
-            }
-          },
-          "defaultConfiguration": "production"
-        },
-        "test": {
-          "builder": "@angular-devkit/build-angular:karma",
-          "options": {
-            "main": "projects/pitxi/ngx-material-components/src/test.ts",
-            "tsConfig": "projects/pitxi/ngx-material-components/tsconfig.spec.json",
-            "karmaConfig": "projects/pitxi/ngx-material-components/karma.conf.js"
-          }
-        }
-      }
-    },
     "@pitxi/ngx-mat-data-filter": {
       "projectType": "library",
       "root": "projects/pitxi/ngx-mat-data-filter",
