@@ -4,19 +4,19 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { DataFilter } from './data-filter';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { MatButtonModule } from '@angular/material/button';
 import { MatNativeDateModule } from '@angular/material/core';
 import { MatValueListFilterSelectorComponent } from './mat-value-list-filter-selector';
 import { MatStringFilterSelectorComponent } from './mat-string-filter-selector';
 import { MatNumberFilterSelectorComponent } from './mat-number-filter-selector';
-import { MatDateFilterSelectorComponent } from './mat-date-filter-selector/mat-date-filter-selector.component';
+import { MatDateFilterSelectorComponent } from './mat-date-filter-selector';
 import { NGX_MAT_DATA_FILTER_INTL_PROVIDER } from './ngx-mat-data-filter-intl';
 import { Overlay } from '@angular/cdk/overlay';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatSelectModule } from '@angular/material/select';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatInputModule } from '@angular/material/input';
-import { MatDatepickerModule } from '@angular/material/datepicker';
 
 @Component({
              template: `
