@@ -13,7 +13,7 @@ import {
 import { DataService } from './data.service';
 import { PageEvent } from '@angular/material/paginator';
 import { Person } from './person';
-import { DataFilter, MatDataFilterDirective, ValueListItem } from '../../../ngx-mat-data-filter/src/lib';
+import { DataFilter, MatDataFilterDirective, ValueListItem } from '../../../pitxi/ngx-mat-data-filter/src/lib';
 
 interface ModelView {
   filtersForm: FormGroup;

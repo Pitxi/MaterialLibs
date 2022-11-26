@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Person } from './person';
-import { DataFilter, DataFilterComparison } from '../../../ngx-mat-data-filter/src/lib';
 import { map, Observable } from 'rxjs';
+import { DataFilter, DataFilterComparison } from '../../../pitxi/ngx-mat-data-filter/src/lib';
 
 export interface PersonFilters {
   firstName?: DataFilter;

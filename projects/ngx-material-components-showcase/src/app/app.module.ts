@@ -12,7 +12,7 @@ import { MatTableModule } from '@angular/material/table';
 import { HttpClientModule } from '@angular/common/http';
 import { FlexModule } from '@angular/flex-layout';
 import { MatPaginatorModule } from '@angular/material/paginator';
-import { NgxMaterialComponentsModule } from '../../../ngx-material-components/src/public-api';
+import { NgxMaterialComponentsModule } from '../../../pitxi/ngx-material-components/src/lib';
 
 @NgModule({
             declarations: [
