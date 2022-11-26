@@ -11,7 +11,7 @@ import {
   switchMap
 } from 'rxjs';
 import { DataService } from './data.service';
-import { PageEvent } from '@angular/material/paginator';
+import { LegacyPageEvent as PageEvent } from '@angular/material/legacy-paginator';
 import { Person } from './person';
 import { DataFilter, MatDataFilterDirective, ValueListItem } from '../../../pitxi/ngx-mat-data-filter/src/lib';
 
@@ -113,7 +113,6 @@ export class AppComponent implements OnInit, OnDestroy {
 
   resetFilters() {
     this.filtersForm.reset();
-    console.log(this.filterComponents.get(0));
   }
 
   setPage(event: PageEvent) {

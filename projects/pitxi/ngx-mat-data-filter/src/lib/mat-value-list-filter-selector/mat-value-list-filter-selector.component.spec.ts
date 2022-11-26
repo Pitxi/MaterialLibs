@@ -4,9 +4,9 @@ import { MatValueListFilterSelectorComponent } from './mat-value-list-filter-sel
 import { ReactiveFormsModule } from '@angular/forms';
 import { FILTER_SELECTOR_DATA } from '../filter-selector-data';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { MatSelectModule } from '@angular/material/select';
-import { MatCheckboxModule } from '@angular/material/checkbox';
-import { MatCardModule } from '@angular/material/card';
+import { MatLegacySelectModule as MatSelectModule } from '@angular/material/legacy-select';
+import { MatLegacyCheckboxModule as MatCheckboxModule } from '@angular/material/legacy-checkbox';
+import { MatLegacyCardModule as MatCardModule } from '@angular/material/legacy-card';
 
 describe('MatValueListDataFilterComponent', () => {
   let component: MatValueListFilterSelectorComponent;

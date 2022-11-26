@@ -1,6 +1,6 @@
 {
   "name": "@pitxi/ngx-mat-data-filter",
-  "version": "1.0.1",
+  "version": "15.0.0",
   "author": {
     "name": "Javier Campón",
     "email": "javiercamponp@gmail.com"
@@ -10,10 +10,10 @@
     "url": "https://github.com/Pitxi/MaterialLibs"
   },
   "peerDependencies": {
-    "@angular/common": "^14.2.0",
-    "@angular/core": "^14.2.0",
-    "@angular/cdk": "~14.2.3",
-    "@angular/material": "~14.2.3"
+    "@angular/common": "^15.0.1",
+    "@angular/core": "^15.0.1",
+    "@angular/cdk": "~15.0.0",
+    "@angular/material": "~15.0.0"
   },
   "dependencies": {
     "tslib": "^2.3.0"
