@@ -1,4 +1,14 @@
-import { Directive, ElementRef, forwardRef, HostListener, Injector, Input, OnDestroy, Type } from '@angular/core';
+import {
+  Directive,
+  ElementRef,
+  forwardRef,
+  HostListener,
+  Injector,
+  Input,
+  OnDestroy,
+  Optional,
+  Type
+} from '@angular/core';
 import { DataFilterType } from './data-filter-type';
 import { DataFilter } from './data-filter';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
@@ -14,6 +24,7 @@ import { MatNumberFilterSelectorComponent } from './mat-number-filter-selector';
 import { DataFilterHelper } from './data-filter-helper';
 import { DataFilterComparison } from './data-filter-comparison';
 import { MatDateFilterSelectorComponent } from './mat-date-filter-selector';
+import { MatButton } from '@angular/material/button';
 
 @Directive({
              selector : '[ngxMatDataFilter]',
@@ -24,22 +35,25 @@ import { MatDateFilterSelectorComponent } from './mat-date-filter-selector';
                  useExisting: forwardRef(() => MatDataFilterDirective),
                  multi      : true
                }
-             ]
+             ],
+             host     : {
+               '[attr.disabled]'            : 'disabled || null',
+               '[class.mat-button-disabled]': 'disabled && isMatButton',
+             }
            })
 export class MatDataFilterDirective implements OnDestroy, ControlValueAccessor {
   @Input() valueListItems: ValueListItem[] = [];
   @Input('ngxMatDataFilter') filterType!: DataFilterType;
   @Input() defaultFilter: DataFilter | undefined;
-
+  private isDisabled                       = false;
   private isDropdownOpen                   = false;
   private dataFilter: DataFilter | null    = null;
   private oldDatafilter: DataFilter | null = null;
-  private isDisabled                       = false;
   private overlayRef                       = this.createMatDataFilterOverlay();
   private dropdownClosingActions$          = merge(this.overlayRef.backdropClick(), this.overlayRef.detachments());
   private dropdownUnsubscriber: Subject<void> | undefined;
 
-  constructor(private overlay: Overlay, private elementRef: ElementRef) {
+  constructor(private overlay: Overlay, private elementRef: ElementRef, @Optional() private matButton: MatButton) {
   }
 
   get filterIsEmpty(): boolean {
@@ -62,6 +76,14 @@ export class MatDataFilterDirective implements OnDestroy, ControlValueAccessor {
     return !this.dataFilter;
   }
 
+  get disabled(): boolean {
+    return this.isDisabled;
+  }
+
+  get isMatButton(): boolean {
+    return !!this.matButton;
+  }
+
   ngOnDestroy(): void {
     this.closeDropdown();
   }
@@ -75,7 +97,7 @@ export class MatDataFilterDirective implements OnDestroy, ControlValueAccessor {
   }
 
   setDisabledState(isDisabled: boolean): void {
-    this.isDisabled = true;
+    this.isDisabled = isDisabled;
   }
 
   writeValue(dataFilter: DataFilter | null): void {
@@ -85,44 +107,46 @@ export class MatDataFilterDirective implements OnDestroy, ControlValueAccessor {
 
   @HostListener('click')
   private openDropdown(): void {
-    let componentType: Type<FilterSelectorBase>;
+    if (!this.isDisabled) {
+      let componentType: Type<FilterSelectorBase>;
 
-    const data: FilterSelectorData = { defaultFilter: this.defaultFilter, filter: this.dataFilter ?? null };
-    this.isDropdownOpen            = true;
-    this.dropdownUnsubscriber      = new Subject<void>();
+      const data: FilterSelectorData = { defaultFilter: this.defaultFilter, filter: this.dataFilter ?? null };
+      this.isDropdownOpen            = true;
+      this.dropdownUnsubscriber      = new Subject<void>();
 
-    switch (this.filterType) {
-      case 'string':
-        componentType = MatStringFilterSelectorComponent;
-        break;
-      case 'number':
-        componentType = MatNumberFilterSelectorComponent;
-        break;
-      case 'date':
-        componentType = MatDateFilterSelectorComponent;
-        break;
-      case 'value-list':
-        componentType       = MatValueListFilterSelectorComponent;
-        data.valueListItems = this.valueListItems;
+      switch (this.filterType) {
+        case 'string':
+          componentType = MatStringFilterSelectorComponent;
+          break;
+        case 'number':
+          componentType = MatNumberFilterSelectorComponent;
+          break;
+        case 'date':
+          componentType = MatDateFilterSelectorComponent;
+          break;
+        case 'value-list':
+          componentType       = MatValueListFilterSelectorComponent;
+          data.valueListItems = this.valueListItems;
 
-        break;
+          break;
+      }
+
+      const injector     = Injector.create({ providers: [ { provide: FILTER_SELECTOR_DATA, useValue: data } ] });
+      const portal       = new ComponentPortal<FilterSelectorBase>(componentType, null, injector);
+      const componentRef = this.overlayRef.attach(portal);
+
+      componentRef?.instance.filterChanged$
+                  .pipe(takeUntil(this.dropdownUnsubscriber))
+                  .subscribe(filter => {
+                    this.dataFilter = filter;
+
+                    this.propagateTouched();
+                  });
+
+      this.dropdownClosingActions$
+          .pipe(takeUntil(this.dropdownUnsubscriber))
+          .subscribe(() => this.closeDropdown());
     }
-
-    const injector     = Injector.create({ providers: [ { provide: FILTER_SELECTOR_DATA, useValue: data } ] });
-    const portal       = new ComponentPortal<FilterSelectorBase>(componentType, null, injector);
-    const componentRef = this.overlayRef.attach(portal);
-
-    componentRef?.instance.filterChanged$
-                .pipe(takeUntil(this.dropdownUnsubscriber))
-                .subscribe(filter => {
-                  this.dataFilter = filter;
-
-                  this.propagateTouched();
-                });
-
-    this.dropdownClosingActions$
-        .pipe(takeUntil(this.dropdownUnsubscriber))
-        .subscribe(() => this.closeDropdown());
   }
 
   private propagateChanged = (_: DataFilter | null | undefined): void => {
