@@ -11,9 +11,9 @@ import {
   switchMap
 } from 'rxjs';
 import { DataService } from './data.service';
-import { LegacyPageEvent as PageEvent } from '@angular/material/legacy-paginator';
 import { Person } from './person';
 import { DataFilter, MatDataFilterDirective, ValueListItem } from '../../../pitxi/ngx-mat-data-filter/src/lib';
+import { PageEvent } from '@angular/material/paginator';
 
 interface ModelView {
   filtersForm: FormGroup;
