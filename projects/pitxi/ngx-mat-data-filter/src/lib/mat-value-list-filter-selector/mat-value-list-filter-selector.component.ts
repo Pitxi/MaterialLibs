@@ -1,12 +1,12 @@
 import { ChangeDetectionStrategy, Component, Inject, OnDestroy, OnInit } from '@angular/core';
 import { FilterSelectorBase } from '../filter-selector-base';
-import { distinctUntilChanged, map, Subject, takeUntil } from 'rxjs';
+import { distinctUntilChanged, filter, map, startWith, Subject, takeUntil, tap } from 'rxjs';
 import { DataFilter } from '../data-filter';
 import { FILTER_SELECTOR_DATA, FilterSelectorData } from '../filter-selector-data';
 import { ComparisonItem } from '../comparison-item';
 import { DataFilterComparison } from '../data-filter-comparison';
 import { NgxMatDataFilterIntl } from '../ngx-mat-data-filter-intl';
-import { FormBuilder, FormControl, Validators } from '@angular/forms';
+import { FormArray, FormBuilder, FormControl, Validators } from '@angular/forms';
 
 @Component({
              selector       : 'ngx-mat-value-list-filter-selector',
@@ -44,6 +44,27 @@ export class MatValueListFilterSelectorComponent
                                                                             ?? []
                                                                           )
                                                                         });
+  readonly actionsData$                           = this.form.valueChanges
+                                                        .pipe(
+                                                          startWith(this.form.value),
+                                                          filter(value => value.valueItemControls!.length > 0),
+                                                          map(value => ({
+                                                            selectAll      : {
+                                                              tooltipText: this.intl.selectAll,
+                                                              disabled   : value.valueItemControls?.every(isChecked => isChecked)
+                                                            },
+                                                            selectNone     : {
+                                                              tooltipText: this.intl.selectNone,
+                                                              disabled   : value.valueItemControls?.every(isChecked => !isChecked)
+                                                            },
+                                                            toggleSelection: {
+                                                              tooltipText: this.intl.toggleSelection,
+                                                              disabled   : value.valueItemControls?.every(isChecked => isChecked) ||
+                                                                value.valueItemControls?.every(isChecked => !isChecked)
+                                                            }
+                                                          })),
+                                                          tap(console.log)
+                                                        );
   private filterChangeSubject                     = new Subject<DataFilter | null>();
   readonly filterChanged$                         = this.filterChangeSubject.asObservable();
   private unsubscribeValueItems: Subject<void> | undefined;
@@ -61,6 +82,32 @@ export class MatValueListFilterSelectorComponent
   ngOnDestroy(): void {
     this.unSubscribeValueItems();
     this.unsubscribeFormControls();
+  }
+
+  toggleSelection(): void {
+    const controls = this.form.get('valueItemControls') as FormArray;
+
+    for (let index = 0; index < controls.length; ++index) {
+      const control = controls.get(String(index));
+
+      control?.setValue(!control?.value);
+    }
+
+    controls.updateValueAndValidity();
+  }
+
+  selectAll(): void {
+    const controls = this.form.get('valueItemControls') as FormArray;
+
+    controls.setValue(Array(controls.length).fill(true));
+    controls.updateValueAndValidity();
+  }
+
+  selectNone(): void {
+    const controls = this.form.get('valueItemControls') as FormArray;
+
+    controls.setValue(Array(controls.length).fill(false));
+    controls.updateValueAndValidity();
   }
 
   protected subscribeFormControls(): void {

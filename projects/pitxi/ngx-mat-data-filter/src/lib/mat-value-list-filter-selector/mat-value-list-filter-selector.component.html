@@ -16,5 +16,32 @@
         </div>
       </div>
     </div>
+    <mat-card-footer>
+      <div *ngIf="actionsData$ | async as actionsData" class="filter-actions">
+        <button (click)="selectAll()"
+                [disabled]="actionsData.selectAll.disabled"
+                [matTooltip]="actionsData.selectAll.tooltipText"
+                color="primary"
+                mat-icon-button>
+          <mat-icon>check_box</mat-icon>
+        </button>
+
+        <button (click)="selectNone()"
+                [disabled]="actionsData.selectNone.disabled"
+                [matTooltip]="actionsData.selectNone.tooltipText"
+                color="primary"
+                mat-icon-button>
+          <mat-icon>check_box_outline_blank</mat-icon>
+        </button>
+
+        <button (click)="toggleSelection()"
+                [disabled]="actionsData.toggleSelection.disabled"
+                [matTooltip]="actionsData.toggleSelection.tooltipText"
+                color="primary"
+                mat-icon-button>
+          <mat-icon>indeterminate_check_box</mat-icon>
+        </button>
+      </div>
+    </mat-card-footer>
   </mat-card-content>
 </mat-card>

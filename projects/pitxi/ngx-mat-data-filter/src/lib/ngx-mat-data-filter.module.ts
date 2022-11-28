@@ -13,6 +13,10 @@ import { MatCardModule } from '@angular/material/card';
 import { MatSelectModule } from '@angular/material/select';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatInputModule } from '@angular/material/input';
+import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
+import { MatDividerModule } from '@angular/material/divider';
+import { MatTooltipModule } from '@angular/material/tooltip';
 
 @NgModule({
             declarations: [
@@ -22,15 +26,19 @@ import { MatInputModule } from '@angular/material/input';
               MatNumberFilterSelectorComponent,
               MatDateFilterSelectorComponent
             ],
-              imports: [
-                  CommonModule,
-                  ReactiveFormsModule,
-                  MatCardModule,
-                  MatSelectModule,
-                  MatCheckboxModule,
-                  MatInputModule,
-                  MatDatepickerModule
-              ],
+            imports     : [
+              CommonModule,
+              ReactiveFormsModule,
+              MatCardModule,
+              MatSelectModule,
+              MatCheckboxModule,
+              MatInputModule,
+              MatDatepickerModule,
+              MatButtonModule,
+              MatIconModule,
+              MatDividerModule,
+              MatTooltipModule
+            ],
             exports     : [
               MatDataFilterDirective,
               MatValueListFilterSelectorComponent,
