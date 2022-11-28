@@ -159,7 +159,7 @@ export class MatDataFilterDirective implements OnDestroy, ControlValueAccessor {
     return this.overlay.create({
                                  hasBackdrop     : true,
                                  backdropClass   : 'cdk-overlay-transparent-backdrop',
-                                 scrollStrategy  : this.overlay.scrollStrategies.close(),
+                                 scrollStrategy  : this.overlay.scrollStrategies.noop(),
                                  positionStrategy: this.overlay
                                                        .position()
                                                        .flexibleConnectedTo(this.elementRef)
