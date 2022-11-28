@@ -58,7 +58,7 @@ export class AppComponent implements OnInit, OnDestroy {
     { value: 'Bigender', description: 'Bigender' },
     { value: 'Genderfluid', description: 'Genderfluid' },
     { value: 'Agender', description: 'Agender' },
-    { value: 'Non-binary', description: 'Non-binary' },
+    { value: 'Non-binary', description: 'Non-binary' }
   ];
   private displayedColumns                      = [
     'id',
