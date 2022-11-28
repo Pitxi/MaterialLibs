@@ -6,7 +6,10 @@ import { ComparisonItem } from './comparison-item';
 @Injectable({ providedIn: 'root' })
 export class NgxMatDataFilterIntl {
   readonly changes = new Subject<void>();
-
+  readonly stringFilterPlaceholder = 'Text filter';
+  readonly selectAll               = 'Select all';
+  readonly selectNone              = 'Select none';
+  readonly toggleSelection         = 'Toggle selection';
   protected comparisons: { [key in DataFilterComparison]: string } = {
     [DataFilterComparison.IsOneOf]    : 'Is one of',
     [DataFilterComparison.IsNotOneOf] : 'Is not one of',
@@ -18,8 +21,6 @@ export class NgxMatDataFilterIntl {
     [DataFilterComparison.NotContains]: 'Not contains',
     [DataFilterComparison.IsInRange]  : 'Is in range'
   };
-
-  readonly stringFilterPlaceholder = 'Text filter';
 
   getNumberFiltersPlaceholders(comparison: DataFilterComparison): string[] {
     switch (comparison) {
@@ -40,7 +41,7 @@ export class NgxMatDataFilterIntl {
   }
 
   getComparisonItem(comparison: DataFilterComparison): ComparisonItem {
-    return { comparison, description: this.comparisons[comparison] }
+    return { comparison, description: this.comparisons[comparison] };
   }
 }
 
