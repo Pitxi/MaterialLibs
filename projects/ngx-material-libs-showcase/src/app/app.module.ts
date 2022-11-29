@@ -12,6 +12,10 @@ import { NgxMatDataFilterModule } from '../../../pitxi/ngx-mat-data-filter/src/l
 import { MatButtonModule } from '@angular/material/button';
 import { MatTableModule } from '@angular/material/table';
 import { MatPaginatorModule } from '@angular/material/paginator';
+import {
+  NgxMatDataFilterConfiguration
+} from '../../../pitxi/ngx-mat-data-filter/src/lib/ngx-mat-data-filter-configuration';
+import { DataFilterConfiguration } from './data-filter-configuration';
 
 @NgModule({
             declarations: [
@@ -30,7 +34,9 @@ import { MatPaginatorModule } from '@angular/material/paginator';
               MatTableModule,
               MatPaginatorModule
             ],
-            providers   : [],
+            providers   : [
+              { provide: NgxMatDataFilterConfiguration, useClass: DataFilterConfiguration }
+            ],
             bootstrap   : [ AppComponent ]
           })
 export class AppModule {
