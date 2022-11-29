@@ -3,7 +3,7 @@ import { DataFilterComparison } from './data-filter-comparison';
 import { Subject } from 'rxjs';
 import { ComparisonItem } from './comparison-item';
 
-@Injectable({ providedIn: 'root' })
+@Injectable()
 export class NgxMatDataFilterIntl {
   readonly changes = new Subject<void>();
   readonly stringFilterPlaceholder = 'Text filter';
