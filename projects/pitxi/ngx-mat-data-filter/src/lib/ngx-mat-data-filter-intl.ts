@@ -5,11 +5,14 @@ import { ComparisonItem } from './comparison-item';
 
 @Injectable()
 export class NgxMatDataFilterIntl {
-  readonly changes = new Subject<void>();
-  readonly stringFilterPlaceholder = 'Text filter';
-  readonly selectAll               = 'Select all';
-  readonly selectNone              = 'Select none';
-  readonly toggleSelection         = 'Toggle selection';
+  readonly changes                                                 = new Subject<void>();
+  readonly stringFilterPlaceholder                                 = 'Text filter';
+  readonly selectAll                                               = 'Select all';
+  readonly selectNone                                              = 'Select none';
+  readonly toggleSelection                                         = 'Toggle selection';
+  readonly all                                                     = 'All';
+  readonly none                                                    = 'None';
+  readonly toggle                                                  = 'Toggle';
   protected comparisons: { [key in DataFilterComparison]: string } = {
     [DataFilterComparison.IsOneOf]    : 'Is one of',
     [DataFilterComparison.IsNotOneOf] : 'Is not one of',
