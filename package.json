@@ -2,6 +2,7 @@
   "name": "material-libs",
   "version": "1.0.0",
   "description": "Useful libraries for Angular Material",
+  "license": "GPL-3.0-or-later",
   "author": {
     "name": "Javier Campón",
     "email": "javiercamponp@gmail.com"
