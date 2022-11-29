@@ -17,6 +17,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import { NGX_MAT_DATA_FILTER_CONFIGURATION_PROVIDER } from './ngx-mat-data-filter-configuration';
 
 @NgModule({
             declarations: [
@@ -48,7 +49,8 @@ import { MatTooltipModule } from '@angular/material/tooltip';
             ],
             providers   : [
               Overlay,
-              NGX_MAT_DATA_FILTER_INTL_PROVIDER
+              NGX_MAT_DATA_FILTER_INTL_PROVIDER,
+              NGX_MAT_DATA_FILTER_CONFIGURATION_PROVIDER
             ]
           })
 export class NgxMatDataFilterModule {
