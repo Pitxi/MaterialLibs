@@ -1,45 +1,79 @@
-<mat-card>
+<mat-card *ngIf="mv$ | async as mv">
   <mat-card-content>
     <div [formGroup]="form">
       <mat-form-field appearance="outline">
         <mat-select formControlName="comparison">
-          <mat-option *ngFor="let item of availableComparisons" [value]="item.comparison">
+          <mat-option *ngFor="let item of mv.availableComparisons" [value]="item.comparison">
             {{ item.description }}
           </mat-option>
         </mat-select>
       </mat-form-field>
 
       <div class="filter-controls">
-        <div *ngFor="let item of valueItems; let i = index"
+        <div *ngFor="let item of mv.valueItems; let i = index"
              formArrayName="valueItemControls">
           <mat-checkbox [formControlName]="i">{{ item.description }}</mat-checkbox>
         </div>
       </div>
     </div>
-    <mat-card-footer>
-      <div *ngIf="actionsData$ | async as actionsData" class="filter-actions">
+    <mat-card-footer *ngIf="mv.showActions">
+      <div class="filter-actions">
+
+        <!-- Select All -->
         <button (click)="selectAll()"
-                [disabled]="actionsData.selectAll.disabled"
-                [matTooltip]="actionsData.selectAll.tooltipText"
+                *ngIf="!mv.actionsData.selectAll.icon"
+                [disabled]="mv.actionsData.selectAll.disabled"
+                [matTooltip]="mv.actionsData.selectAll.tooltipText"
+                color="primary"
+                mat-flat-button>
+          {{ mv.actionsData.selectAll.text }}
+        </button>
+
+        <button (click)="selectAll()"
+                *ngIf="mv.actionsData.selectAll.icon as icon"
+                [disabled]="mv.actionsData.selectAll.disabled"
+                [matTooltip]="mv.actionsData.selectAll.tooltipText"
                 color="primary"
                 mat-icon-button>
-          <mat-icon>check_box</mat-icon>
+          <mat-icon>{{ icon }}</mat-icon>
+        </button>
+
+        <!-- Select None -->
+        <button (click)="selectNone()"
+                *ngIf="!mv.actionsData.selectNone.icon"
+                [disabled]="mv.actionsData.selectNone.disabled"
+                [matTooltip]="mv.actionsData.selectNone.tooltipText"
+                color="primary"
+                mat-flat-button>
+          {{ mv.actionsData.selectNone.text }}
         </button>
 
         <button (click)="selectNone()"
-                [disabled]="actionsData.selectNone.disabled"
-                [matTooltip]="actionsData.selectNone.tooltipText"
+                *ngIf="mv.actionsData.selectNone.icon as icon"
+                [disabled]="mv.actionsData.selectNone.disabled"
+                [matTooltip]="mv.actionsData.selectNone.tooltipText"
                 color="primary"
                 mat-icon-button>
-          <mat-icon>check_box_outline_blank</mat-icon>
+          <mat-icon>{{ icon }}</mat-icon>
+        </button>
+
+        <!-- Toggle Selection -->
+        <button (click)="toggleSelection()"
+                *ngIf="!mv.actionsData.toggleSelection.icon"
+                [disabled]="mv.actionsData.toggleSelection.disabled"
+                [matTooltip]="mv.actionsData.toggleSelection.tooltipText"
+                color="primary"
+                mat-flat-button>
+          {{ mv.actionsData.toggleSelection.text }}
         </button>
 
         <button (click)="toggleSelection()"
-                [disabled]="actionsData.toggleSelection.disabled"
-                [matTooltip]="actionsData.toggleSelection.tooltipText"
+                *ngIf="mv.actionsData.toggleSelection.icon as icon"
+                [disabled]="mv.actionsData.toggleSelection.disabled"
+                [matTooltip]="mv.actionsData.toggleSelection.tooltipText"
                 color="primary"
                 mat-icon-button>
-          <mat-icon>indeterminate_check_box</mat-icon>
+          <mat-icon>{{ icon }}</mat-icon>
         </button>
       </div>
     </mat-card-footer>
