@@ -51,6 +51,10 @@ export class MatNumberFilterSelectorComponent
     super();
   }
 
+  clearControl(controlName: string): void {
+    this.form.get(controlName)?.reset();
+  }
+
   ngOnInit(): void {
     this.subscribeFormControls();
   }

@@ -10,29 +10,30 @@
       </mat-form-field>
 
       <div *ngIf="placeHolders$ | async as placeholders" class="filter-controls">
-        <div>
-          <mat-form-field appearance="fill">
-            <input [matDatepicker]="picker1"
-                   [placeholder]="placeholders[0]"
-                   formControlName="date1"
-                   matInput
-                   type="text">
-            <mat-datepicker-toggle [for]="picker1" matSuffix></mat-datepicker-toggle>
-            <mat-datepicker #picker1></mat-datepicker>
-          </mat-form-field>
-        </div>
+        <mat-form-field *ngIf="placeholders[1] == null" appearance="fill">
+          <input [matDatepicker]="datePicker"
+                 [placeholder]="placeholders[0]"
+                 formControlName="date1"
+                 matInput
+                 type="text">
+          <mat-datepicker-toggle [for]="datePicker" matSuffix></mat-datepicker-toggle>
+          <mat-datepicker #datePicker></mat-datepicker>
+          <button (click)="clearControls()" mat-icon-button matIconSuffix>
+            <mat-icon>backspace</mat-icon>
+          </button>
+        </mat-form-field>
 
-        <div *ngIf="placeholders[1] != null">
-          <mat-form-field appearance="fill">
-            <input [matDatepicker]="picker2"
-                   [placeholder]="placeholders[1]"
-                   formControlName="date2"
-                   matInput
-                   type="text">
-            <mat-datepicker-toggle [for]="picker2" matSuffix></mat-datepicker-toggle>
-            <mat-datepicker #picker2></mat-datepicker>
-          </mat-form-field>
-        </div>
+        <mat-form-field *ngIf="placeholders[1] != null" appearance="fill">
+          <mat-date-range-input [rangePicker]="dateRangePicker">
+            <input [placeholder]="placeholders[0]" formControlName="date1" matStartDate>
+            <input [placeholder]="placeholders[1]" formControlName="date2" matEndDate>
+          </mat-date-range-input>
+          <mat-datepicker-toggle [for]="dateRangePicker" matIconSuffix></mat-datepicker-toggle>
+          <mat-date-range-picker #dateRangePicker></mat-date-range-picker>
+          <button (click)="clearControls()" mat-icon-button matIconSuffix>
+            <mat-icon>backspace</mat-icon>
+          </button>
+        </mat-form-field>
       </div>
     </div>
   </mat-card-content>

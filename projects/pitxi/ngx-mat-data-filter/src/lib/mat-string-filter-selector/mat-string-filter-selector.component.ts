@@ -81,4 +81,8 @@ export class MatStringFilterSelectorComponent
     this.unsubscribeControls?.next();
     this.unsubscribeControls?.complete();
   }
+
+  clearControl(): void {
+    this.form.get('text')?.reset();
+  }
 }

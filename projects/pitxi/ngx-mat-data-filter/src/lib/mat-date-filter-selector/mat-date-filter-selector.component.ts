@@ -106,4 +106,8 @@ export class MatDateFilterSelectorComponent
       values
     };
   }
+
+  clearControls(): void {
+    this.form.patchValue({ date1: null, date2: null });
+  }
 }
