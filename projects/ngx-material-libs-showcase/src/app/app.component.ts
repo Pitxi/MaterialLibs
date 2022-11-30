@@ -8,7 +8,8 @@ import {
   Observable,
   startWith,
   Subject,
-  switchMap
+  switchMap,
+  tap
 } from 'rxjs';
 import { DataService } from './data.service';
 import { Person } from './person';
@@ -72,13 +73,25 @@ export class AppComponent implements OnInit, OnDestroy {
     'birthDate'
   ];
   private unsubscribe                           = new Subject<void>();
-  private paginationData                        = new BehaviorSubject<{ pageIndex: number; pageSize: number; }>({
-                                                                                                                  pageIndex: 0,
-                                                                                                                  pageSize : 25
-                                                                                                                });
+  private paginationDataSubject                 = new BehaviorSubject<{ pageIndex: number; pageSize: number; }>(
+    {
+      pageIndex: 0,
+      pageSize : 25
+    }
+  );
   private paginatedDataSource$                  = combineLatest([
-                                                                  this.filtersForm.valueChanges.pipe(startWith({})),
-                                                                  this.paginationData.asObservable()
+                                                                  this.filtersForm.valueChanges.pipe(
+                                                                    startWith(this.filtersForm.value),
+                                                                    distinctUntilChanged(),
+                                                                    tap(_ => this.paginationDataSubject.next(
+                                                                      {
+                                                                        pageIndex: 0,
+                                                                        pageSize : this.paginationDataSubject
+                                                                                       .getValue().pageSize
+                                                                      }
+                                                                    ))
+                                                                  ),
+                                                                  this.paginationDataSubject.asObservable()
                                                                 ])
     .pipe(
       switchMap(([ filters, { pageIndex, pageSize } ]) => this.data.getData(filters, pageIndex, pageSize))
@@ -117,6 +130,6 @@ export class AppComponent implements OnInit, OnDestroy {
   }
 
   setPage(event: PageEvent) {
-    this.paginationData.next({ pageSize: event.pageSize, pageIndex: event.pageIndex });
+    this.paginationDataSubject.next({ pageSize: event.pageSize, pageIndex: event.pageIndex });
   }
 }
