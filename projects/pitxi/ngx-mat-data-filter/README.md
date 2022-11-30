@@ -20,8 +20,4 @@ yarn add @pitxi/ngx-mat-data-filter
 
 ## Documentation
 
-
-
-```ts
-
-```
+_WORK IN PROGRESS_
