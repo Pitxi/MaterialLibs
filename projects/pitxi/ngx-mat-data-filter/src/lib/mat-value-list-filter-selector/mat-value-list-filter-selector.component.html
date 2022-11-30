@@ -16,66 +16,67 @@
         </div>
       </div>
     </div>
-    <mat-card-footer *ngIf="mv.showActions">
-      <div class="filter-actions">
-
-        <!-- Select All -->
-        <button (click)="selectAll()"
-                *ngIf="!mv.actionsData.selectAll.icon"
-                [disabled]="mv.actionsData.selectAll.disabled"
-                [matTooltip]="mv.actionsData.selectAll.tooltipText"
-                color="primary"
-                mat-flat-button>
-          {{ mv.actionsData.selectAll.text }}
-        </button>
-
-        <button (click)="selectAll()"
-                *ngIf="mv.actionsData.selectAll.icon as icon"
-                [disabled]="mv.actionsData.selectAll.disabled"
-                [matTooltip]="mv.actionsData.selectAll.tooltipText"
-                color="primary"
-                mat-icon-button>
-          <mat-icon>{{ icon }}</mat-icon>
-        </button>
-
-        <!-- Select None -->
-        <button (click)="selectNone()"
-                *ngIf="!mv.actionsData.selectNone.icon"
-                [disabled]="mv.actionsData.selectNone.disabled"
-                [matTooltip]="mv.actionsData.selectNone.tooltipText"
-                color="primary"
-                mat-flat-button>
-          {{ mv.actionsData.selectNone.text }}
-        </button>
-
-        <button (click)="selectNone()"
-                *ngIf="mv.actionsData.selectNone.icon as icon"
-                [disabled]="mv.actionsData.selectNone.disabled"
-                [matTooltip]="mv.actionsData.selectNone.tooltipText"
-                color="primary"
-                mat-icon-button>
-          <mat-icon>{{ icon }}</mat-icon>
-        </button>
-
-        <!-- Toggle Selection -->
-        <button (click)="toggleSelection()"
-                *ngIf="!mv.actionsData.toggleSelection.icon"
-                [disabled]="mv.actionsData.toggleSelection.disabled"
-                [matTooltip]="mv.actionsData.toggleSelection.tooltipText"
-                color="primary"
-                mat-flat-button>
-          {{ mv.actionsData.toggleSelection.text }}
-        </button>
-
-        <button (click)="toggleSelection()"
-                *ngIf="mv.actionsData.toggleSelection.icon as icon"
-                [disabled]="mv.actionsData.toggleSelection.disabled"
-                [matTooltip]="mv.actionsData.toggleSelection.tooltipText"
-                color="primary"
-                mat-icon-button>
-          <mat-icon>{{ icon }}</mat-icon>
-        </button>
-      </div>
-    </mat-card-footer>
   </mat-card-content>
+
+  <mat-card-footer *ngIf="mv.showActions">
+    <div class="filter-actions">
+
+      <!-- Select All -->
+      <button (click)="selectAll()"
+              *ngIf="!mv.actionsData.selectAll.icon"
+              [disabled]="mv.actionsData.selectAll.disabled"
+              [matTooltip]="mv.actionsData.selectAll.tooltipText"
+              color="primary"
+              mat-flat-button>
+        {{ mv.actionsData.selectAll.text }}
+      </button>
+
+      <button (click)="selectAll()"
+              *ngIf="mv.actionsData.selectAll.icon as icon"
+              [disabled]="mv.actionsData.selectAll.disabled"
+              [matTooltip]="mv.actionsData.selectAll.tooltipText"
+              color="primary"
+              mat-icon-button>
+        <mat-icon>{{ icon }}</mat-icon>
+      </button>
+
+      <!-- Select None -->
+      <button (click)="selectNone()"
+              *ngIf="!mv.actionsData.selectNone.icon"
+              [disabled]="mv.actionsData.selectNone.disabled"
+              [matTooltip]="mv.actionsData.selectNone.tooltipText"
+              color="primary"
+              mat-flat-button>
+        {{ mv.actionsData.selectNone.text }}
+      </button>
+
+      <button (click)="selectNone()"
+              *ngIf="mv.actionsData.selectNone.icon as icon"
+              [disabled]="mv.actionsData.selectNone.disabled"
+              [matTooltip]="mv.actionsData.selectNone.tooltipText"
+              color="primary"
+              mat-icon-button>
+        <mat-icon>{{ icon }}</mat-icon>
+      </button>
+
+      <!-- Toggle Selection -->
+      <button (click)="toggleSelection()"
+              *ngIf="!mv.actionsData.toggleSelection.icon"
+              [disabled]="mv.actionsData.toggleSelection.disabled"
+              [matTooltip]="mv.actionsData.toggleSelection.tooltipText"
+              color="primary"
+              mat-flat-button>
+        {{ mv.actionsData.toggleSelection.text }}
+      </button>
+
+      <button (click)="toggleSelection()"
+              *ngIf="mv.actionsData.toggleSelection.icon as icon"
+              [disabled]="mv.actionsData.toggleSelection.disabled"
+              [matTooltip]="mv.actionsData.toggleSelection.tooltipText"
+              color="primary"
+              mat-icon-button>
+        <mat-icon>{{ icon }}</mat-icon>
+      </button>
+    </div>
+  </mat-card-footer>
 </mat-card>
