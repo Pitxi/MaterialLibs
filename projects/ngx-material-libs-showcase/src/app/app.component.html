@@ -137,7 +137,10 @@
       </ng-container>
 
       <tr *matHeaderRowDef="mv.displayedColumns; sticky: true" mat-header-row></tr>
-      <tr *matRowDef="let row; columns: mv.displayedColumns;" mat-row></tr>
+      <tr *matRowDef="let row; let even = even; columns: mv.displayedColumns;"
+          [ngClass]="{ 'row-alternate-color': even }"
+          mat-row>
+      </tr>
     </table>
   </div>
   <mat-paginator (page)="setPage($event)"
