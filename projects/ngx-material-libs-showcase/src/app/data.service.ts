@@ -52,6 +52,12 @@ export class DataService {
                                case DataFilterComparison.GreaterThan:
                                  return !filter.values[0] || value > filter.values[0];
                                case DataFilterComparison.EqualTo:
+                                 if (value instanceof Date && filter.values[0] instanceof Date) {
+                                   return value.getFullYear() === filter.values[0].getFullYear() &&
+                                     value.getDate() === filter.values[0].getDate() &&
+                                     value.getMonth() === filter.values[0].getMonth();
+                                 }
+
                                  return !filter.values[0] || value === filter.values[0];
                                case DataFilterComparison.NotEqualTo:
                                  return !filter.values[0] || value !== filter.values[0];
