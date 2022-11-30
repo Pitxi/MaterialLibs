@@ -13,7 +13,11 @@
         <div>
           <mat-form-field appearance="fill">
             <input [placeholder]="placeholders[0]" formControlName="number1" matInput type="number">
-            <button (click)="clearControl('number1')" mat-icon-button matSuffix>
+            <button (click)="clearControl('number1')"
+                    [disabled]="form.value.number1 === null"
+                    color="primary"
+                    mat-icon-button
+                    matSuffix>
               <mat-icon>backspace</mat-icon>
             </button>
           </mat-form-field>
@@ -22,7 +26,11 @@
         <div *ngIf="placeholders[1] != null">
           <mat-form-field appearance="fill">
             <input [placeholder]="placeholders[1]" formControlName="number2" matInput type="number">
-            <button (click)="clearControl('number2')" mat-icon-button matSuffix>
+            <button (click)="clearControl('number2')"
+                    [disabled]="form.value.number2 === null"
+                    color="primary"
+                    mat-icon-button
+                    matSuffix>
               <mat-icon>backspace</mat-icon>
             </button>
           </mat-form-field>

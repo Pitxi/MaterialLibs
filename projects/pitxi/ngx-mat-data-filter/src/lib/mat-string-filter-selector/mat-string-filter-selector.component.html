@@ -11,8 +11,12 @@
 
       <div class="filter-controls">
         <mat-form-field appearance="fill">
-          <input formControlName="text" matInput type="text" [placeholder]="placeholder">
-          <button (click)="clearControl()" mat-icon-button matSuffix>
+          <input [placeholder]="placeholder" formControlName="text" matInput type="text">
+          <button (click)="clearControl()"
+                  [disabled]="!form.value.text"
+                  color="primary"
+                  mat-icon-button
+                  matSuffix>
             <mat-icon>backspace</mat-icon>
           </button>
         </mat-form-field>
