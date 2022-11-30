@@ -20,7 +20,8 @@ export class MatStringFilterSelectorComponent
   readonly availableComparisons: ComparisonItem[]        = [
     this.intl.getComparisonItem(DataFilterComparison.EqualTo),
     this.intl.getComparisonItem(DataFilterComparison.NotEqualTo),
-    this.intl.getComparisonItem(DataFilterComparison.Contains)
+    this.intl.getComparisonItem(DataFilterComparison.Contains),
+    this.intl.getComparisonItem(DataFilterComparison.NotContains)
   ];
   readonly placeholder                                   = this.intl.stringFilterPlaceholder;
   private defaultFilter: DataFilter                      = this.data.defaultFilter ??
