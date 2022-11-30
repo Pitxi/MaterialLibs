@@ -9,113 +9,129 @@
     <table [dataSource]="mv.dataSource" mat-table>
       <ng-container matColumnDef="id">
         <th *matHeaderCellDef mat-header-cell>
-          ID
-          <button #idFilter="ngxMatDataFilter"
-                  [color]="idFilter.filterIsEmpty ? 'primary' : 'accent'"
-                  formControlName="id"
-                  mat-icon-button
-                  ngxMatDataFilter="number">
-            <mat-icon>filter_list</mat-icon>
-          </button>
+          <div class="row-content">
+            ID
+            <button #idFilter="ngxMatDataFilter"
+                    [color]="idFilter.filterIsEmpty ? 'primary' : 'accent'"
+                    formControlName="id"
+                    mat-icon-button
+                    ngxMatDataFilter="number">
+              <mat-icon>filter_list</mat-icon>
+            </button>
+          </div>
         </th>
         <td *matCellDef="let person" mat-cell>{{ person['id'] }}</td>
       </ng-container>
 
       <ng-container matColumnDef="firstName">
         <th *matHeaderCellDef mat-header-cell>
-          First name
-          <button #firstNameFilter="ngxMatDataFilter"
-                  [color]="firstNameFilter.filterIsEmpty ? 'primary' : 'accent'"
-                  formControlName="firstName"
-                  mat-icon-button
-                  ngxMatDataFilter="string">
-            <mat-icon>filter_list</mat-icon>
-          </button>
+          <div class="row-content">
+            First name
+            <button #firstNameFilter="ngxMatDataFilter"
+                    [color]="firstNameFilter.filterIsEmpty ? 'primary' : 'accent'"
+                    formControlName="firstName"
+                    mat-icon-button
+                    ngxMatDataFilter="string">
+              <mat-icon>filter_list</mat-icon>
+            </button>
+          </div>
         </th>
         <td *matCellDef="let person" mat-cell>{{ person['firstName'] }}</td>
       </ng-container>
 
       <ng-container matColumnDef="lastName">
         <th *matHeaderCellDef mat-header-cell>
-          Last name
-          <button #lastNameFilter="ngxMatDataFilter"
-                  [color]="lastNameFilter.filterIsEmpty ? 'primary' : 'accent'"
-                  formControlName="lastName"
-                  mat-icon-button
-                  ngxMatDataFilter="string">
-            <mat-icon>filter_list</mat-icon>
-          </button>
+          <div class="row-content">
+            Last name
+            <button #lastNameFilter="ngxMatDataFilter"
+                    [color]="lastNameFilter.filterIsEmpty ? 'primary' : 'accent'"
+                    formControlName="lastName"
+                    mat-icon-button
+                    ngxMatDataFilter="string">
+              <mat-icon>filter_list</mat-icon>
+            </button>
+          </div>
         </th>
         <td *matCellDef="let person" mat-cell>{{ person['lastName'] }}</td>
       </ng-container>
 
       <ng-container matColumnDef="email">
         <th *matHeaderCellDef mat-header-cell>
-          Email
-          <button #emailFilter="ngxMatDataFilter"
-                  [color]="emailFilter.filterIsEmpty ? 'primary' : 'accent'"
-                  formControlName="email"
-                  mat-icon-button
-                  ngxMatDataFilter="string">
-            <mat-icon>filter_list</mat-icon>
-          </button>
+          <div class="row-content">
+            Email
+            <button #emailFilter="ngxMatDataFilter"
+                    [color]="emailFilter.filterIsEmpty ? 'primary' : 'accent'"
+                    formControlName="email"
+                    mat-icon-button
+                    ngxMatDataFilter="string">
+              <mat-icon>filter_list</mat-icon>
+            </button>
+          </div>
         </th>
         <td *matCellDef="let person" mat-cell>{{ person['email'] }}</td>
       </ng-container>
 
       <ng-container matColumnDef="gender">
         <th *matHeaderCellDef mat-header-cell>
-          Gender
-          <button #genderFilter="ngxMatDataFilter"
-                  [color]="genderFilter.filterIsEmpty ? 'primary' : 'accent'"
-                  [valueListItems]="mv.genderValueListItems"
-                  formControlName="gender"
-                  mat-icon-button
-                  ngxMatDataFilter="value-list">
-            <mat-icon>filter_list</mat-icon>
-          </button>
+          <div class="row-content">
+            Gender
+            <button #genderFilter="ngxMatDataFilter"
+                    [color]="genderFilter.filterIsEmpty ? 'primary' : 'accent'"
+                    [valueListItems]="mv.genderValueListItems"
+                    formControlName="gender"
+                    mat-icon-button
+                    ngxMatDataFilter="value-list">
+              <mat-icon>filter_list</mat-icon>
+            </button>
+          </div>
         </th>
         <td *matCellDef="let person" mat-cell>{{ person['gender'] }}</td>
       </ng-container>
 
       <ng-container matColumnDef="ipAddress">
         <th *matHeaderCellDef mat-header-cell>
-          IP address
-          <button #ipAddressFilter="ngxMatDataFilter"
-                  [color]="ipAddressFilter.filterIsEmpty ? 'primary' : 'accent'"
-                  formControlName="ipAddress"
-                  mat-icon-button
-                  ngxMatDataFilter="string">
-            <mat-icon>filter_list</mat-icon>
-          </button>
+          <div class="row-content">
+            IP address
+            <button #ipAddressFilter="ngxMatDataFilter"
+                    [color]="ipAddressFilter.filterIsEmpty ? 'primary' : 'accent'"
+                    formControlName="ipAddress"
+                    mat-icon-button
+                    ngxMatDataFilter="string">
+              <mat-icon>filter_list</mat-icon>
+            </button>
+          </div>
         </th>
         <td *matCellDef="let person" mat-cell>{{ person['ipAddress'] }}</td>
       </ng-container>
 
       <ng-container matColumnDef="jobTitle">
         <th *matHeaderCellDef mat-header-cell>
-          Job title
-          <button #jobTitleFilter="ngxMatDataFilter"
-                  [color]="jobTitleFilter.filterIsEmpty ? 'primary' : 'accent'"
-                  formControlName="jobTitle"
-                  mat-icon-button
-                  ngxMatDataFilter="string">
-            <mat-icon>filter_list</mat-icon>
-          </button>
+          <div class="row-content">
+            Job title
+            <button #jobTitleFilter="ngxMatDataFilter"
+                    [color]="jobTitleFilter.filterIsEmpty ? 'primary' : 'accent'"
+                    formControlName="jobTitle"
+                    mat-icon-button
+                    ngxMatDataFilter="string">
+              <mat-icon>filter_list</mat-icon>
+            </button>
+          </div>
         </th>
         <td *matCellDef="let person" mat-cell>{{ person['jobTitle'] || 'NONE' }}</td>
       </ng-container>
 
       <ng-container matColumnDef="birthDate">
         <th *matHeaderCellDef mat-header-cell>
-          Birth date
-          <button #birthDateFilter="ngxMatDataFilter"
-                  [color]="birthDateFilter.filterIsEmpty ? 'primary' : 'accent'"
-                  formControlName="birthDate"
-                  mat-icon-button
-                  ngxMatDataFilter="date">
-            <mat-icon>filter_list</mat-icon>
-          </button>
+          <div class="row-content">
+            Birth date
+            <button #birthDateFilter="ngxMatDataFilter"
+                    [color]="birthDateFilter.filterIsEmpty ? 'primary' : 'accent'"
+                    formControlName="birthDate"
+                    mat-icon-button
+                    ngxMatDataFilter="date">
+              <mat-icon>filter_list</mat-icon>
+            </button>
+          </div>
         </th>
         <td *matCellDef="let person" mat-cell>{{ person['birthDate'] | date : 'short' }}</td>
       </ng-container>

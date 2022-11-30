@@ -12,9 +12,16 @@
 
 .table-action-area {
   padding: 1rem;
+
   & .mat-icon {
     margin-right: 0.5rem;
   }
+}
+
+.row-content {
+  display: flex;
+  flex-direction: row;
+  align-items: center
 }
 
 table {
