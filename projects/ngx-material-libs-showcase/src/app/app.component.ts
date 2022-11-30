@@ -35,6 +35,7 @@ interface ModelView {
 export class AppComponent implements OnInit, OnDestroy {
   @ViewChildren(MatDataFilterDirective) filterComponents!: QueryList<MatDataFilterDirective>;
   private filtersForm: FormGroup = this.fBuilder.group({
+                                                         id       : new FormControl<DataFilter | null>(null),
                                                          firstName: new FormControl<DataFilter | null>(null),
                                                          lastName : new FormControl<DataFilter | null>(null),
                                                          email    : new FormControl<DataFilter | null>(null),

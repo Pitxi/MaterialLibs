@@ -10,6 +10,13 @@
       <ng-container matColumnDef="id">
         <th *matHeaderCellDef mat-header-cell>
           ID
+          <button #idFilter="ngxMatDataFilter"
+                  [color]="idFilter.filterIsEmpty ? 'primary' : 'accent'"
+                  formControlName="id"
+                  mat-icon-button
+                  ngxMatDataFilter="number">
+            <mat-icon>filter_list</mat-icon>
+          </button>
         </th>
         <td *matCellDef="let person" mat-cell>{{ person['id'] }}</td>
       </ng-container>

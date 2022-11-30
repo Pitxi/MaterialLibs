@@ -5,6 +5,7 @@ import { map, Observable } from 'rxjs';
 import { DataFilter, DataFilterComparison } from '../../../pitxi/ngx-mat-data-filter/src/lib';
 
 export interface PersonFilters {
+  id?: DataFilter;
   firstName?: DataFilter;
   lastName?: DataFilter;
   email?: DataFilter;
