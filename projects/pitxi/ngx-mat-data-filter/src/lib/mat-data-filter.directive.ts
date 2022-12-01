@@ -25,6 +25,7 @@ import { DataFilterHelper } from './data-filter-helper';
 import { DataFilterComparison } from './data-filter-comparison';
 import { MatDateFilterSelectorComponent } from './mat-date-filter-selector';
 import { MatButton } from '@angular/material/button';
+import { NgxMatDataFilterConfiguration } from './ngx-mat-data-filter-configuration';
 
 @Directive({
              selector : '[ngxMatDataFilter]',
@@ -53,7 +54,10 @@ export class MatDataFilterDirective implements OnDestroy, ControlValueAccessor {
   private dropdownClosingActions$          = merge(this.overlayRef.backdropClick(), this.overlayRef.detachments());
   private dropdownUnsubscriber: Subject<void> | undefined;
 
-  constructor(private overlay: Overlay, private elementRef: ElementRef, @Optional() private matButton: MatButton) {
+  constructor(private config: NgxMatDataFilterConfiguration,
+              private overlay: Overlay,
+              private elementRef: ElementRef,
+              @Optional() private matButton: MatButton) {
   }
 
   get filterIsEmpty(): boolean {
@@ -158,7 +162,7 @@ export class MatDataFilterDirective implements OnDestroy, ControlValueAccessor {
   private createMatDataFilterOverlay(): OverlayRef {
     return this.overlay.create({
                                  hasBackdrop     : true,
-                                 backdropClass   : 'cdk-overlay-transparent-backdrop',
+                                 backdropClass   : this.config.backdropClass,
                                  scrollStrategy  : this.overlay.scrollStrategies.noop(),
                                  positionStrategy: this.overlay
                                                        .position()
