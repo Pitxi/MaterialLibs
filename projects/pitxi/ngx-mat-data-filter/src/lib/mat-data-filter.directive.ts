@@ -163,13 +163,31 @@ export class MatDataFilterDirective implements OnDestroy, ControlValueAccessor {
                                  positionStrategy: this.overlay
                                                        .position()
                                                        .flexibleConnectedTo(this.elementRef)
+                                                       .setOrigin(this.elementRef)
                                                        .withPositions([
                                                                         {
                                                                           originX : 'start',
                                                                           originY : 'bottom',
                                                                           overlayX: 'start',
-                                                                          overlayY: 'top',
-                                                                          offsetY : 8
+                                                                          overlayY: 'top'
+                                                                        },
+                                                                        {
+                                                                          originX : 'start',
+                                                                          originY : 'top',
+                                                                          overlayX: 'start',
+                                                                          overlayY: 'bottom'
+                                                                        },
+                                                                        {
+                                                                          originX : 'end',
+                                                                          originY : 'bottom',
+                                                                          overlayX: 'end',
+                                                                          overlayY: 'top'
+                                                                        },
+                                                                        {
+                                                                          originX : 'start',
+                                                                          originY : 'top',
+                                                                          overlayX: 'end',
+                                                                          overlayY: 'bottom'
                                                                         }
                                                                       ])
                                });
