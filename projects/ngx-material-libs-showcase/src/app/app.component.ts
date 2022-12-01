@@ -27,15 +27,15 @@ export class AppComponent {
                                map(event => (event as NavigationEnd).url)
                              );
   readonly activeLinkItem$ = this.currentUrl$
-    .pipe(
-      map(url => this.links.find(item => item.link === url))
-    );
-  sidenaveOpen         = true;
+                                 .pipe(
+                                   map(url => this.links.find(item => item.link === url))
+                                 );
+  sidenavOpen              = true;
 
   constructor(private router: Router) {
   }
 
   toggleSidenav(): void {
-    this.sidenaveOpen = !this.sidenaveOpen;
+    this.sidenavOpen = !this.sidenavOpen;
   }
 }
