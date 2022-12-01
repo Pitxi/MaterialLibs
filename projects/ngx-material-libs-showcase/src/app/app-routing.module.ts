@@ -11,6 +11,11 @@ const routes: Routes = [
     title       : 'Data Filter Showcase',
     path        : 'data-filter',
     loadChildren: async () => (await import('./data-filter-showcase/data-filter-showcase.module')).DataFilterShowcaseModule
+  },
+  {
+    path: '**',
+    pathMatch : 'full',
+    redirectTo: '/data-filter'
   }
 ];
 
