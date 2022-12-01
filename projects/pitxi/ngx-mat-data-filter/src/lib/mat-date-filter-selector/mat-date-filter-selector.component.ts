@@ -6,6 +6,7 @@ import { FormBuilder, FormControl, Validators } from '@angular/forms';
 import { DataFilterComparison } from '../data-filter-comparison';
 import { BehaviorSubject, distinctUntilChanged, map, Subject, takeUntil, tap } from 'rxjs';
 import { DataFilter } from '../data-filter';
+import { NgxMatDataFilterConfiguration } from '../ngx-mat-data-filter-configuration';
 
 @Component({
              selector       : 'ngx-mat-date-filter-selector',
@@ -24,6 +25,7 @@ export class MatDateFilterSelectorComponent
     this.intl.getComparisonItem(DataFilterComparison.GreaterThan),
     this.intl.getComparisonItem(DataFilterComparison.IsInRange)
   ];
+  readonly clearControlIcon         = this.config.icons.clearControl;
   private defaultFilter: DataFilter = this.data.defaultFilter ??
     {
       comparison: this.availableComparisons[0].comparison,
@@ -54,6 +56,7 @@ export class MatDateFilterSelectorComponent
 
   constructor(private fBuilder: FormBuilder,
               private intl: NgxMatDataFilterIntl,
+              private config: NgxMatDataFilterConfiguration,
               @Inject(FILTER_SELECTOR_DATA) private data: FilterSelectorData) {
     super();
   }
@@ -64,6 +67,10 @@ export class MatDateFilterSelectorComponent
 
   ngOnDestroy(): void {
     this.unsubscribeFormControls();
+  }
+
+  clearControls(): void {
+    this.form.patchValue({ date1: null, date2: null });
   }
 
   protected subscribeFormControls(): void {
@@ -105,9 +112,5 @@ export class MatDateFilterSelectorComponent
       comparison: value.comparison!,
       values
     };
-  }
-
-  clearControls(): void {
-    this.form.patchValue({ date1: null, date2: null });
   }
 }

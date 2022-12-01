@@ -6,6 +6,7 @@ import { FormBuilder, FormControl, Validators } from '@angular/forms';
 import { NgxMatDataFilterIntl } from '../ngx-mat-data-filter-intl';
 import { DataFilterComparison } from '../data-filter-comparison';
 import { FILTER_SELECTOR_DATA, FilterSelectorData } from '../filter-selector-data';
+import { NgxMatDataFilterConfiguration } from '../ngx-mat-data-filter-configuration';
 
 @Component({
              selector       : 'ngx-mat-number-filter-selector',
@@ -23,6 +24,7 @@ export class MatNumberFilterSelectorComponent
     this.intl.getComparisonItem(DataFilterComparison.LesserThan),
     this.intl.getComparisonItem(DataFilterComparison.IsInRange)
   ];
+  readonly clearControlIcon         = this.config.icons.clearControl;
   private defaultFilter: DataFilter = this.data.defaultFilter ??
     {
       comparison: this.availableComparisons[0].comparison,
@@ -47,6 +49,7 @@ export class MatNumberFilterSelectorComponent
 
   constructor(private fBuilder: FormBuilder,
               private intl: NgxMatDataFilterIntl,
+              private config: NgxMatDataFilterConfiguration,
               @Inject(FILTER_SELECTOR_DATA) private data: FilterSelectorData) {
     super();
   }

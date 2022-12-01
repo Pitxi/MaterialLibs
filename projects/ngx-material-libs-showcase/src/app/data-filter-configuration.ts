@@ -5,5 +5,11 @@ import {
 
 @Injectable()
 export class DataFilterConfiguration extends NgxMatDataFilterConfiguration {
-  override icons = { 'selectAll': 'select_all', 'selectNone': 'check_box_outline_blank', 'toggleSelection': 'indeterminate_check_box' }
+  constructor() {
+    super();
+    this.icons.selectAll           = 'select_all';
+    this.icons.selectNone          = 'check_box_outline_blank';
+    this.icons.toggleSelection     = 'indeterminate_check_box';
+    this.icons.clearControl        = 'backspace';
+  }
 }

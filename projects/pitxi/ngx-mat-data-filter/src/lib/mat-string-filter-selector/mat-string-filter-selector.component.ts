@@ -7,6 +7,7 @@ import { NgxMatDataFilterIntl } from '../ngx-mat-data-filter-intl';
 import { FormBuilder, FormControl, Validators } from '@angular/forms';
 import { ComparisonItem } from '../comparison-item';
 import { DataFilterComparison } from '../data-filter-comparison';
+import { NgxMatDataFilterConfiguration } from '../ngx-mat-data-filter-configuration';
 
 @Component({
              selector       : 'ngx-mat-string-filter-selector',
@@ -24,6 +25,7 @@ export class MatStringFilterSelectorComponent
     this.intl.getComparisonItem(DataFilterComparison.NotContains)
   ];
   readonly placeholder                                   = this.intl.stringFilterPlaceholder;
+  readonly clearControlIcon                              = this.config.icons.clearControl;
   private defaultFilter: DataFilter                      = this.data.defaultFilter ??
     {
       comparison: this.availableComparisons[0].comparison,
@@ -47,6 +49,7 @@ export class MatStringFilterSelectorComponent
 
   constructor(@Inject(FILTER_SELECTOR_DATA) private data: FilterSelectorData,
               private intl: NgxMatDataFilterIntl,
+              private config: NgxMatDataFilterConfiguration,
               private fBuilder: FormBuilder) {
     super();
   }
@@ -57,6 +60,10 @@ export class MatStringFilterSelectorComponent
 
   ngOnDestroy(): void {
     this.unsubscribeFormControls();
+  }
+
+  clearControl(): void {
+    this.form.get('text')?.reset();
   }
 
   protected subscribeFormControls(): void {
@@ -81,9 +88,5 @@ export class MatStringFilterSelectorComponent
   protected unsubscribeFormControls(): void {
     this.unsubscribeControls?.next();
     this.unsubscribeControls?.complete();
-  }
-
-  clearControl(): void {
-    this.form.get('text')?.reset();
   }
 }

@@ -19,11 +19,12 @@
           <mat-datepicker-toggle [for]="datePicker" matSuffix></mat-datepicker-toggle>
           <mat-datepicker #datePicker></mat-datepicker>
           <button (click)="clearControls()"
-                  [disabled]="!form.value.date1"
+                  *ngIf="!!clearControlIcon"
+                  [disabled]="!form.value.date1 && !form.value.date2"
                   color="primary"
                   mat-icon-button
                   matSuffix>
-            <mat-icon>backspace</mat-icon>
+            <mat-icon>{{ clearControlIcon }}</mat-icon>
           </button>
         </mat-form-field>
 
@@ -35,11 +36,12 @@
           <mat-datepicker-toggle [for]="dateRangePicker" matIconSuffix></mat-datepicker-toggle>
           <mat-date-range-picker #dateRangePicker></mat-date-range-picker>
           <button (click)="clearControls()"
+                  *ngIf="!!clearControlIcon"
                   [disabled]="!form.value.date1 && !form.value.date2"
                   color="primary"
                   mat-icon-button
                   matSuffix>
-            <mat-icon>backspace</mat-icon>
+            <mat-icon>{{ clearControlIcon }}</mat-icon>
           </button>
         </mat-form-field>
       </div>
