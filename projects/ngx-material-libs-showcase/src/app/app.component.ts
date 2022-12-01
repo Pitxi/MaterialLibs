@@ -21,11 +21,11 @@ export class AppComponent {
     }
   ];
 
-  readonly currentUrl$ = this.router.events
-                             .pipe(
-                               filter(event => event instanceof NavigationEnd),
-                               map(event => (event as NavigationEnd).url)
-                             );
+  readonly currentUrl$     = this.router.events
+                                 .pipe(
+                                   filter(event => event instanceof NavigationEnd),
+                                   map(event => (event as NavigationEnd).urlAfterRedirects)
+                                 );
   readonly activeLinkItem$ = this.currentUrl$
                                  .pipe(
                                    map(url => this.links.find(item => item.link === url))
