@@ -1,154 +1,23 @@
-<div *ngIf="mv$ | async as mv" class="main-content">
-  <div class="table-action-area">
-    <button (click)="resetFilters()" [disabled]="!mv.hasFilters" color="primary" mat-button>
-      <mat-icon>restart_alt</mat-icon>
-      <span>Reset filters</span>
-    </button>
-  </div>
-  <div [formGroup]="mv.filtersForm" class="table-wrapper mat-elevation-z1">
-    <table [dataSource]="mv.dataSource" mat-table>
-      <ng-container matColumnDef="id">
-        <th *matHeaderCellDef mat-header-cell>
-          <div class="row-content">
-            ID
-            <button #idFilter="ngxMatDataFilter"
-                    [color]="idFilter.filterIsEmpty ? 'primary' : 'accent'"
-                    formControlName="id"
-                    mat-icon-button
-                    ngxMatDataFilter="number">
-              <mat-icon>filter_list</mat-icon>
-            </button>
-          </div>
-        </th>
-        <td *matCellDef="let person" mat-cell>{{ person['id'] }}</td>
-      </ng-container>
+<mat-toolbar class="mat-elevation-z4" color="primary">
+  <button (click)="toggleSidenav()" mat-icon-button>
+    <mat-icon>menu</mat-icon>
+  </button>
+  <div *ngIf="activeLinkItem$ | async as linkItem">NgxMaterialLibs - {{ linkItem.title }} Showcase</div>
+</mat-toolbar>
 
-      <ng-container matColumnDef="firstName">
-        <th *matHeaderCellDef mat-header-cell>
-          <div class="row-content">
-            First name
-            <button #firstNameFilter="ngxMatDataFilter"
-                    [color]="firstNameFilter.filterIsEmpty ? 'primary' : 'accent'"
-                    formControlName="firstName"
-                    mat-icon-button
-                    ngxMatDataFilter="string">
-              <mat-icon>filter_list</mat-icon>
-            </button>
-          </div>
-        </th>
-        <td *matCellDef="let person" mat-cell>{{ person['firstName'] }}</td>
-      </ng-container>
-
-      <ng-container matColumnDef="lastName">
-        <th *matHeaderCellDef mat-header-cell>
-          <div class="row-content">
-            Last name
-            <button #lastNameFilter="ngxMatDataFilter"
-                    [color]="lastNameFilter.filterIsEmpty ? 'primary' : 'accent'"
-                    formControlName="lastName"
-                    mat-icon-button
-                    ngxMatDataFilter="string">
-              <mat-icon>filter_list</mat-icon>
-            </button>
-          </div>
-        </th>
-        <td *matCellDef="let person" mat-cell>{{ person['lastName'] }}</td>
-      </ng-container>
-
-      <ng-container matColumnDef="email">
-        <th *matHeaderCellDef mat-header-cell>
-          <div class="row-content">
-            Email
-            <button #emailFilter="ngxMatDataFilter"
-                    [color]="emailFilter.filterIsEmpty ? 'primary' : 'accent'"
-                    formControlName="email"
-                    mat-icon-button
-                    ngxMatDataFilter="string">
-              <mat-icon>filter_list</mat-icon>
-            </button>
-          </div>
-        </th>
-        <td *matCellDef="let person" mat-cell>{{ person['email'] }}</td>
-      </ng-container>
-
-      <ng-container matColumnDef="gender">
-        <th *matHeaderCellDef mat-header-cell>
-          <div class="row-content">
-            Gender
-            <button #genderFilter="ngxMatDataFilter"
-                    [color]="genderFilter.filterIsEmpty ? 'primary' : 'accent'"
-                    [valueListItems]="mv.genderValueListItems"
-                    formControlName="gender"
-                    mat-icon-button
-                    ngxMatDataFilter="value-list">
-              <mat-icon>filter_list</mat-icon>
-            </button>
-          </div>
-        </th>
-        <td *matCellDef="let person" mat-cell>{{ person['gender'] }}</td>
-      </ng-container>
-
-      <ng-container matColumnDef="ipAddress">
-        <th *matHeaderCellDef mat-header-cell>
-          <div class="row-content">
-            IP address
-            <button #ipAddressFilter="ngxMatDataFilter"
-                    [color]="ipAddressFilter.filterIsEmpty ? 'primary' : 'accent'"
-                    formControlName="ipAddress"
-                    mat-icon-button
-                    ngxMatDataFilter="string">
-              <mat-icon>filter_list</mat-icon>
-            </button>
-          </div>
-        </th>
-        <td *matCellDef="let person" mat-cell>{{ person['ipAddress'] }}</td>
-      </ng-container>
-
-      <ng-container matColumnDef="jobTitle">
-        <th *matHeaderCellDef mat-header-cell>
-          <div class="row-content">
-            Job title
-            <button #jobTitleFilter="ngxMatDataFilter"
-                    [color]="jobTitleFilter.filterIsEmpty ? 'primary' : 'accent'"
-                    formControlName="jobTitle"
-                    mat-icon-button
-                    ngxMatDataFilter="string">
-              <mat-icon>filter_list</mat-icon>
-            </button>
-          </div>
-        </th>
-        <td *matCellDef="let person" mat-cell>{{ person['jobTitle'] || 'NONE' }}</td>
-      </ng-container>
-
-      <ng-container matColumnDef="birthDate">
-        <th *matHeaderCellDef mat-header-cell>
-          <div class="row-content">
-            Birth date
-            <button #birthDateFilter="ngxMatDataFilter"
-                    [color]="birthDateFilter.filterIsEmpty ? 'primary' : 'accent'"
-                    formControlName="birthDate"
-                    mat-icon-button
-                    ngxMatDataFilter="date">
-              <mat-icon>filter_list</mat-icon>
-            </button>
-          </div>
-        </th>
-        <td *matCellDef="let person" mat-cell>{{ person['birthDate'] | date : 'short' }}</td>
-      </ng-container>
-
-      <tr *matHeaderRowDef="mv.displayedColumns; sticky: true" mat-header-row></tr>
-      <tr *matRowDef="let even = even; columns: mv.displayedColumns;"
-          [ngClass]="{ 'row-alternate-color': even }"
-          mat-row>
-      </tr>
-    </table>
-  </div>
-  <mat-paginator (page)="setPage($event)"
-                 [length]="mv.rowCount"
-                 [pageIndex]="mv.pageIndex"
-                 [pageSizeOptions]="[ 15, 25, 50, 75, 100 ]"
-                 [pageSize]="mv.pageSize"
-                 [showFirstLastButtons]="true"
-                 aria-label="Select page">
-  </mat-paginator>
-</div>
+<mat-sidenav-container>
+  <mat-sidenav [opened]="sidenaveOpen" mode="side">
+    <mat-nav-list *ngIf="currentUrl$ | async as currentUrl">
+      <a *ngFor="let linkItem of links"
+         [activated]="currentUrl === linkItem.link"
+         [routerLink]="linkItem.link"
+         mat-list-item
+         routerLinkActive="active-route">
+        {{ linkItem.title }}
+      </a>
+    </mat-nav-list>
+  </mat-sidenav>
+  <mat-sidenav-content>
+    <router-outlet></router-outlet>
+  </mat-sidenav-content>
+</mat-sidenav-container>

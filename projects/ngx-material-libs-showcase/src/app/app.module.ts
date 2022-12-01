@@ -5,17 +5,13 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatIconModule } from '@angular/material/icon';
-import { ReactiveFormsModule } from '@angular/forms';
-import { MatNativeDateModule } from '@angular/material/core';
 import { HttpClientModule } from '@angular/common/http';
-import { NgxMatDataFilterModule } from '../../../pitxi/ngx-mat-data-filter/src/lib';
 import { MatButtonModule } from '@angular/material/button';
 import { MatTableModule } from '@angular/material/table';
 import { MatPaginatorModule } from '@angular/material/paginator';
-import {
-  NgxMatDataFilterConfiguration
-} from '../../../pitxi/ngx-mat-data-filter/src/lib/ngx-mat-data-filter-configuration';
-import { DataFilterConfiguration } from './data-filter-configuration';
+import { MatSidenavModule } from '@angular/material/sidenav';
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatListModule } from '@angular/material/list';
 
 @NgModule({
             declarations: [
@@ -26,16 +22,13 @@ import { DataFilterConfiguration } from './data-filter-configuration';
               AppRoutingModule,
               BrowserAnimationsModule,
               HttpClientModule,
-              ReactiveFormsModule,
-              MatButtonModule,
-              MatIconModule,
-              MatNativeDateModule,
-              NgxMatDataFilterModule,
               MatTableModule,
-              MatPaginatorModule
-            ],
-            providers   : [
-              { provide: NgxMatDataFilterConfiguration, useClass: DataFilterConfiguration }
+              MatPaginatorModule,
+              MatSidenavModule,
+              MatToolbarModule,
+              MatButtonModule,
+              MatListModule,
+              MatIconModule
             ],
             bootstrap   : [ AppComponent ]
           })
