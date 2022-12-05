@@ -109,7 +109,7 @@
       "projectType": "library",
       "root": "projects/pitxi/ngx-mat-data-filter",
       "sourceRoot": "projects/pitxi/ngx-mat-data-filter/src",
-      "prefix": "lib",
+      "prefix": "ngx",
       "architect": {
         "build": {
           "builder": "@angular-devkit/build-angular:ng-packagr",
@@ -132,6 +132,39 @@
             "main": "projects/pitxi/ngx-mat-data-filter/src/test.ts",
             "tsConfig": "projects/pitxi/ngx-mat-data-filter/tsconfig.spec.json",
             "karmaConfig": "projects/pitxi/ngx-mat-data-filter/karma.conf.js"
+          }
+        }
+      }
+    },
+    "@pitxi/ngx-cdk-data-filter": {
+      "projectType": "library",
+      "root": "projects/pitxi/ngx-cdk-data-filter",
+      "sourceRoot": "projects/pitxi/ngx-cdk-data-filter/src",
+      "prefix": "ngx",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:ng-packagr",
+          "options": {
+            "project": "projects/pitxi/ngx-cdk-data-filter/ng-package.json"
+          },
+          "configurations": {
+            "production": {
+              "tsConfig": "projects/pitxi/ngx-cdk-data-filter/tsconfig.lib.prod.json"
+            },
+            "development": {
+              "tsConfig": "projects/pitxi/ngx-cdk-data-filter/tsconfig.lib.json"
+            }
+          },
+          "defaultConfiguration": "production"
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "tsConfig": "projects/pitxi/ngx-cdk-data-filter/tsconfig.spec.json",
+            "polyfills": [
+              "zone.js",
+              "zone.js/testing"
+            ]
           }
         }
       }

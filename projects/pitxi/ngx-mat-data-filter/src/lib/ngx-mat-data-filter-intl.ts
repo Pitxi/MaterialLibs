@@ -1,50 +1,49 @@
 import { Injectable, Optional, Provider, SkipSelf } from '@angular/core';
-import { DataFilterComparison } from './data-filter-comparison';
 import { Subject } from 'rxjs';
-import { ComparisonItem } from './comparison-item';
+import { FilterComparison } from './FilterComparison';
 
 @Injectable()
 export class NgxMatDataFilterIntl {
-  readonly changes                                                 = new Subject<void>();
-  readonly stringFilterPlaceholder                                 = 'Text filter';
-  readonly selectAll                                               = 'Select all';
-  readonly selectNone                                              = 'Select none';
-  readonly toggleSelection                                         = 'Toggle selection';
-  readonly all                                                     = 'All';
-  readonly none                                                    = 'None';
-  readonly toggle                                                  = 'Toggle';
-  protected comparisons: { [key in DataFilterComparison]: string } = {
-    [DataFilterComparison.IsOneOf]    : 'Is one of',
-    [DataFilterComparison.IsNotOneOf] : 'Is not one of',
-    [DataFilterComparison.EqualTo]    : 'Is equal to',
-    [DataFilterComparison.NotEqualTo] : 'Is not equal to',
-    [DataFilterComparison.GreaterThan]: 'Is greater than',
-    [DataFilterComparison.LesserThan] : 'Is lesser than',
-    [DataFilterComparison.Contains]   : 'Contains',
-    [DataFilterComparison.NotContains]: 'Not contains',
-    [DataFilterComparison.IsInRange]  : 'Is in range'
+  readonly changes                                             = new Subject<void>();
+  readonly stringFilterPlaceholder                             = 'Text filter';
+  readonly selectAll                                           = 'Select all';
+  readonly selectNone                                          = 'Select none';
+  readonly toggleSelection                                     = 'Toggle selection';
+  readonly all                                                 = 'All';
+  readonly none                                                = 'None';
+  readonly toggle                                              = 'Toggle';
+  protected comparisons: { [key in FilterComparison]: string } = {
+    'is-one-of'    : 'Is one of',
+    'is-not-one-of': 'Is not one of',
+    'equal-to'     : 'Is equal to',
+    'not-equal-to' : 'Is not equal to',
+    'greater-than' : 'Is greater than',
+    'lesser-than'  : 'Is lesser than',
+    'contains'     : 'Contains',
+    'not-contains' : 'Not contains',
+    'is-in-range'  : 'Is in range'
   };
 
-  getNumberFiltersPlaceholders(comparison: DataFilterComparison): string[] {
+  getNumberFiltersPlaceholders(comparison: FilterComparison): string[] {
     switch (comparison) {
-      case DataFilterComparison.IsInRange:
+      case 'is-in-range':
         return [ 'From number', 'To number' ];
       default:
         return [ 'Number filter' ];
     }
   }
 
-  getDateFiltersPlaceholders(comparison: DataFilterComparison): string[] {
+  getDateFiltersPlaceholders(comparison: FilterComparison): string[] {
     switch (comparison) {
-      case DataFilterComparison.IsInRange:
+      case 'is-in-range':
         return [ 'From date', 'To date' ];
       default:
         return [ 'Date filter' ];
     }
   }
 
-  getComparisonItem(comparison: DataFilterComparison): ComparisonItem {
-    return { comparison, description: this.comparisons[comparison] };
+  getComparisonText(comparison: FilterComparison): string {
+    return this.comparisons[comparison];
   }
 }
 

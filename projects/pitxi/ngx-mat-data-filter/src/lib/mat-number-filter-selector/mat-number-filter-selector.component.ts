@@ -1,12 +1,10 @@
 import { ChangeDetectionStrategy, Component, Inject, OnDestroy, OnInit } from '@angular/core';
-import { FilterSelectorBase } from '../filter-selector-base';
-import { DataFilter } from '../data-filter';
 import { BehaviorSubject, distinctUntilChanged, map, Subject, takeUntil, tap } from 'rxjs';
 import { FormBuilder, FormControl, Validators } from '@angular/forms';
 import { NgxMatDataFilterIntl } from '../ngx-mat-data-filter-intl';
-import { DataFilterComparison } from '../data-filter-comparison';
-import { FILTER_SELECTOR_DATA, FilterSelectorData } from '../filter-selector-data';
 import { NgxMatDataFilterConfiguration } from '../ngx-mat-data-filter-configuration';
+import { DataFilter, FILTER_SELECTOR_DATA, FilterSelectorBase, FilterSelectorData } from '@pitxi/ngx-cdk-data-filter';
+import { FilterComparison } from '../FilterComparison';
 
 @Component({
              selector       : 'ngx-mat-number-filter-selector',
@@ -17,40 +15,41 @@ import { NgxMatDataFilterConfiguration } from '../ngx-mat-data-filter-configurat
 export class MatNumberFilterSelectorComponent
   extends FilterSelectorBase
   implements OnInit, OnDestroy {
-  readonly availableComparisons     = [
-    this.intl.getComparisonItem(DataFilterComparison.EqualTo),
-    this.intl.getComparisonItem(DataFilterComparison.NotEqualTo),
-    this.intl.getComparisonItem(DataFilterComparison.GreaterThan),
-    this.intl.getComparisonItem(DataFilterComparison.LesserThan),
-    this.intl.getComparisonItem(DataFilterComparison.IsInRange)
-  ];
+  readonly comparisons              = new Map<FilterComparison, string>([
+                                                                          [ 'equal-to', this.intl.getComparisonText('equal-to') ],
+                                                                          [ 'not-equal-to', this.intl.getComparisonText('not-equal-to') ],
+                                                                          [ 'greater-than', this.intl.getComparisonText('greater-than') ],
+                                                                          [ 'lesser-than', this.intl.getComparisonText('lesser-than') ],
+                                                                          [ 'is-in-range', this.intl.getComparisonText('is-in-range') ]
+                                                                        ]);
   readonly clearControlIcon         = this.config.icons.clearControl;
   private defaultFilter: DataFilter = this.data.defaultFilter ??
     {
-      comparison: this.availableComparisons[0].comparison,
-      values    : [ null, null ]
+      comparisonName: this.comparisons.keys().next().value,
+      values        : [ null, null ]
     };
   readonly form                     = this.fBuilder.group({
-                                                            comparison: new FormControl<DataFilterComparison>(
-                                                              this.data.filter?.comparison ??
-                                                              this.defaultFilter.comparison,
+                                                            comparisonName: new FormControl<string>(
+                                                              this.data.filter?.comparisonName ??
+                                                              this.defaultFilter.comparisonName,
                                                               {
                                                                 nonNullable: true,
                                                                 validators : [ Validators.required ]
                                                               }
                                                             ),
                                                             number1   : new FormControl<number | null>(this.data.filter?.values[0] ?? this.defaultFilter.values[0]),
-                                                            number2   : new FormControl<number | null>(this.data.filter?.values[1] ?? this.defaultFilter.values[0])
+                                                            number2   : new FormControl<number | null>(this.data.filter?.values[1] ?? this.defaultFilter.values[1])
                                                           });
-  private placeholdersSubject       = new BehaviorSubject<string[]>(this.intl.getNumberFiltersPlaceholders(this.form.value.comparison!));
+  private placeholdersSubject       = new BehaviorSubject<string[]>(this.intl.getNumberFiltersPlaceholders(this.form.value.comparisonName as FilterComparison));
   readonly placeHolders$            = this.placeholdersSubject.asObservable();
   private filterChangedSubject      = new Subject<DataFilter | null>;
   readonly filterChanged$           = this.filterChangedSubject.asObservable();
+  private unsubscribeControls: Subject<void> | undefined;
 
   constructor(private fBuilder: FormBuilder,
               private intl: NgxMatDataFilterIntl,
               private config: NgxMatDataFilterConfiguration,
-              @Inject(FILTER_SELECTOR_DATA) private data: FilterSelectorData) {
+              @Inject(FILTER_SELECTOR_DATA) protected data: FilterSelectorData) {
     super();
   }
 
@@ -73,7 +72,7 @@ export class MatNumberFilterSelectorComponent
         .pipe(
           distinctUntilChanged(),
           takeUntil(this.unsubscribeControls),
-          tap(({ comparison }) => this.placeholdersSubject.next(this.intl.getNumberFiltersPlaceholders(comparison!))),
+          tap(({ comparisonName }) => this.placeholdersSubject.next(this.intl.getNumberFiltersPlaceholders(comparisonName as FilterComparison))),
           map(value => this.getFilter(value))
         )
         .subscribe(filter => this.filterChangedSubject.next(filter));
@@ -84,10 +83,10 @@ export class MatNumberFilterSelectorComponent
     this.unsubscribeControls?.complete();
   }
 
-  private getFilter(value: Partial<{ comparison: DataFilterComparison; number1: number | null; number2: number | null; }>)
+  private getFilter(value: Partial<{ comparisonName: string; number1: number | null; number2: number | null; }>)
     : DataFilter | null {
 
-    if (value.comparison === this.defaultFilter.comparison &&
+    if (value.comparisonName === this.defaultFilter.comparisonName &&
       value.number1 == this.defaultFilter.values[0] &&
       value.number2 == this.defaultFilter.values[1]
     ) {
@@ -105,7 +104,7 @@ export class MatNumberFilterSelectorComponent
     }
 
     return {
-      comparison: value.comparison ?? this.defaultFilter.comparison,
+      comparisonName: value.comparisonName ?? this.defaultFilter.comparisonName,
       values
     };
   }

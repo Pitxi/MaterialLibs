@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Person } from './person';
 import { map, Observable } from 'rxjs';
-import { DataFilter, DataFilterComparison } from '../../../../pitxi/ngx-mat-data-filter/src/lib';
+import { DataFilter, FilterComparison } from '../../../../pitxi/ngx-mat-data-filter/src/lib';
 
 export interface PersonFilters {
   id?: DataFilter;
@@ -40,18 +40,19 @@ export class DataService {
                          .forEach(([ key, filter ]) => {
                            persons = persons.filter(person => {
                              const value = person[key as keyof Person];
+                             const comparisonName = filter?.comparisonName as FilterComparison | undefined
 
-                             switch (filter?.comparison) {
-                               case DataFilterComparison.IsInRange:
+                             switch (comparisonName) {
+                               case 'is-in-range':
                                  return !filter.values[0] ||
                                    !filter.values[1] ||
                                    (value >= filter.values[0] &&
                                      value <= filter.values[1]);
-                               case DataFilterComparison.LesserThan:
+                               case 'lesser-than':
                                  return !filter.values[0] || value < filter.values[0];
-                               case DataFilterComparison.GreaterThan:
+                               case 'greater-than':
                                  return !filter.values[0] || value > filter.values[0];
-                               case DataFilterComparison.EqualTo:
+                               case 'equal-to':
                                  if (value instanceof Date && filter.values[0] instanceof Date) {
                                    return value.getFullYear() === filter.values[0].getFullYear() &&
                                      value.getDate() === filter.values[0].getDate() &&
@@ -59,15 +60,15 @@ export class DataService {
                                  }
 
                                  return !filter.values[0] || value === filter.values[0];
-                               case DataFilterComparison.NotEqualTo:
+                               case 'not-equal-to':
                                  return !filter.values[0] || value !== filter.values[0];
-                               case DataFilterComparison.Contains:
+                               case 'contains':
                                  return !filter.values[0] || (value as string)?.includes(filter.values[0]);
-                               case DataFilterComparison.NotContains:
+                               case 'not-contains':
                                  return !filter.values[0] || !(value as string)?.includes(filter.values[0]);
-                               case DataFilterComparison.IsOneOf:
+                               case 'is-one-of':
                                  return filter.values.includes(value);
-                               case DataFilterComparison.IsNotOneOf:
+                               case 'is-not-one-of':
                                  return !filter.values.includes(value);
                              }
 

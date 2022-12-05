@@ -2,9 +2,9 @@
   <mat-card-content>
     <div [formGroup]="form">
       <mat-form-field appearance="outline">
-        <mat-select formControlName="comparison">
-          <mat-option *ngFor="let item of availableComparisons" [value]="item.comparison">
-            {{ item.description }}
+        <mat-select formControlName="comparisonName">
+          <mat-option *ngFor="let item of comparisons | keyvalue" [value]="item.key">
+            {{ item.value }}
           </mat-option>
         </mat-select>
       </mat-form-field>

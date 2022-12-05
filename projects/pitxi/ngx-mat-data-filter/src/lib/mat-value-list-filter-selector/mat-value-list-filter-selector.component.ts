@@ -1,14 +1,16 @@
 import { ChangeDetectionStrategy, Component, Inject, OnDestroy, OnInit } from '@angular/core';
-import { FilterSelectorBase } from '../filter-selector-base';
 import { distinctUntilChanged, filter, map, Observable, startWith, Subject, takeUntil } from 'rxjs';
-import { DataFilter } from '../data-filter';
-import { FILTER_SELECTOR_DATA, FilterSelectorData } from '../filter-selector-data';
-import { ComparisonItem } from '../comparison-item';
-import { DataFilterComparison } from '../data-filter-comparison';
 import { NgxMatDataFilterIntl } from '../ngx-mat-data-filter-intl';
 import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { NgxMatDataFilterConfiguration } from '../ngx-mat-data-filter-configuration';
-import { ValueListItem } from '../value-list-item';
+import { FilterComparison } from '../FilterComparison';
+import {
+  DataFilter,
+  FILTER_SELECTOR_DATA,
+  FilterSelectorBase,
+  FilterSelectorData,
+  ValueListItem
+} from '@pitxi/ngx-cdk-data-filter';
 
 interface ActionData {
   tooltipText: string;
@@ -25,7 +27,7 @@ interface ActionsData {
 
 interface ModelView {
   form: FormGroup;
-  availableComparisons: ComparisonItem[];
+  comparisons: Map<FilterComparison, string>;
   valueItems: ValueListItem[];
   showActions: boolean;
   actionsData: ActionsData;
@@ -40,20 +42,20 @@ interface ModelView {
 export class MatValueListFilterSelectorComponent
   extends FilterSelectorBase
   implements OnInit, OnDestroy {
-  private valueItems = this.data.valueListItems ?? [];
-  readonly availableComparisons       = [
-    this.intl.getComparisonItem(DataFilterComparison.IsOneOf),
-    this.intl.getComparisonItem(DataFilterComparison.IsNotOneOf)
-  ];
+  comparisons                         = new Map<FilterComparison, string>([
+                                                                            [ 'is-one-of', this.intl.getComparisonText('is-one-of') ],
+                                                                            [ 'is-not-one-of', this.intl.getComparisonText('is-not-one-of') ]
+                                                                          ]);
+  private valueItems                  = this.data.valueListItems ?? [];
   private defaultFilter               = this.data.defaultFilter ??
     {
-      comparison: this.availableComparisons[0].comparison,
-      values    : this.data.valueListItems?.map(v => v.value) ?? []
+      comparisonName: this.comparisons.keys().next().value,
+      values        : this.data.valueListItems?.map(v => v.value) ?? []
     };
   readonly form                       = this.fBuilder.group({
-                                                              comparison       : new FormControl<DataFilterComparison>(
-                                                                this.data.filter?.comparison ??
-                                                                this.defaultFilter.comparison,
+                                                              comparisonName   : new FormControl<string>(
+                                                                this.data.filter?.comparisonName ??
+                                                                this.defaultFilter.comparisonName,
                                                                 {
                                                                   nonNullable: true,
                                                                   validators : [ Validators.required ]
@@ -93,18 +95,19 @@ export class MatValueListFilterSelectorComponent
                                                 }
                                               } as ActionsData)),
                                               map(actionsData => ({
-                                                form                : this.form,
-                                                valueItems          : this.valueItems,
-                                                availableComparisons: this.availableComparisons,
-                                                showActions         : this.config.showActions['value-list'] ?? false,
+                                                form       : this.form,
+                                                valueItems : this.valueItems,
+                                                comparisons: this.comparisons,
+                                                showActions: this.config.showActions['value-list'] ?? false,
                                                 actionsData
                                               }))
                                             );
   private filterChangeSubject         = new Subject<DataFilter | null>();
   readonly filterChanged$             = this.filterChangeSubject.asObservable();
   private unsubscribeValueItems: Subject<void> | undefined;
+  private unsubscribeControls: Subject<void> | undefined;
 
-  constructor(@Inject(FILTER_SELECTOR_DATA) private data: FilterSelectorData,
+  constructor(@Inject(FILTER_SELECTOR_DATA) protected data: FilterSelectorData,
               private config: NgxMatDataFilterConfiguration,
               private intl: NgxMatDataFilterIntl,
               private fBuilder: FormBuilder) {
@@ -156,14 +159,14 @@ export class MatValueListFilterSelectorComponent
           map(value => {
             const values = this.valueItems.filter((item, index) => !!value.valueItemControls![index]).map(item => item.value);
 
-            if (value.comparison === this.defaultFilter.comparison &&
+            if (value.comparisonName === this.defaultFilter.comparisonName &&
               values.length === this.defaultFilter.values.length &&
               values.every(v => this.defaultFilter.values.includes(v))) {
               return null;
             }
 
             return {
-              comparison: value.comparison,
+              comparisonName: value.comparisonName,
               values
             } as DataFilter;
           })

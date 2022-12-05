@@ -17,6 +17,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import { NgxCdkDataFilterModule } from '@pitxi/ngx-cdk-data-filter';
 import { NGX_MAT_DATA_FILTER_CONFIGURATION_PROVIDER } from './ngx-mat-data-filter-configuration';
 
 @NgModule({
@@ -30,6 +31,7 @@ import { NGX_MAT_DATA_FILTER_CONFIGURATION_PROVIDER } from './ngx-mat-data-filte
             imports     : [
               CommonModule,
               ReactiveFormsModule,
+              NgxCdkDataFilterModule,
               MatCardModule,
               MatSelectModule,
               MatCheckboxModule,
