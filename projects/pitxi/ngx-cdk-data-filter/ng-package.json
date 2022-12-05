@@ -1,0 +1,10 @@
+{
+  "$schema": "../../../node_modules/ng-packagr/ng-package.schema.json",
+  "dest": "../../../dist/pitxi/ngx-cdk-data-filter",
+  "assets": [
+    "./LICENSE.md"
+  ],
+  "lib": {
+    "entryFile": "src/public-api.ts"
+  }
+}

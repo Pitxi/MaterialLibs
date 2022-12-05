@@ -3,6 +3,9 @@
   "compileOnSave": false,
   "compilerOptions": {
     "paths": {
+      "@pitxi/ngx-cdk-data-filter": [
+        "dist/pitxi/ngx-cdk-data-filter"
+      ],
       "@pitxi/ngx-mat-data-filter": [
         "dist/pitxi/ngx-mat-data-filter"
       ]
