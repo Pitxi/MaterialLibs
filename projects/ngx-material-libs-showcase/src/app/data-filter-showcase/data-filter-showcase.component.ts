@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit, QueryList, ViewChildren } from '@angular/core';
-import { DataFilter, MatDataFilterDirective, ValueListItem } from '../../../../pitxi/ngx-mat-data-filter/src/lib';
+import { DataFilter, MatDataFilterDirective, ValueListItem } from '@pitxi/ngx-mat-data-filter';
 import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import {
   BehaviorSubject,
