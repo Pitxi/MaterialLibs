@@ -5,10 +5,13 @@ import { CdkDataFilterDirective } from './cdk-data-filter.directive';
 
 @NgModule({
             declarations: [
-    CdkDataFilterDirective
-  ],
+              CdkDataFilterDirective
+            ],
             imports     : [
               CommonModule
+            ],
+            exports     : [
+              CdkDataFilterDirective
             ],
             providers   : [ Overlay ]
           })

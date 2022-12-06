@@ -16,10 +16,10 @@ export class DataFilterRegistry {
   /**
    * Registers a type to be used as a filter selector component within the filter directive.
    *
-   * @param name
-   * @param selectorComponent
+   * @param name The key name used to identify the filter selector component type.
+   * @param selectorComponentType The filter selector component type.
    */
-  registerFilterSelectorComponentType(name: string, selectorComponent: Type<FilterSelectorBase>): void {
-    this._filterConfigs.set(name, selectorComponent);
+  registerFilterSelectorComponentType(name: string, selectorComponentType: Type<FilterSelectorBase>): void {
+    this._filterConfigs.set(name, selectorComponentType);
   }
 }
