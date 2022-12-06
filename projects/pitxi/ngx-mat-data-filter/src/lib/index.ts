@@ -6,4 +6,5 @@ export * from './mat-string-filter-selector';
 export * from './mat-number-filter-selector';
 export * from './mat-date-filter-selector';
 export * from './ngx-mat-data-filter-intl';
+export * from './ngx-mat-data-filter-configuration';
 export * from './FilterComparison';
