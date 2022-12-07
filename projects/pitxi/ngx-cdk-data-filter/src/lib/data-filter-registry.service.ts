@@ -1,9 +1,17 @@
-import { Injectable, Type } from '@angular/core';
+import { Inject, Injectable, Optional, Type } from '@angular/core';
 import { FilterSelectorBase } from './filter-selector-base';
+import { DATA_FILTER_REGISTRY_CONFIG, RegistryConfig } from './registry-config';
 
-@Injectable({ providedIn: 'root' })
+
+@Injectable()
 export class DataFilterRegistry {
-  private _filterConfigs = new Map<string, Type<FilterSelectorBase>>();
+  private _filterConfigs: Map<string, Type<FilterSelectorBase>>;
+
+  constructor(@Optional() @Inject(DATA_FILTER_REGISTRY_CONFIG) config?: RegistryConfig) {
+    const components = config?.selectorComponents ?? {};
+
+    this._filterConfigs = new Map<string, Type<FilterSelectorBase>>(Object.entries(components));
+  }
 
   /**
    * Gets a registered type, derived from FilterSelectorBase, corresponding to a filter selector component.

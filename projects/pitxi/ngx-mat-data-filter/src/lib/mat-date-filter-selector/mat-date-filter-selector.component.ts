@@ -25,7 +25,7 @@ export class MatDateFilterSelectorComponent
   readonly clearControlIcon         = this.config.icons.clearControl;
   private defaultFilter: DataFilter = this.data.defaultFilter ??
     {
-      comparisonName: this.comparisons.keys().next().value,
+      comparisonName: 'equal-to',
       values        : [ null, null ]
     };
   readonly form                     = this.fBuilder.group({

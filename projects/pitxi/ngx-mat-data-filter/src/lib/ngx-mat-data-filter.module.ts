@@ -31,7 +31,14 @@ import { NGX_MAT_DATA_FILTER_CONFIGURATION_PROVIDER } from './ngx-mat-data-filte
             imports     : [
               CommonModule,
               ReactiveFormsModule,
-              NgxCdkDataFilterModule,
+              NgxCdkDataFilterModule.forRoot({
+                                               selectorComponents: {
+                                                 'string'    : MatStringFilterSelectorComponent,
+                                                 'number'    : MatNumberFilterSelectorComponent,
+                                                 'date'      : MatDateFilterSelectorComponent,
+                                                 'value-list': MatValueListFilterSelectorComponent
+                                               }
+                                             }),
               MatCardModule,
               MatSelectModule,
               MatCheckboxModule,

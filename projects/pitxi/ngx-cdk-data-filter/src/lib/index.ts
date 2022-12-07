@@ -1,3 +1,4 @@
+export * from './registry-config';
 export * from './data-filter-registry.service';
 export * from './data-filter';
 export * from './filter-selector-data';

@@ -49,7 +49,7 @@ export class MatValueListFilterSelectorComponent
   private valueItems                  = this.data.valueListItems ?? [];
   private defaultFilter               = this.data.defaultFilter ??
     {
-      comparisonName: this.comparisons.keys().next().value,
+      comparisonName: 'is-one-of',
       values        : this.data.valueListItems?.map(v => v.value) ?? []
     };
   readonly form                       = this.fBuilder.group({
