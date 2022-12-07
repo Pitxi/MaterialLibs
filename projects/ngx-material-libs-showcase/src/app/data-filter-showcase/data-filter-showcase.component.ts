@@ -1,17 +1,7 @@
-import { Component, OnDestroy, OnInit, QueryList, ViewChildren } from '@angular/core';
+import { Component, QueryList, ViewChildren } from '@angular/core';
 import { DataFilter, MatDataFilterDirective, ValueListItem } from '@pitxi/ngx-mat-data-filter';
 import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
-import {
-  BehaviorSubject,
-  combineLatest,
-  distinctUntilChanged,
-  map,
-  Observable,
-  startWith,
-  Subject,
-  switchMap,
-  tap
-} from 'rxjs';
+import { BehaviorSubject, combineLatest, distinctUntilChanged, map, Observable, startWith, switchMap, tap } from 'rxjs';
 import { DataService } from './data.service';
 import { PageEvent } from '@angular/material/paginator';
 import { Person } from './person';
@@ -32,7 +22,7 @@ interface ModelView {
              templateUrl: './data-filter-showcase.component.html',
              styleUrls  : [ './data-filter-showcase.component.scss' ]
            })
-export class DataFilterShowcaseComponent implements OnInit, OnDestroy {
+export class DataFilterShowcaseComponent {
   @ViewChildren(MatDataFilterDirective) filterComponents!: QueryList<MatDataFilterDirective>;
   private filtersForm: FormGroup = this.fBuilder.group({
                                                          id       : new FormControl<DataFilter | null>(null),
@@ -71,7 +61,6 @@ export class DataFilterShowcaseComponent implements OnInit, OnDestroy {
     'jobTitle',
     'birthDate'
   ];
-  private unsubscribe                           = new Subject<void>();
   private paginationDataSubject                 = new BehaviorSubject<{ pageIndex: number; pageSize: number; }>(
     {
       pageIndex: 0,
@@ -114,14 +103,6 @@ export class DataFilterShowcaseComponent implements OnInit, OnDestroy {
     );
 
   constructor(private fBuilder: FormBuilder, private data: DataService) {
-  }
-
-  ngOnInit(): void {
-  }
-
-  ngOnDestroy(): void {
-    this.unsubscribe.next();
-    this.unsubscribe.complete();
   }
 
   resetFilters() {
