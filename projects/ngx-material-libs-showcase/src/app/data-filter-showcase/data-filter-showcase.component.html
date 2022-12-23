@@ -1,4 +1,4 @@
-<div *ngIf="mv$ | async as mv" class="main-content">
+<div *ngIf="mv$ | async as mv">
   <div class="table-action-area">
     <button (click)="resetFilters()" [disabled]="!mv.hasFilters" color="primary" mat-button>
       <mat-icon>restart_alt</mat-icon>
