@@ -15,7 +15,7 @@ import { FilterComparison } from '../FilterComparison';
 export class MatStringFilterSelectorComponent
   extends FilterSelectorBase
   implements OnInit, OnDestroy {
-  comparisons                                            = new Map<FilterComparison, string>([
+  readonly comparisons                                   = new Map<FilterComparison, string>([
                                                                                                [ 'equal-to', this.intl.getComparisonText('equal-to') ],
                                                                                                [ 'not-equal-to', this.intl.getComparisonText('not-equal-to') ],
                                                                                                [ 'contains', this.intl.getComparisonText('contains') ],

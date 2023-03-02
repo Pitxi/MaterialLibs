@@ -42,7 +42,7 @@ interface ModelView {
 export class MatValueListFilterSelectorComponent
   extends FilterSelectorBase
   implements OnInit, OnDestroy {
-  comparisons                         = new Map<FilterComparison, string>([
+  readonly comparisons                = new Map<FilterComparison, string>([
                                                                             [ 'is-one-of', this.intl.getComparisonText('is-one-of') ],
                                                                             [ 'is-not-one-of', this.intl.getComparisonText('is-not-one-of') ]
                                                                           ]);
