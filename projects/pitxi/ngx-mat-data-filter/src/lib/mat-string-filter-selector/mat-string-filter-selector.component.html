@@ -3,8 +3,8 @@
     <div [formGroup]="form">
       <mat-form-field appearance="outline">
         <mat-select formControlName="comparisonName">
-          <mat-option *ngFor="let item of comparisons | keyvalue" [value]="item.key">
-            {{ item.value }}
+          <mat-option *ngFor="let comparison of comparisons.keys()" [value]="comparison">
+            {{ comparisons.get(comparison) }}
           </mat-option>
         </mat-select>
       </mat-form-field>
