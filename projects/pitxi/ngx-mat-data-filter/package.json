@@ -1,6 +1,6 @@
 {
   "name": "@pitxi/ngx-mat-data-filter",
-  "version": "15.1.2",
+  "version": "15.1.3",
   "description": "Angular Material data filtering library",
   "license": "GPL-3.0-or-later",
   "author": {
