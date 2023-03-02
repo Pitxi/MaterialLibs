@@ -19,7 +19,9 @@ export class MatStringFilterSelectorComponent
                                                                                                [ 'equal-to', this.intl.getComparisonText('equal-to') ],
                                                                                                [ 'not-equal-to', this.intl.getComparisonText('not-equal-to') ],
                                                                                                [ 'contains', this.intl.getComparisonText('contains') ],
-                                                                                               [ 'not-contains', this.intl.getComparisonText('not-contains') ]
+                                                                                               [ 'not-contains', this.intl.getComparisonText('not-contains') ],
+                                                                                               [ 'starts-with', this.intl.getComparisonText('starts-with') ],
+                                                                                               [ 'ends-with', this.intl.getComparisonText('ends-with') ]
                                                                                              ]);
   readonly placeholder                                   = this.intl.stringFilterPlaceholder;
   readonly clearControlIcon                              = this.config.icons.clearControl;

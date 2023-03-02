@@ -21,6 +21,8 @@ export class NgxMatDataFilterIntl {
     'lesser-than'  : 'Is lesser than',
     'contains'     : 'Contains',
     'not-contains' : 'Not contains',
+    'starts-with'  : 'Starts with',
+    'ends-with'    : 'Ends with',
     'is-in-range'  : 'Is in range'
   };
 

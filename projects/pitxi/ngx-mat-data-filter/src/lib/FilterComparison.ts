@@ -6,4 +6,6 @@ export type FilterComparison = 'is-one-of' |
                                'lesser-than' |
                                'contains' |
                                'not-contains' |
+                               'starts-with' |
+                               'ends-with' |
                                'is-in-range';

@@ -66,6 +66,10 @@ export class DataService {
                                  return !filter.values[0] || (value as string)?.includes(filter.values[0]);
                                case 'not-contains':
                                  return !filter.values[0] || !(value as string)?.includes(filter.values[0]);
+                               case 'starts-with':
+                                 return !filter.values[0] || (value as string)?.startsWith(filter.values[0]);
+                               case 'ends-with':
+                                 return !filter.values[0] || (value as string)?.endsWith(filter.values[0]);
                                case 'is-one-of':
                                  return filter.values.includes(value);
                                case 'is-not-one-of':
