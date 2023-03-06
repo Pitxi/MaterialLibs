@@ -28,12 +28,12 @@ export class CdkDataFilterDirective implements ControlValueAccessor {
   @Input('ngxCdkDataFilter') filterType!: string;
   @Input() defaultFilter: DataFilter | undefined;
   protected backdropClass: string | string[] | undefined = 'cdk-overlay-transparent-backdrop';
-  protected dataFilter: DataFilter | null                  = null;
-  protected oldDataFilter: DataFilter | null               = null;
-  protected isDisabled                                     = false;
-  protected overlayRef                                     = this.createOverlayRef();
-  protected isOverlayVisible                               = false;
-  protected overlayClosingActions$                         = merge(this.overlayRef.backdropClick(), this.overlayRef.detachments());
+  protected dataFilter: DataFilter | null                = null;
+  protected oldDataFilter: DataFilter | null             = null;
+  protected isDisabled                                   = false;
+  protected overlayRef                                   = this.createOverlayRef();
+  protected isOverlayVisible                             = false;
+  protected overlayClosingActions$                       = merge(this.overlayRef.backdropClick(), this.overlayRef.detachments());
   protected overlayUnsubscribeSubject: Subject<void> | undefined;
 
   constructor(private registry: DataFilterRegistry, private overlay: Overlay, private elementRef: ElementRef) {
@@ -166,6 +166,7 @@ export class CdkDataFilterDirective implements ControlValueAccessor {
                   .subscribe(filter => {
                     this.dataFilter = filter;
 
+                    this.overlayRef.updatePosition();
                     this.propagateTouched();
                   });
     }
