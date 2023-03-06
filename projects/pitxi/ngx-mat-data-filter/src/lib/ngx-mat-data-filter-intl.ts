@@ -1,17 +1,21 @@
 import { Injectable, Optional, Provider, SkipSelf } from '@angular/core';
-import { Subject } from 'rxjs';
 import { FilterComparison } from './FilterComparison';
 
 @Injectable()
 export class NgxMatDataFilterIntl {
-  readonly changes                                             = new Subject<void>();
-  readonly stringFilterPlaceholder                             = 'Text filter';
-  readonly selectAll                                           = 'Select all';
-  readonly selectNone                                          = 'Select none';
-  readonly toggleSelection                                     = 'Toggle selection';
-  readonly all                                                 = 'All';
-  readonly none                                                = 'None';
-  readonly toggle                                              = 'Toggle';
+  stringFilterPlaceholder                                      = 'Text filter';
+  numberFilterPlaceholder                                      = 'Number filter';
+  dateFilterPlaceholder                                        = 'Date filter';
+  fromNumberPlaceholder                                        = 'From number';
+  toNumberPlaceholder                                          = 'To number';
+  fromDatePlaceholder                                          = 'From date';
+  toDatePlaceholder                                            = 'To date';
+  selectAll                                                    = 'Select all';
+  selectNone                                                   = 'Select none';
+  toggleSelection                                              = 'Toggle selection';
+  all                                                          = 'All';
+  none                                                         = 'None';
+  toggle                                                       = 'Toggle';
   protected comparisons: { [key in FilterComparison]: string } = {
     'is-one-of'    : 'Is one of',
     'is-not-one-of': 'Is not one of',
@@ -26,27 +30,27 @@ export class NgxMatDataFilterIntl {
     'is-in-range'  : 'Is in range'
   };
 
-  getNumberFiltersPlaceholders(comparison: FilterComparison): string[] {
+  readonly getNumberFiltersPlaceholders = (comparison: FilterComparison): string[] => {
     switch (comparison) {
       case 'is-in-range':
-        return [ 'From number', 'To number' ];
+        return [ this.fromNumberPlaceholder, this.toNumberPlaceholder ];
       default:
-        return [ 'Number filter' ];
+        return [ this.numberFilterPlaceholder ];
     }
-  }
+  };
 
-  getDateFiltersPlaceholders(comparison: FilterComparison): string[] {
+  readonly getDateFiltersPlaceholders = (comparison: FilterComparison): string[] => {
     switch (comparison) {
       case 'is-in-range':
-        return [ 'From date', 'To date' ];
+        return [ this.fromDatePlaceholder, this.toDatePlaceholder ];
       default:
-        return [ 'Date filter' ];
+        return [ this.dateFilterPlaceholder ];
     }
-  }
+  };
 
-  getComparisonText(comparison: FilterComparison): string {
+  readonly getComparisonText = (comparison: FilterComparison): string => {
     return this.comparisons[comparison];
-  }
+  };
 }
 
 export function NGX_MAT_DATA_FILTER_INTL_PROVIDER_FACTORY(parentIntl: NgxMatDataFilterIntl): NgxMatDataFilterIntl {
