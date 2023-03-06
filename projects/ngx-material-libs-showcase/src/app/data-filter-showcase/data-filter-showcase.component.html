@@ -11,8 +11,8 @@
         <th *matHeaderCellDef mat-header-cell>
           <div class="row-content">
             ID
-            <button #idFilter="ngxMatDataFilter"
-                    [color]="idFilter.filterIsEmpty ? 'primary' : 'accent'"
+            <button #filter="ngxMatDataFilter"
+                    [color]="filter.filterIsEmpty ? 'primary' : 'accent'"
                     formControlName="id"
                     mat-icon-button
                     ngxMatDataFilter="number">
@@ -27,8 +27,8 @@
         <th *matHeaderCellDef mat-header-cell>
           <div class="row-content">
             First name
-            <button #firstNameFilter="ngxMatDataFilter"
-                    [color]="firstNameFilter.filterIsEmpty ? 'primary' : 'accent'"
+            <button #filter="ngxMatDataFilter"
+                    [color]="filter.filterIsEmpty ? 'primary' : 'accent'"
                     formControlName="firstName"
                     mat-icon-button
                     ngxMatDataFilter="string">
@@ -43,8 +43,8 @@
         <th *matHeaderCellDef mat-header-cell>
           <div class="row-content">
             Last name
-            <button #lastNameFilter="ngxMatDataFilter"
-                    [color]="lastNameFilter.filterIsEmpty ? 'primary' : 'accent'"
+            <button #filter="ngxMatDataFilter"
+                    [color]="filter.filterIsEmpty ? 'primary' : 'accent'"
                     formControlName="lastName"
                     mat-icon-button
                     ngxMatDataFilter="string">
@@ -59,8 +59,8 @@
         <th *matHeaderCellDef mat-header-cell>
           <div class="row-content">
             Email
-            <button #emailFilter="ngxMatDataFilter"
-                    [color]="emailFilter.filterIsEmpty ? 'primary' : 'accent'"
+            <button #filter="ngxMatDataFilter"
+                    [color]="filter.filterIsEmpty ? 'primary' : 'accent'"
                     formControlName="email"
                     mat-icon-button
                     ngxMatDataFilter="string">
@@ -75,8 +75,8 @@
         <th *matHeaderCellDef mat-header-cell>
           <div class="row-content">
             Gender
-            <button #genderFilter="ngxMatDataFilter"
-                    [color]="genderFilter.filterIsEmpty ? 'primary' : 'accent'"
+            <button #filter="ngxMatDataFilter"
+                    [color]="filter.filterIsEmpty ? 'primary' : 'accent'"
                     [valueListItems]="mv.genderValueListItems"
                     formControlName="gender"
                     mat-icon-button
@@ -92,8 +92,8 @@
         <th *matHeaderCellDef mat-header-cell>
           <div class="row-content">
             IP address
-            <button #ipAddressFilter="ngxMatDataFilter"
-                    [color]="ipAddressFilter.filterIsEmpty ? 'primary' : 'accent'"
+            <button #filter="ngxMatDataFilter"
+                    [color]="filter.filterIsEmpty ? 'primary' : 'accent'"
                     formControlName="ipAddress"
                     mat-icon-button
                     ngxMatDataFilter="string">
@@ -108,8 +108,8 @@
         <th *matHeaderCellDef mat-header-cell>
           <div class="row-content">
             Job title
-            <button #jobTitleFilter="ngxMatDataFilter"
-                    [color]="jobTitleFilter.filterIsEmpty ? 'primary' : 'accent'"
+            <button #filter="ngxMatDataFilter"
+                    [color]="filter.filterIsEmpty ? 'primary' : 'accent'"
                     formControlName="jobTitle"
                     mat-icon-button
                     ngxMatDataFilter="string">
@@ -124,8 +124,8 @@
         <th *matHeaderCellDef mat-header-cell>
           <div class="row-content">
             Birth date
-            <button #birthDateFilter="ngxMatDataFilter"
-                    [color]="birthDateFilter.filterIsEmpty ? 'primary' : 'accent'"
+            <button #filter="ngxMatDataFilter"
+                    [color]="filter.filterIsEmpty ? 'primary' : 'accent'"
                     formControlName="birthDate"
                     mat-icon-button
                     ngxMatDataFilter="date">
