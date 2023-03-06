@@ -27,7 +27,8 @@ import { DataFilterConfiguration } from './data-filter-configuration';
               MatButtonModule
             ],
             providers   : [
-              { provide: NgxMatDataFilterConfiguration, useClass: DataFilterConfiguration }
+              { provide: NgxMatDataFilterConfiguration, useClass: DataFilterConfiguration },
+              // Spanish: { provide: NgxMatDataFilterIntl, useClass: SpanishNgxMatDataFilterIntl }
             ]
           })
 export class DataFilterShowcaseModule {
