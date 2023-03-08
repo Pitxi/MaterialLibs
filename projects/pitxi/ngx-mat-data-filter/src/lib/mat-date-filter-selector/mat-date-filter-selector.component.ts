@@ -16,16 +16,16 @@ export class MatDateFilterSelectorComponent
   extends FilterSelectorBase
   implements OnInit, OnDestroy {
   readonly comparisons              = new Map<FilterComparison, string>([
-                                                                          [ 'equal-to', this.intl.getComparisonText('equal-to') ],
-                                                                          [ 'not-equal-to', this.intl.getComparisonText('not-equal-to') ],
+                                                                          [ 'equals', this.intl.getComparisonText('equals') ],
+                                                                          [ 'not-equal', this.intl.getComparisonText('not-equal') ],
                                                                           [ 'greater-than', this.intl.getComparisonText('greater-than') ],
-                                                                          [ 'lesser-than', this.intl.getComparisonText('lesser-than') ],
+                                                                          [ 'less-than', this.intl.getComparisonText('less-than') ],
                                                                           [ 'is-in-range', this.intl.getComparisonText('is-in-range') ]
                                                                         ]);
   readonly clearControlIcon         = this.config.icons.clearControl;
   private defaultFilter: DataFilter = this.data.defaultFilter ??
     {
-      comparisonName: 'equal-to',
+      comparisonName: 'equals',
       values        : [ null, null ]
     };
   readonly form                     = this.fBuilder.group({

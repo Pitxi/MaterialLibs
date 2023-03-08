@@ -19,10 +19,10 @@ export class NgxMatDataFilterIntl {
   protected comparisons: { [key in FilterComparison]: string } = {
     'is-one-of'    : 'Is one of',
     'is-not-one-of': 'Is not one of',
-    'equal-to'     : 'Is equal to',
-    'not-equal-to' : 'Is not equal to',
+    'equals'       : 'Is equal to',
+    'not-equal'    : 'Is not equal to',
     'greater-than' : 'Is greater than',
-    'lesser-than'  : 'Is lesser than',
+    'less-than'    : 'Is less than',
     'contains'     : 'Contains',
     'not-contains' : 'Not contains',
     'starts-with'  : 'Starts with',

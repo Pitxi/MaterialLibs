@@ -16,8 +16,8 @@ export class MatStringFilterSelectorComponent
   extends FilterSelectorBase
   implements OnInit, OnDestroy {
   readonly comparisons                                   = new Map<FilterComparison, string>([
-                                                                                               [ 'equal-to', this.intl.getComparisonText('equal-to') ],
-                                                                                               [ 'not-equal-to', this.intl.getComparisonText('not-equal-to') ],
+                                                                                               [ 'equals', this.intl.getComparisonText('equals') ],
+                                                                                               [ 'not-equal', this.intl.getComparisonText('not-equal') ],
                                                                                                [ 'contains', this.intl.getComparisonText('contains') ],
                                                                                                [ 'not-contains', this.intl.getComparisonText('not-contains') ],
                                                                                                [ 'starts-with', this.intl.getComparisonText('starts-with') ],
@@ -27,7 +27,7 @@ export class MatStringFilterSelectorComponent
   readonly clearControlIcon                              = this.config.icons.clearControl;
   private defaultFilter: DataFilter                      = this.data.defaultFilter ??
     {
-      comparisonName: 'equal-to',
+      comparisonName: 'equals',
       values        : [ null ]
     };
   readonly form                                          = this.fBuilder.group({

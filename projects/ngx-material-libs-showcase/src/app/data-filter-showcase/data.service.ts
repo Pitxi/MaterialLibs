@@ -48,11 +48,11 @@ export class DataService {
                                    !filter.values[1] ||
                                    (value >= filter.values[0] &&
                                      value <= filter.values[1]);
-                               case 'lesser-than':
+                               case 'less-than':
                                  return !filter.values[0] || value < filter.values[0];
                                case 'greater-than':
                                  return !filter.values[0] || value > filter.values[0];
-                               case 'equal-to':
+                               case 'equals':
                                  if (value instanceof Date && filter.values[0] instanceof Date) {
                                    return value.getFullYear() === filter.values[0].getFullYear() &&
                                      value.getDate() === filter.values[0].getDate() &&
@@ -60,7 +60,7 @@ export class DataService {
                                  }
 
                                  return !filter.values[0] || value === filter.values[0];
-                               case 'not-equal-to':
+                               case 'not-equal':
                                  return !filter.values[0] || value !== filter.values[0];
                                case 'contains':
                                  return !filter.values[0] || (value as string)?.includes(filter.values[0]);

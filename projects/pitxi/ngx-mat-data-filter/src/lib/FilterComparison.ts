@@ -1,9 +1,9 @@
 export type FilterComparison = 'is-one-of' |
                                'is-not-one-of' |
-                               'equal-to' |
-                               'not-equal-to' |
+                               'equals' |
+                               'not-equal' |
                                'greater-than' |
-                               'lesser-than' |
+                               'less-than' |
                                'contains' |
                                'not-contains' |
                                'starts-with' |
