@@ -17,10 +17,10 @@ export class SpanishNgxMatDataFilterIntl extends NgxMatDataFilterIntl {
   override comparisons: { [key in FilterComparison]: string } = {
     'is-one-of'    : 'Es uno de',
     'is-not-one-of': 'No es uno de',
-    'equal-to'     : 'Es igual a',
-    'not-equal-to' : 'Es diferente de',
+    'equals'       : 'Es igual a',
+    'not-equal'    : 'Es diferente de',
     'greater-than' : 'Es mayor que',
-    'lesser-than'  : 'Es menor que',
+    'less-than'    : 'Es menor que',
     'contains'     : 'Contiene',
     'not-contains' : 'No contiene',
     'starts-with'  : 'Empieza por',
