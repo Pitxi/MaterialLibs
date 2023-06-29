@@ -1,14 +1,33 @@
-.table-wrapper {
-  max-height: 500px;
-  overflow: auto;
+$paginator-height: 64px;
+$action-area-height: 64px;
+
+:host {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  height: 100%;
+
+  & > div {
+    width: 100%;
+    height: 100%;
+  }
 }
 
 .table-action-area {
-  padding: 1rem;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-start;
+  height: $action-area-height;
 
   & .mat-icon {
     margin-right: 0.5rem;
   }
+}
+
+.table-wrapper {
+  height: calc(100% - $action-area-height - $paginator-height);
+  overflow: auto;
 }
 
 .row-content {
@@ -33,4 +52,12 @@ table {
 
     background: #fafafa;
   }
+}
+
+mat-paginator {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-end;
+  height: $paginator-height;
 }
