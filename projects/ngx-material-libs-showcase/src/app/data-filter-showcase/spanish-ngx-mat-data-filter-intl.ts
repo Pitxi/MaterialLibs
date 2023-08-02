@@ -1,5 +1,7 @@
 import { FilterComparison, NgxMatDataFilterIntl } from '@pitxi/ngx-mat-data-filter';
+import { Injectable } from '@angular/core';
 
+@Injectable()
 export class SpanishNgxMatDataFilterIntl extends NgxMatDataFilterIntl {
   override stringFilterPlaceholder                            = 'Filtro de texto';
   override numberFilterPlaceholder                            = 'Filtro numérico';
