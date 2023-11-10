@@ -1,12 +1,11 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
 import { MatValueListFilterSelectorComponent } from './mat-value-list-filter-selector.component';
 import { ReactiveFormsModule } from '@angular/forms';
-import { FILTER_SELECTOR_DATA } from '../filter-selector-data';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { MatLegacySelectModule as MatSelectModule } from '@angular/material/legacy-select';
-import { MatLegacyCheckboxModule as MatCheckboxModule } from '@angular/material/legacy-checkbox';
-import { MatLegacyCardModule as MatCardModule } from '@angular/material/legacy-card';
+import { MatSelectModule } from '@angular/material/select';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatCardModule } from '@angular/material/card';
+import { FILTER_SELECTOR_DATA } from '@pitxi/ngx-cdk-data-filter';
 
 describe('MatValueListDataFilterComponent', () => {
   let component: MatValueListFilterSelectorComponent;

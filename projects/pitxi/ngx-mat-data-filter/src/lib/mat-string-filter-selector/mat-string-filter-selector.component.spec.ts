@@ -2,11 +2,11 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { MatStringFilterSelectorComponent } from './mat-string-filter-selector.component';
 import { ReactiveFormsModule } from '@angular/forms';
-import { FILTER_SELECTOR_DATA } from '../filter-selector-data';
-import { MatLegacyInputModule as MatInputModule } from '@angular/material/legacy-input';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { MatLegacySelectModule as MatSelectModule } from '@angular/material/legacy-select';
-import { MatLegacyCardModule as MatCardModule } from '@angular/material/legacy-card';
+import { MatInputModule } from '@angular/material/input';
+import { MatSelectModule } from '@angular/material/select';
+import { MatCardModule } from '@angular/material/card';
+import { FILTER_SELECTOR_DATA } from '@pitxi/ngx-cdk-data-filter';
 
 describe('MatStringFilterSelectorComponent', () => {
   let component: MatStringFilterSelectorComponent;
