@@ -1,10 +1,10 @@
 import { Component, QueryList, ViewChildren } from '@angular/core';
-import { DataFilter, MatDataFilterDirective, ValueListItem } from '@pitxi/ngx-mat-data-filter';
 import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { BehaviorSubject, combineLatest, distinctUntilChanged, map, Observable, startWith, switchMap, tap } from 'rxjs';
 import { DataService } from './data.service';
 import { PageEvent } from '@angular/material/paginator';
 import { Person } from './person';
+import { DataFilter, MatDataFilterDirective, ValueListItem } from '../../../../pitxi/ngx-mat-data-filter/src/lib';
 
 interface ModelView {
   filtersForm: FormGroup;
@@ -40,7 +40,6 @@ export class DataFilterShowcaseComponent {
                                          distinctUntilChanged(),
                                          map(_ => this.filterComponents?.some(fc => !fc.filterIsEmpty))
                                        );
-
   private genderValueListItems: ValueListItem[] = [
     { value: 'Male', description: 'Male' },
     { value: 'Female', description: 'Female' },
@@ -84,7 +83,6 @@ export class DataFilterShowcaseComponent {
     .pipe(
       switchMap(([ filters, { pageIndex, pageSize } ]) => this.data.getData(filters, pageIndex, pageSize))
     );
-
   readonly mv$: Observable<ModelView> = combineLatest([
                                                         this.paginatedDataSource$,
                                                         this.hasFilters$

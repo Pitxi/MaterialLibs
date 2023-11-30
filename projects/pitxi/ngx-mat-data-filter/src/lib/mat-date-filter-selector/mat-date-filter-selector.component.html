@@ -26,6 +26,9 @@
                   matSuffix>
             <mat-icon>{{ clearControlIcon }}</mat-icon>
           </button>
+          <mat-error *ngIf="form.hasError('matDatepickerParse', 'date1')">
+            {{ dateFilterErrorMessage }}
+          </mat-error>
         </mat-form-field>
 
         <mat-form-field *ngIf="placeholders[1] != null" appearance="fill">

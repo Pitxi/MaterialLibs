@@ -6,3 +6,4 @@ export * from './value-list-item';
 export * from './filter-selector-base';
 export * from './cdk-data-filter.directive';
 export * from './ngx-cdk-data-filter.module';
+export * from './filter-input-mask';

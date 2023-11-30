@@ -16,6 +16,7 @@ export class NgxMatDataFilterIntl {
   all                                                          = 'All';
   none                                                         = 'None';
   toggle                                                       = 'Toggle';
+  datefilterErrorMessage                                       = 'Invalid date format';
   protected comparisons: { [key in FilterComparison]: string } = {
     'is-one-of'    : 'Is one of',
     'is-not-one-of': 'Is not one of',

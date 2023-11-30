@@ -8,6 +8,7 @@ import { merge, Subject, takeUntil } from 'rxjs';
 import { FILTER_SELECTOR_DATA, FilterSelectorData } from './filter-selector-data';
 import { FilterSelectorBase } from './filter-selector-base';
 import { ComponentPortal } from '@angular/cdk/portal';
+import { FilterInputMask } from './filter-input-mask';
 
 @Directive({
              selector : '[ngxCdkDataFilter]',
@@ -27,6 +28,7 @@ export class CdkDataFilterDirective implements ControlValueAccessor {
   @Input() valueListItems: ValueListItem[]               = [];
   @Input('ngxCdkDataFilter') filterType!: string;
   @Input() defaultFilter: DataFilter | undefined;
+  @Input() protected _inputMask: FilterInputMask | null  = null;
   protected backdropClass: string | string[] | undefined = 'cdk-overlay-transparent-backdrop';
   protected dataFilter: DataFilter | null                = null;
   protected oldDataFilter: DataFilter | null             = null;
@@ -37,6 +39,14 @@ export class CdkDataFilterDirective implements ControlValueAccessor {
   protected overlayUnsubscribeSubject: Subject<void> | undefined;
 
   constructor(private registry: DataFilterRegistry, private overlay: Overlay, private elementRef: ElementRef) {
+  }
+
+  get inputMask(): FilterInputMask | null {
+    return this._inputMask;
+  }
+
+  set inputMask(value: FilterInputMask | null) {
+    this._inputMask = value;
   }
 
   get disabled(): boolean {
@@ -153,7 +163,8 @@ export class CdkDataFilterDirective implements ControlValueAccessor {
     const data: FilterSelectorData = {
       defaultFilter : this.defaultFilter,
       filter        : this.dataFilter,
-      valueListItems: this.valueListItems
+      valueListItems: this.valueListItems,
+      inputMask     : this._inputMask
     };
 
     const injector     = Injector.create({ providers: [ { provide: FILTER_SELECTOR_DATA, useValue: data } ] });

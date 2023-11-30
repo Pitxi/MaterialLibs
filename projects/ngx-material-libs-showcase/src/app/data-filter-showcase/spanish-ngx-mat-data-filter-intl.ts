@@ -1,5 +1,5 @@
-import { FilterComparison, NgxMatDataFilterIntl } from '@pitxi/ngx-mat-data-filter';
 import { Injectable } from '@angular/core';
+import { FilterComparison, NgxMatDataFilterIntl } from '../../../../pitxi/ngx-mat-data-filter/src/lib';
 
 @Injectable()
 export class SpanishNgxMatDataFilterIntl extends NgxMatDataFilterIntl {
@@ -16,6 +16,7 @@ export class SpanishNgxMatDataFilterIntl extends NgxMatDataFilterIntl {
   override all                                                = 'Todo';
   override none                                               = 'Nada';
   override toggle                                             = 'Invertir';
+  override datefilterErrorMessage                             = 'Formato de fecha no válido';
   override comparisons: { [key in FilterComparison]: string } = {
     'is-one-of'    : 'Es uno de',
     'is-not-one-of': 'No es uno de',

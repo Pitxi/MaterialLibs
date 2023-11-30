@@ -6,15 +6,15 @@ import { MatIconModule } from '@angular/material/icon';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatNativeDateModule } from '@angular/material/core';
-import {
-  NgxMatDataFilterConfiguration,
-  NgxMatDataFilterIntl,
-  NgxMatDataFilterModule
-} from '@pitxi/ngx-mat-data-filter';
 import { MatTableModule } from '@angular/material/table';
 import { MatButtonModule } from '@angular/material/button';
 import { DataFilterConfiguration } from './data-filter-configuration';
 import { SpanishNgxMatDataFilterIntl } from './spanish-ngx-mat-data-filter-intl';
+import {
+  NgxMatDataFilterConfiguration,
+  NgxMatDataFilterIntl,
+  NgxMatDataFilterModule
+} from '../../../../pitxi/ngx-mat-data-filter/src/lib';
 
 @NgModule({
             declarations: [

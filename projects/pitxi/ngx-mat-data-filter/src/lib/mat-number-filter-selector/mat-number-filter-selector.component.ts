@@ -5,6 +5,7 @@ import { NgxMatDataFilterIntl } from '../ngx-mat-data-filter-intl';
 import { NgxMatDataFilterConfiguration } from '../ngx-mat-data-filter-configuration';
 import { DataFilter, FILTER_SELECTOR_DATA, FilterSelectorBase, FilterSelectorData } from '@pitxi/ngx-cdk-data-filter';
 import { FilterComparison } from '../FilterComparison';
+import { FiltersHelper } from '../filters-helper';
 
 @Component({
              selector       : 'ngx-mat-number-filter-selector',
@@ -37,8 +38,8 @@ export class MatNumberFilterSelectorComponent
                                                                 validators : [ Validators.required ]
                                                               }
                                                             ),
-                                                            number1   : new FormControl<number | null>(this.data.filter?.values[0] ?? this.defaultFilter.values[0]),
-                                                            number2   : new FormControl<number | null>(this.data.filter?.values[1] ?? this.defaultFilter.values[1])
+                                                            number1       : new FormControl<number | null>(this.data.filter?.values[0] ?? this.defaultFilter.values[0]),
+                                                            number2       : new FormControl<number | null>(this.data.filter?.values[1] ?? this.defaultFilter.values[1])
                                                           });
   private placeholdersSubject       = new BehaviorSubject<string[]>(this.intl.getNumberFiltersPlaceholders(this.form.value.comparisonName as FilterComparison));
   readonly placeHolders$            = this.placeholdersSubject.asObservable();
@@ -67,6 +68,14 @@ export class MatNumberFilterSelectorComponent
 
   protected subscribeFormControls(): void {
     this.unsubscribeControls = new Subject<void>();
+    this.data.inputMask = this.data.inputMask ?? /^\d+$/;
+
+    FiltersHelper.SetControlsPatternValidation([
+                                                 this.form.get('number1')!,
+                                                 this.form.get('number2')!
+                                               ],
+                                               this.data.inputMask,
+                                               this.unsubscribeControls);
 
     this.form.valueChanges
         .pipe(

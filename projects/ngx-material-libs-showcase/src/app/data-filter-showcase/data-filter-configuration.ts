@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { NgxMatDataFilterConfiguration } from '@pitxi/ngx-mat-data-filter';
+import { NgxMatDataFilterConfiguration } from '../../../../pitxi/ngx-mat-data-filter/src/lib';
 
 @Injectable()
 export class DataFilterConfiguration extends NgxMatDataFilterConfiguration {

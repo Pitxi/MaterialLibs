@@ -3,7 +3,7 @@ import { NG_VALUE_ACCESSOR } from '@angular/forms';
 import { Overlay } from '@angular/cdk/overlay';
 import { MatButton } from '@angular/material/button';
 import { NgxMatDataFilterConfiguration } from './ngx-mat-data-filter-configuration';
-import { CdkDataFilterDirective, DataFilterRegistry } from '@pitxi/ngx-cdk-data-filter';
+import { CdkDataFilterDirective, DataFilterRegistry, FilterInputMask } from '@pitxi/ngx-cdk-data-filter';
 
 @Directive({
              selector : '[ngxMatDataFilter]',
@@ -29,6 +29,15 @@ export class MatDataFilterDirective extends CdkDataFilterDirective {
               @Optional() private matButton: MatButton) {
     super(registry, overlay, elementRef);
     this.backdropClass = this.config.backdropClass;
+  }
+
+  @Input()
+  override set inputMask(value: FilterInputMask | null) {
+    if (![ 'string', 'number' ].includes(this.filterType)) {
+      throw Error(`Filter of type '${ this.filterType }' cannot have an input mask.`);
+    }
+
+    this._inputMask = value;
   }
 
   override get disabled(): boolean {

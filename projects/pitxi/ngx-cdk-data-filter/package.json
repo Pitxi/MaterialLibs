@@ -1,6 +1,6 @@
 {
   "name": "@pitxi/ngx-cdk-data-filter",
-  "version": "17.0.0",
+  "version": "17.0.1",
   "description": "Angular CDK data filtering library",
   "license": "GPL-3.0-or-later",
   "author": {
