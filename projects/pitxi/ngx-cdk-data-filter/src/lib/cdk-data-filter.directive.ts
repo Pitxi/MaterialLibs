@@ -28,7 +28,8 @@ export class CdkDataFilterDirective implements ControlValueAccessor {
   @Input() valueListItems: ValueListItem[]               = [];
   @Input('ngxCdkDataFilter') filterType!: string;
   @Input() defaultFilter: DataFilter | undefined;
-  @Input() protected _inputMask: FilterInputMask | null  = null;
+  protected _inputMask: FilterInputMask | null           = null;
+  protected _inputReadonly: boolean                      = false;
   protected backdropClass: string | string[] | undefined = 'cdk-overlay-transparent-backdrop';
   protected dataFilter: DataFilter | null                = null;
   protected oldDataFilter: DataFilter | null             = null;
@@ -41,11 +42,19 @@ export class CdkDataFilterDirective implements ControlValueAccessor {
   constructor(private registry: DataFilterRegistry, private overlay: Overlay, private elementRef: ElementRef) {
   }
 
+  get inputReadonly(): boolean {
+    return this._inputReadonly;
+  }
+
+  @Input() set inputReadonly(value: boolean) {
+    this._inputReadonly = value;
+  }
+
   get inputMask(): FilterInputMask | null {
     return this._inputMask;
   }
 
-  set inputMask(value: FilterInputMask | null) {
+  @Input() set inputMask(value: FilterInputMask | null) {
     this._inputMask = value;
   }
 
@@ -164,7 +173,8 @@ export class CdkDataFilterDirective implements ControlValueAccessor {
       defaultFilter : this.defaultFilter,
       filter        : this.dataFilter,
       valueListItems: this.valueListItems,
-      inputMask     : this._inputMask
+      inputMask     : this._inputMask,
+      inputReadonly : this._inputReadonly
     };
 
     const injector     = Injector.create({ providers: [ { provide: FILTER_SELECTOR_DATA, useValue: data } ] });

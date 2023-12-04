@@ -32,17 +32,28 @@ export class MatDataFilterDirective extends CdkDataFilterDirective {
   }
 
   @Input()
+  override set inputReadonly(value: boolean) {
+    if (![ 'string', 'number', 'date' ].includes(this.filterType)) {
+      throw Error(`Filter of type '${ this.filterType }' cannot be read only.`);
+    }
+
+    super.inputReadonly = value;
+  }
+
+  @Input()
   override set inputMask(value: FilterInputMask | null) {
     if (![ 'string', 'number' ].includes(this.filterType)) {
       throw Error(`Filter of type '${ this.filterType }' cannot have an input mask.`);
     }
 
-    this._inputMask = value;
+    super.inputMask = value;
   }
 
-  override get disabled(): boolean {
-    return super.disabled;
-  }
+  /* TODO: Comprobar si es necesario este override
+   override get disabled(): boolean {
+   return super.disabled;
+   }
+   */
 
   get isMatButton(): boolean {
     return !!this.matButton;

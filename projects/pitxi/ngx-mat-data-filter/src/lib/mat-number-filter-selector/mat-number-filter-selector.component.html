@@ -12,7 +12,11 @@
       <div *ngIf="placeHolders$ | async as placeholders" class="filter-controls">
         <div>
           <mat-form-field appearance="fill">
-            <input [placeholder]="placeholders[0]" formControlName="number1" matInput type="number">
+            <input [placeholder]="placeholders[0]"
+                   [readonly]="inputReadonly"
+                   formControlName="number1"
+                   matInput
+                   type="number">
             <button (click)="clearControl('number1')"
                     *ngIf="!!clearControlIcon"
                     [disabled]="form.value.number1 === null"
@@ -26,7 +30,11 @@
 
         <div *ngIf="placeholders[1] != null">
           <mat-form-field appearance="fill">
-            <input [placeholder]="placeholders[1]" formControlName="number2" matInput type="number">
+            <input [placeholder]="placeholders[1]"
+                   [readonly]="inputReadonly"
+                   formControlName="number2"
+                   matInput
+                   type="number">
             <button (click)="clearControl('number2')"
                     [disabled]="form.value.number2 === null"
                     color="primary"

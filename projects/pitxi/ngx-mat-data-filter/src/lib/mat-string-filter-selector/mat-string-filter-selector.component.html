@@ -11,7 +11,7 @@
 
       <div class="filter-controls">
         <mat-form-field appearance="fill">
-          <input [placeholder]="placeholder" formControlName="text" matInput type="text">
+          <input [placeholder]="placeholder" [readonly]="inputReadonly" formControlName="text" matInput type="text">
           <button (click)="clearControl()"
                   *ngIf="!!clearControlIcon"
                   [disabled]="!form.value.text"

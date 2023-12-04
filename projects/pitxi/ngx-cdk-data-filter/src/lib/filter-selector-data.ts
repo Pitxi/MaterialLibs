@@ -10,4 +10,5 @@ export interface FilterSelectorData {
   defaultFilter?: DataFilter;
   valueListItems: ValueListItem[];
   inputMask: FilterInputMask | null;
+  inputReadonly: boolean;
 }

@@ -24,6 +24,7 @@ export class MatNumberFilterSelectorComponent
                                                                           [ 'is-in-range', this.intl.getComparisonText('is-in-range') ]
                                                                         ]);
   readonly clearControlIcon         = this.config.icons.clearControl;
+  protected readonly inputReadonly = this.data.inputReadonly;
   private defaultFilter: DataFilter = this.data.defaultFilter ??
     {
       comparisonName: 'equals',
@@ -68,7 +69,7 @@ export class MatNumberFilterSelectorComponent
 
   protected subscribeFormControls(): void {
     this.unsubscribeControls = new Subject<void>();
-    this.data.inputMask = this.data.inputMask ?? /^\d+$/;
+    this.data.inputMask      = this.data.inputMask ?? /^\d+$/;
 
     FiltersHelper.SetControlsPatternValidation([
                                                  this.form.get('number1')!,

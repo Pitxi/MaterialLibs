@@ -13,6 +13,7 @@
         <mat-form-field *ngIf="placeholders[1] == null" appearance="fill">
           <input [matDatepicker]="datePicker"
                  [placeholder]="placeholders[0]"
+                 [readonly]="inputReadonly"
                  formControlName="date1"
                  matInput
                  type="text">
@@ -33,8 +34,8 @@
 
         <mat-form-field *ngIf="placeholders[1] != null" appearance="fill">
           <mat-date-range-input [rangePicker]="dateRangePicker">
-            <input [placeholder]="placeholders[0]" formControlName="date1" matStartDate>
-            <input [placeholder]="placeholders[1]" formControlName="date2" matEndDate>
+            <input [placeholder]="placeholders[0]" [readonly]="inputReadonly" formControlName="date1" matStartDate>
+            <input [placeholder]="placeholders[1]" [readonly]="inputReadonly" formControlName="date2" matEndDate>
           </mat-date-range-input>
           <mat-datepicker-toggle [for]="dateRangePicker" matIconSuffix></mat-datepicker-toggle>
           <mat-date-range-picker #dateRangePicker></mat-date-range-picker>

@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, Inject, OnDestroy, OnInit } from '@angular/core';
-import { distinctUntilChanged, map, Observable, pairwise, startWith, Subject, takeUntil } from 'rxjs';
+import { distinctUntilChanged, map, Observable, Subject, takeUntil } from 'rxjs';
 import { NgxMatDataFilterIntl } from '../ngx-mat-data-filter-intl';
 import { FormBuilder, FormControl, Validators } from '@angular/forms';
 import { NgxMatDataFilterConfiguration } from '../ngx-mat-data-filter-configuration';
@@ -26,6 +26,7 @@ export class MatStringFilterSelectorComponent
                                                                                              ]);
   readonly placeholder                                   = this.intl.stringFilterPlaceholder;
   readonly clearControlIcon                              = this.config.icons.clearControl;
+  protected readonly inputReadonly                       = this.data.inputReadonly;
   private defaultFilter: DataFilter                      = this.data.defaultFilter ??
     {
       comparisonName: 'equals',

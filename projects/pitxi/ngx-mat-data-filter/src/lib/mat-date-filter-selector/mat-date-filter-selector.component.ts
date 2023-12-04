@@ -5,7 +5,6 @@ import { BehaviorSubject, distinctUntilChanged, map, Subject, takeUntil, tap } f
 import { NgxMatDataFilterConfiguration } from '../ngx-mat-data-filter-configuration';
 import { DataFilter, FILTER_SELECTOR_DATA, FilterSelectorBase, FilterSelectorData } from '@pitxi/ngx-cdk-data-filter';
 import { FilterComparison } from '../FilterComparison';
-import { FiltersHelper } from '../filters-helper';
 
 @Component({
              selector       : 'ngx-mat-date-filter-selector',
@@ -25,6 +24,7 @@ export class MatDateFilterSelectorComponent
                                                                                 ]);
   readonly clearControlIcon                 = this.config.icons.clearControl;
   protected readonly dateFilterErrorMessage = this.intl.datefilterErrorMessage;
+  protected readonly inputReadonly          = this.data.inputReadonly;
   private defaultFilter: DataFilter         = this.data.defaultFilter ??
     {
       comparisonName: 'equals',
