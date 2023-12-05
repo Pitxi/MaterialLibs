@@ -16,36 +16,43 @@ import { FiltersHelper } from '../filters-helper';
 export class MatNumberFilterSelectorComponent
   extends FilterSelectorBase
   implements OnInit, OnDestroy {
-  readonly comparisons              = new Map<FilterComparison, string>([
-                                                                          [ 'equals', this.intl.getComparisonText('equals') ],
-                                                                          [ 'not-equal', this.intl.getComparisonText('not-equal') ],
-                                                                          [ 'greater-than', this.intl.getComparisonText('greater-than') ],
-                                                                          [ 'less-than', this.intl.getComparisonText('less-than') ],
-                                                                          [ 'is-in-range', this.intl.getComparisonText('is-in-range') ]
-                                                                        ]);
-  readonly clearControlIcon         = this.config.icons.clearControl;
-  protected readonly inputReadonly = this.data.inputReadonly;
-  private defaultFilter: DataFilter = this.data.defaultFilter ??
+  readonly comparisons                    = new Map<FilterComparison, string>([
+                                                                                [ 'equals', this.intl.getComparisonText('equals') ],
+                                                                                [ 'not-equal', this.intl.getComparisonText('not-equal') ],
+                                                                                [ 'greater-than', this.intl.getComparisonText('greater-than') ],
+                                                                                [ 'less-than', this.intl.getComparisonText('less-than') ],
+                                                                                [ 'is-in-range', this.intl.getComparisonText('is-in-range') ]
+                                                                              ]);
+  readonly clearControlIcon               = this.config.icons.clearControl;
+  protected readonly inputReadonly        = this.data.inputReadonly;
+  protected readonly minValueErrorMessage = this.intl.minValueErrorMessage;
+  protected readonly maxValueErrorMessage = this.intl.maxValueErrorMessage;
+  private defaultFilter: DataFilter       = this.data.defaultFilter ??
     {
       comparisonName: 'equals',
       values        : [ null, null ]
     };
-  readonly form                     = this.fBuilder.group({
-                                                            comparisonName: new FormControl<string>(
-                                                              this.data.filter?.comparisonName ??
-                                                              this.defaultFilter.comparisonName,
-                                                              {
-                                                                nonNullable: true,
-                                                                validators : [ Validators.required ]
-                                                              }
-                                                            ),
-                                                            number1       : new FormControl<number | null>(this.data.filter?.values[0] ?? this.defaultFilter.values[0]),
-                                                            number2       : new FormControl<number | null>(this.data.filter?.values[1] ?? this.defaultFilter.values[1])
-                                                          });
-  private placeholdersSubject       = new BehaviorSubject<string[]>(this.intl.getNumberFiltersPlaceholders(this.form.value.comparisonName as FilterComparison));
-  readonly placeHolders$            = this.placeholdersSubject.asObservable();
-  private filterChangedSubject      = new Subject<DataFilter | null>;
-  readonly filterChanged$           = this.filterChangedSubject.asObservable();
+  readonly form                           = this.fBuilder.group(
+    {
+      comparisonName: new FormControl<string>(
+        this.data.filter?.comparisonName ??
+        this.defaultFilter.comparisonName,
+        {
+          nonNullable: true,
+          validators : [ Validators.required ]
+        }
+      ),
+      number1       : new FormControl<number | null>(this.data.filter?.values[0] ?? this.defaultFilter.values[0]),
+      number2       : new FormControl<number | null>(this.data.filter?.values[1] ?? this.defaultFilter.values[1])
+    }
+  );
+  readonly filterIsValid$                 = this.form.statusChanges.pipe(map(status => status === 'VALID'));
+  private placeholdersSubject             = new BehaviorSubject<Array<string>>(
+    this.intl.getNumberFiltersPlaceholders(this.form.value.comparisonName as FilterComparison)
+  );
+  readonly placeHolders$                  = this.placeholdersSubject.asObservable();
+  private filterChangedSubject            = new Subject<DataFilter | null>;
+  readonly filterChanged$                 = this.filterChangedSubject.asObservable();
   private unsubscribeControls: Subject<void> | undefined;
 
   constructor(private fBuilder: FormBuilder,
@@ -60,6 +67,16 @@ export class MatNumberFilterSelectorComponent
   }
 
   ngOnInit(): void {
+    if (typeof this.data.minValue === 'number') {
+      this.form.get('number1')?.addValidators(Validators.min(this.data.minValue));
+      this.form.get('number2')?.addValidators(Validators.min(this.data.minValue));
+    }
+
+    if (typeof this.data.maxValue === 'number') {
+      this.form.get('number1')?.addValidators(Validators.max(this.data.maxValue));
+      this.form.get('number2')?.addValidators(Validators.max(this.data.maxValue));
+    }
+
     this.subscribeFormControls();
   }
 
@@ -69,7 +86,7 @@ export class MatNumberFilterSelectorComponent
 
   protected subscribeFormControls(): void {
     this.unsubscribeControls = new Subject<void>();
-    this.data.inputMask      = this.data.inputMask ?? /^\d+$/;
+    this.data.inputMask      = this.data.inputMask ?? /^-?$|^[+-]?\d+$|^[+-]?\d+\.\d*$/;
 
     FiltersHelper.SetControlsPatternValidation([
                                                  this.form.get('number1')!,
@@ -80,12 +97,14 @@ export class MatNumberFilterSelectorComponent
 
     this.form.valueChanges
         .pipe(
-          distinctUntilChanged(),
           takeUntil(this.unsubscribeControls),
-          tap(({ comparisonName }) => this.placeholdersSubject.next(this.intl.getNumberFiltersPlaceholders(comparisonName as FilterComparison))),
+          distinctUntilChanged(),
+          tap(({ comparisonName }) => this.placeholdersSubject.next(
+            this.intl.getNumberFiltersPlaceholders(comparisonName as FilterComparison))
+          ),
           map(value => this.getFilter(value))
         )
-        .subscribe(filter => this.filterChangedSubject.next(filter));
+        .subscribe(filter => this.filterChangedSubject.next(this.form.valid ? filter : null));
   }
 
   protected unsubscribeFormControls(): void {
@@ -103,13 +122,13 @@ export class MatNumberFilterSelectorComponent
       return null;
     }
 
-    const values = [];
+    const values = new Array<number>();
 
     if (value.number1 != null) {
-      values.push(value.number1);
+      values.push(Number(value.number1));
 
       if (value.number2 != null) {
-        values.push(value.number2);
+        values.push(Number(value.number2));
       }
     }
 

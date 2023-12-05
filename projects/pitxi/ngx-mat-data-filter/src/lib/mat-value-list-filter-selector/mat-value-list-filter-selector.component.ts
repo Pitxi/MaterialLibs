@@ -28,7 +28,7 @@ interface ActionsData {
 interface ModelView {
   form: FormGroup;
   comparisons: Map<FilterComparison, string>;
-  valueItems: ValueListItem[];
+  valueItems: Array<ValueListItem>;
   showActions: boolean;
   actionsData: ActionsData;
 }
@@ -42,69 +42,70 @@ interface ModelView {
 export class MatValueListFilterSelectorComponent
   extends FilterSelectorBase
   implements OnInit, OnDestroy {
-  readonly comparisons                = new Map<FilterComparison, string>([
-                                                                            [ 'is-one-of', this.intl.getComparisonText('is-one-of') ],
-                                                                            [ 'is-not-one-of', this.intl.getComparisonText('is-not-one-of') ]
-                                                                          ]);
-  private valueItems                  = this.data.valueListItems ?? [];
-  private defaultFilter               = this.data.defaultFilter ??
+  readonly comparisons                          = new Map<FilterComparison, string>([
+                                                                                      [ 'is-one-of', this.intl.getComparisonText('is-one-of') ],
+                                                                                      [ 'is-not-one-of', this.intl.getComparisonText('is-not-one-of') ]
+                                                                                    ]);
+  private valueItems                            = this.data.valueListItems ?? new Array<ValueListItem>();
+  private readonly defaultFilter                = this.data.defaultFilter ??
     {
       comparisonName: 'is-one-of',
-      values        : this.data.valueListItems?.map(v => v.value) ?? []
+      values        : this.data.valueListItems?.map(v => v.value) ?? new Array<ValueListItem>()
     };
-  readonly form                       = this.fBuilder.group({
-                                                              comparisonName   : new FormControl<string>(
-                                                                this.data.filter?.comparisonName ??
-                                                                this.defaultFilter.comparisonName,
-                                                                {
-                                                                  nonNullable: true,
-                                                                  validators : [ Validators.required ]
-                                                                }),
-                                                              valueItemControls: this.fBuilder.array<FormControl<boolean>>(
-                                                                this.data.valueListItems
-                                                                    ?.map((item) => new FormControl<boolean>(
-                                                                      (this.data.filter ?? this.defaultFilter).values.includes(item.value) ?? true,
-                                                                      { nonNullable: true }
-                                                                    ))
-                                                                ?? []
-                                                              )
-                                                            });
-  readonly mv$: Observable<ModelView> = this.form.valueChanges
-                                            .pipe(
-                                              startWith(this.form.value),
-                                              filter(value => value.valueItemControls!.length > 0),
-                                              map(value => ({
-                                                selectAll      : {
-                                                  tooltipText: this.intl.selectAll,
-                                                  text       : this.intl.all,
-                                                  icon       : this.config.icons.selectAll,
-                                                  disabled   : value.valueItemControls?.every(isChecked => isChecked)
-                                                },
-                                                selectNone     : {
-                                                  tooltipText: this.intl.selectNone,
-                                                  text       : this.intl.none,
-                                                  icon       : this.config.icons.selectNone,
-                                                  disabled   : value.valueItemControls?.every(isChecked => !isChecked)
-                                                },
-                                                toggleSelection: {
-                                                  tooltipText: this.intl.toggleSelection,
-                                                  text       : this.intl.toggle,
-                                                  icon       : this.config.icons.toggleSelection,
-                                                  disabled   : value.valueItemControls?.every(isChecked => isChecked) ||
-                                                    value.valueItemControls?.every(isChecked => !isChecked)
-                                                }
-                                              } as ActionsData)),
-                                              map(actionsData => ({
-                                                form       : this.form,
-                                                valueItems : this.valueItems,
-                                                comparisons: this.comparisons,
-                                                showActions: this.config.showActions['value-list'] ?? false,
-                                                actionsData
-                                              }))
-                                            );
-  private filterChangeSubject         = new Subject<DataFilter | null>();
-  readonly filterChanged$             = this.filterChangeSubject.asObservable();
-  private unsubscribeValueItems: Subject<void> | undefined;
+  protected readonly form                       = this.fBuilder.group({
+                                                                        comparisonName   : new FormControl<string>(
+                                                                          this.data.filter?.comparisonName ??
+                                                                          this.defaultFilter.comparisonName,
+                                                                          {
+                                                                            nonNullable: true,
+                                                                            validators : [ Validators.required ]
+                                                                          }),
+                                                                        valueItemControls: this.fBuilder.array<FormControl<boolean>>(
+                                                                          this.data.valueListItems
+                                                                              ?.map((item) => new FormControl<boolean>(
+                                                                                (this.data.filter ?? this.defaultFilter).values.includes(item.value) ?? true,
+                                                                                { nonNullable: true }
+                                                                              ))
+                                                                          ?? new Array<FormControl<boolean>>
+                                                                        )
+                                                                      });
+  protected readonly mv$: Observable<ModelView> = this.form.valueChanges
+                                                      .pipe(
+                                                        startWith(this.form.value),
+                                                        filter(value => value.valueItemControls!.length > 0),
+                                                        map(value => ({
+                                                          selectAll      : {
+                                                            tooltipText: this.intl.selectAll,
+                                                            text       : this.intl.all,
+                                                            icon       : this.config.icons.selectAll,
+                                                            disabled   : value.valueItemControls?.every(isChecked => isChecked)
+                                                          },
+                                                          selectNone     : {
+                                                            tooltipText: this.intl.selectNone,
+                                                            text       : this.intl.none,
+                                                            icon       : this.config.icons.selectNone,
+                                                            disabled   : value.valueItemControls?.every(isChecked => !isChecked)
+                                                          },
+                                                          toggleSelection: {
+                                                            tooltipText: this.intl.toggleSelection,
+                                                            text       : this.intl.toggle,
+                                                            icon       : this.config.icons.toggleSelection,
+                                                            disabled   : value.valueItemControls?.every(isChecked => isChecked) ||
+                                                              value.valueItemControls?.every(isChecked => !isChecked)
+                                                          }
+                                                        } as ActionsData)),
+                                                        map(actionsData => ({
+                                                          form       : this.form,
+                                                          valueItems : this.valueItems,
+                                                          comparisons: this.comparisons,
+                                                          showActions: this.config.showActions['value-list'] ?? false,
+                                                          actionsData
+                                                        }))
+                                                      );
+  readonly filterIsValid$                       = this.form.statusChanges.pipe(map(status => status === 'VALID'));
+  private readonly filterChangeSubject          = new Subject<DataFilter | null>();
+  readonly filterChanged$                       = this.filterChangeSubject.asObservable();
+  private readonly unsubscribeValueItems: Subject<void> | undefined;
   private unsubscribeControls: Subject<void> | undefined;
 
   constructor(@Inject(FILTER_SELECTOR_DATA) protected data: FilterSelectorData,
@@ -154,10 +155,11 @@ export class MatValueListFilterSelectorComponent
 
     this.form.valueChanges
         .pipe(
-          distinctUntilChanged(),
+          filter(() => this.form.valid),
           takeUntil(this.unsubscribeControls!),
+          distinctUntilChanged(),
           map(value => {
-            const values = this.valueItems.filter((item, index) => !!value.valueItemControls![index]).map(item => item.value);
+            const values = this.valueItems.filter((_, index) => !!value.valueItemControls![index]).map(item => item.value);
 
             if (value.comparisonName === this.defaultFilter.comparisonName &&
               values.length === this.defaultFilter.values.length &&
@@ -171,7 +173,7 @@ export class MatValueListFilterSelectorComponent
             } as DataFilter;
           })
         )
-        .subscribe(filter => this.filterChangeSubject.next(filter));
+        .subscribe(filter => this.filterChangeSubject.next(this.form.valid ? filter : null));
   }
 
   protected unsubscribeFormControls(): void {

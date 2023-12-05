@@ -1,5 +1,16 @@
 import { AbstractControl } from '@angular/forms';
-import { distinctUntilChanged, filter, map, pairwise, startWith, Subject, takeUntil } from 'rxjs';
+import {
+  debounceTime,
+  distinctUntilChanged,
+  filter,
+  map,
+  pairwise,
+  startWith,
+  Subject,
+  takeLast,
+  takeUntil,
+  tap
+} from 'rxjs';
 import { FilterInputMask } from '@pitxi/ngx-cdk-data-filter';
 
 export class FiltersHelper {
@@ -12,7 +23,7 @@ export class FiltersHelper {
                distinctUntilChanged(),
                pairwise(),
                filter(([ , newValue ]) => !!newValue),
-               map(([ oldValue, newValue ]) => mask.test(newValue) ? newValue : mask.test(oldValue) ? oldValue : null)
+               map(([ oldValue, newValue ]) => mask.test(newValue) ? newValue : mask.test(oldValue) ? oldValue : null),
              ).subscribe(value => control.setValue(value));
     }
 
@@ -44,7 +55,7 @@ export class FiltersHelper {
     }
   }
 
-  static SetControlsPatternValidation(controls: AbstractControl[], mask: FilterInputMask | null, unsubscriber: Subject<void>): void {
+  static SetControlsPatternValidation(controls: Array<AbstractControl>, mask: FilterInputMask | null, unsubscriber: Subject<void>): void {
     controls.forEach(control => FiltersHelper.SetControlPatternValidation(control, mask, unsubscriber));
   }
 }

@@ -15,43 +15,36 @@ import { FilterComparison } from '../FilterComparison';
 export class MatDateFilterSelectorComponent
   extends FilterSelectorBase
   implements OnInit, OnDestroy {
-  readonly comparisons                      = new Map<FilterComparison, string>([
-                                                                                  [ 'equals', this.intl.getComparisonText('equals') ],
-                                                                                  [ 'not-equal', this.intl.getComparisonText('not-equal') ],
-                                                                                  [ 'greater-than', this.intl.getComparisonText('greater-than') ],
-                                                                                  [ 'less-than', this.intl.getComparisonText('less-than') ],
-                                                                                  [ 'is-in-range', this.intl.getComparisonText('is-in-range') ]
-                                                                                ]);
-  readonly clearControlIcon                 = this.config.icons.clearControl;
-  protected readonly dateFilterErrorMessage = this.intl.datefilterErrorMessage;
-  protected readonly inputReadonly          = this.data.inputReadonly;
-  private defaultFilter: DataFilter         = this.data.defaultFilter ??
+  readonly comparisons                = new Map<FilterComparison, string>(
+    [
+      [ 'equals', this.intl.getComparisonText('equals') ],
+      [ 'not-equal', this.intl.getComparisonText('not-equal') ],
+      [ 'greater-than', this.intl.getComparisonText('greater-than') ],
+      [ 'less-than', this.intl.getComparisonText('less-than') ],
+      [ 'is-in-range', this.intl.getComparisonText('is-in-range') ]
+    ]
+  );
+  protected readonly clearControlIcon = this.config.icons.clearControl;
+  protected readonly inputReadonly    = this.data.inputReadonly;
+  protected readonly minValue         = this.data.minValue as Date | null;
+  protected readonly maxValue         = this.data.maxValue as Date | null;
+  private defaultFilter: DataFilter   = this.data.defaultFilter ?? { comparisonName: 'equals', values: [ null, null ] };
+  protected readonly form             = this.fBuilder.group(
     {
-      comparisonName: 'equals',
-      values        : [ null, null ]
-    };
-  readonly form                             = this.fBuilder.group({
-                                                                    comparisonName: new FormControl<string>(
-                                                                      this.data.filter?.comparisonName ??
-                                                                      this.defaultFilter.comparisonName,
-                                                                      {
-                                                                        nonNullable: true,
-                                                                        validators : [ Validators.required ]
-                                                                      }
-                                                                    ),
-                                                                    date1         : new FormControl<Date | null>(
-                                                                      this.data.filter?.values[0] ??
-                                                                      this.defaultFilter?.values[0]
-                                                                    ),
-                                                                    date2         : new FormControl<Date | null>(
-                                                                      this.data.filter?.values[1] ??
-                                                                      this.defaultFilter?.values[1]
-                                                                    ),
-                                                                  });
-  private placeholdersSubject               = new BehaviorSubject<string[]>(this.intl.getDateFiltersPlaceholders(this.form.value.comparisonName as FilterComparison));
-  readonly placeHolders$                    = this.placeholdersSubject.asObservable();
-  private filterChangedSubject              = new Subject<DataFilter | null>();
-  readonly filterChanged$                   = this.filterChangedSubject.asObservable();
+      comparisonName: new FormControl<string>(this.data.filter?.comparisonName ?? this.defaultFilter.comparisonName,
+                                              { nonNullable: true, validators: [ Validators.required ] }
+      ),
+      date1         : new FormControl<Date | null>(this.data.filter?.values[0] ?? this.defaultFilter?.values[0]),
+      date2         : new FormControl<Date | null>(this.data.filter?.values[1] ?? this.defaultFilter?.values[1]),
+    }
+  );
+  readonly filterIsValid$             = this.form.statusChanges.pipe(map(status => status === 'VALID'));
+  private placeholdersSubject         = new BehaviorSubject<Array<string>>(
+    this.intl.getDateFiltersPlaceholders(this.form.value.comparisonName as FilterComparison)
+  );
+  protected readonly placeHolders$    = this.placeholdersSubject.asObservable();
+  private filterChangedSubject        = new Subject<DataFilter | null>();
+  readonly filterChanged$             = this.filterChangedSubject.asObservable();
   private unsubscribeControls: Subject<void> | undefined;
 
   constructor(private fBuilder: FormBuilder,
@@ -78,17 +71,39 @@ export class MatDateFilterSelectorComponent
 
     this.form.valueChanges
         .pipe(
-          distinctUntilChanged(),
           takeUntil(this.unsubscribeControls),
-          tap(({ comparisonName }) => this.placeholdersSubject.next(this.intl.getDateFiltersPlaceholders(comparisonName as FilterComparison))),
+          distinctUntilChanged(),
+          tap(({ comparisonName }) => this.placeholdersSubject.next(
+            this.intl.getDateFiltersPlaceholders(comparisonName as FilterComparison))
+          ),
           map(value => this.getFilter(value))
         )
-        .subscribe(filter => this.filterChangedSubject.next(filter));
+        .subscribe(filter => this.filterChangedSubject.next(this.form.valid ? filter : null));
   }
 
   protected unsubscribeFormControls(): void {
     this.unsubscribeControls?.next();
     this.unsubscribeControls?.complete();
+  }
+
+  protected getErrorMessage(controls: Array<string>): string | null {
+    for (let index = 0; index < controls.length; ++index) {
+      const control = this.form.get(controls[index]);
+
+      if (control?.hasError('matDatepickerParse')) {
+        return this.intl.dateFilterErrorMessage;
+      }
+
+      if (control?.hasError('matDatepickerMin')) {
+        return this.intl.minValueErrorMessage;
+      }
+
+      if (control?.hasError('matDatepickerMax')) {
+        return this.intl.maxValueErrorMessage;
+      }
+    }
+
+    return null;
   }
 
   private getFilter(value: Partial<{
@@ -102,7 +117,7 @@ export class MatDateFilterSelectorComponent
       return null;
     }
 
-    const values = [];
+    const values = new Array<Date>();
 
     if (!!value.date1) {
       values.push(value.date1);

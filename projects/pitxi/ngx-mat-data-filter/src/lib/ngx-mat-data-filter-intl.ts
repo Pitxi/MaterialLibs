@@ -16,7 +16,9 @@ export class NgxMatDataFilterIntl {
   all                                                          = 'All';
   none                                                         = 'None';
   toggle                                                       = 'Toggle';
-  datefilterErrorMessage                                       = 'Invalid date format';
+  dateFilterErrorMessage                                       = 'Invalid date format';
+  minValueErrorMessage                                         = 'Value too low';
+  maxValueErrorMessage                                         = 'Value too high';
   protected comparisons: { [key in FilterComparison]: string } = {
     'is-one-of'    : 'Is one of',
     'is-not-one-of': 'Is not one of',
@@ -31,7 +33,7 @@ export class NgxMatDataFilterIntl {
     'is-in-range'  : 'Is in range'
   };
 
-  readonly getNumberFiltersPlaceholders = (comparison: FilterComparison): string[] => {
+  readonly getNumberFiltersPlaceholders = (comparison: FilterComparison): Array<string> => {
     switch (comparison) {
       case 'is-in-range':
         return [ this.fromNumberPlaceholder, this.toNumberPlaceholder ];
@@ -40,7 +42,7 @@ export class NgxMatDataFilterIntl {
     }
   };
 
-  readonly getDateFiltersPlaceholders = (comparison: FilterComparison): string[] => {
+  readonly getDateFiltersPlaceholders = (comparison: FilterComparison): Array<string> => {
     switch (comparison) {
       case 'is-in-range':
         return [ this.fromDatePlaceholder, this.toDatePlaceholder ];

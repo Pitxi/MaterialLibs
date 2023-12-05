@@ -49,11 +49,39 @@ export class MatDataFilterDirective extends CdkDataFilterDirective {
     super.inputMask = value;
   }
 
-  /* TODO: Comprobar si es necesario este override
-   override get disabled(): boolean {
-   return super.disabled;
-   }
-   */
+  @Input()
+  override set minValue(value: number | Date | null) {
+    if (![ 'date', 'number' ].includes(this.filterType)) {
+      throw Error(`Filter of type '${ this.filterType }' cannot have a minimum value.`);
+    }
+
+    if (!!value && this.filterType === 'number' && typeof value !== 'number') {
+      throw Error('Type mismatch. \'minValue\' property must be of type number or null.');
+    }
+
+    if (!!value && this.filterType === 'date' && !(value instanceof Date)) {
+      throw Error('Type mismatch. \'minValue\' property must be of type Date or null.');
+    }
+
+    super.minValue = value;
+  }
+
+  @Input()
+  override set maxValue(value: number | Date | null) {
+    if (![ 'date', 'number' ].includes(this.filterType)) {
+      throw Error(`Filter of type '${ this.filterType }' cannot have a maximum value.`);
+    }
+
+    if (!!value && this.filterType === 'number' && typeof value !== 'number') {
+      throw Error('Type mismatch. \'maxValue\' property must be of type number or null.');
+    }
+
+    if (!!value && this.filterType === 'date' && !(value instanceof Date)) {
+      throw Error('Type mismatch. \'maxValue\' property must be of type Date or null.');
+    }
+
+    super.maxValue = value;
+  }
 
   get isMatButton(): boolean {
     return !!this.matButton;

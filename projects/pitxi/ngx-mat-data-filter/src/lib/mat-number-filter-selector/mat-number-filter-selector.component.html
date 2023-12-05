@@ -16,7 +16,7 @@
                    [readonly]="inputReadonly"
                    formControlName="number1"
                    matInput
-                   type="number">
+                   type="text">
             <button (click)="clearControl('number1')"
                     *ngIf="!!clearControlIcon"
                     [disabled]="form.value.number1 === null"
@@ -25,6 +25,8 @@
                     matSuffix>
               <mat-icon>{{ clearControlIcon }}</mat-icon>
             </button>
+            <mat-error *ngIf="form.hasError('min', 'number1')">{{ minValueErrorMessage }}</mat-error>
+            <mat-error *ngIf="form.hasError('max', 'number1')">{{ maxValueErrorMessage }}</mat-error>
           </mat-form-field>
         </div>
 
@@ -34,7 +36,7 @@
                    [readonly]="inputReadonly"
                    formControlName="number2"
                    matInput
-                   type="number">
+                   type="text">
             <button (click)="clearControl('number2')"
                     [disabled]="form.value.number2 === null"
                     color="primary"
@@ -42,6 +44,8 @@
                     matSuffix>
               <mat-icon>backspace</mat-icon>
             </button>
+            <mat-error *ngIf="form.hasError('min', 'number2')">{{ minValueErrorMessage }}</mat-error>
+            <mat-error *ngIf="form.hasError('max', 'number2')">{{ maxValueErrorMessage }}</mat-error>
           </mat-form-field>
         </div>
       </div>

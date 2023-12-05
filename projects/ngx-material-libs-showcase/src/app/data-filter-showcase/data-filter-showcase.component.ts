@@ -24,22 +24,23 @@ interface ModelView {
            })
 export class DataFilterShowcaseComponent {
   @ViewChildren(MatDataFilterDirective) filterComponents!: QueryList<MatDataFilterDirective>;
-  private filtersForm: FormGroup = this.fBuilder.group({
-                                                         id       : new FormControl<DataFilter | null>(null),
-                                                         firstName: new FormControl<DataFilter | null>(null),
-                                                         lastName : new FormControl<DataFilter | null>(null),
-                                                         email    : new FormControl<DataFilter | null>(null),
-                                                         gender   : new FormControl<DataFilter | null>(null),
-                                                         ipAddress: new FormControl<DataFilter | null>(null),
-                                                         jobTitle : new FormControl<DataFilter | null>(null),
-                                                         birthDate: new FormControl<DataFilter | null>(null)
-                                                       });
-  private hasFilters$            = this.filtersForm.valueChanges
-                                       .pipe(
-                                         startWith(false),
-                                         distinctUntilChanged(),
-                                         map(_ => this.filterComponents?.some(fc => !fc.filterIsEmpty))
-                                       );
+  protected readonly emailRegexp = /^[a-zA-Z\d_.-]+$|^[a-zA-Z\d_.-]+@?[A-z\d_.-]*$/;
+  private filtersForm: FormGroup                = this.fBuilder.group({
+                                                                        id       : new FormControl<DataFilter | null>(null),
+                                                                        firstName: new FormControl<DataFilter | null>(null),
+                                                                        lastName : new FormControl<DataFilter | null>(null),
+                                                                        email    : new FormControl<DataFilter | null>(null),
+                                                                        gender   : new FormControl<DataFilter | null>(null),
+                                                                        ipAddress: new FormControl<DataFilter | null>(null),
+                                                                        jobTitle : new FormControl<DataFilter | null>(null),
+                                                                        birthDate: new FormControl<DataFilter | null>(null)
+                                                                      });
+  private hasFilters$                           = this.filtersForm.valueChanges
+                                                      .pipe(
+                                                        startWith(false),
+                                                        distinctUntilChanged(),
+                                                        map(_ => this.filterComponents?.some(fc => !fc.filterIsEmpty))
+                                                      );
   private genderValueListItems: ValueListItem[] = [
     { value: 'Male', description: 'Male' },
     { value: 'Female', description: 'Female' },
@@ -83,10 +84,10 @@ export class DataFilterShowcaseComponent {
     .pipe(
       switchMap(([ filters, { pageIndex, pageSize } ]) => this.data.getData(filters, pageIndex, pageSize))
     );
-  readonly mv$: Observable<ModelView> = combineLatest([
-                                                        this.paginatedDataSource$,
-                                                        this.hasFilters$
-                                                      ])
+  protected readonly mv$: Observable<ModelView>           = combineLatest([
+                                                                  this.paginatedDataSource$,
+                                                                  this.hasFilters$
+                                                                ])
     .pipe(
       map(([ paginatedDataSource, hasFilters ]) => ({
         filtersForm         : this.filtersForm,
@@ -103,11 +104,11 @@ export class DataFilterShowcaseComponent {
   constructor(private fBuilder: FormBuilder, private data: DataService) {
   }
 
-  resetFilters() {
+  protected resetFilters() {
     this.filtersForm.reset();
   }
 
-  setPage(event: PageEvent) {
+  protected setPage(event: PageEvent) {
     this.paginationDataSubject.next({ pageSize: event.pageSize, pageIndex: event.pageIndex });
   }
 }

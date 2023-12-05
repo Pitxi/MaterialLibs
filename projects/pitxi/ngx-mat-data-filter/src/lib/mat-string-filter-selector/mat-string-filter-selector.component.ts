@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, Inject, OnDestroy, OnInit } from '@angular/core';
-import { distinctUntilChanged, map, Observable, Subject, takeUntil } from 'rxjs';
+import { distinctUntilChanged, filter, map, Observable, Subject, takeUntil } from 'rxjs';
 import { NgxMatDataFilterIntl } from '../ngx-mat-data-filter-intl';
 import { FormBuilder, FormControl, Validators } from '@angular/forms';
 import { NgxMatDataFilterConfiguration } from '../ngx-mat-data-filter-configuration';
@@ -24,15 +24,15 @@ export class MatStringFilterSelectorComponent
                                                                                                [ 'starts-with', this.intl.getComparisonText('starts-with') ],
                                                                                                [ 'ends-with', this.intl.getComparisonText('ends-with') ]
                                                                                              ]);
-  readonly placeholder                                   = this.intl.stringFilterPlaceholder;
-  readonly clearControlIcon                              = this.config.icons.clearControl;
+  protected readonly placeholder                         = this.intl.stringFilterPlaceholder;
+  protected readonly clearControlIcon                    = this.config.icons.clearControl;
   protected readonly inputReadonly                       = this.data.inputReadonly;
   private defaultFilter: DataFilter                      = this.data.defaultFilter ??
     {
       comparisonName: 'equals',
       values        : [ null ]
     };
-  readonly form                                          = this.fBuilder.group(
+  protected readonly form                                = this.fBuilder.group(
     {
       comparisonName: new FormControl<string>(
         this.data.filter?.comparisonName ?? this.defaultFilter.comparisonName,
@@ -43,7 +43,8 @@ export class MatStringFilterSelectorComponent
       text          : new FormControl<string | null>(this.data.filter?.values[0] ?? this.defaultFilter.values[0])
     }
   );
-  private filterChangedSubject                           = new Subject<DataFilter | null>();
+  readonly filterIsValid$                                = this.form.statusChanges.pipe(map(status => status === 'VALID'));
+  private readonly filterChangedSubject                  = new Subject<DataFilter | null>();
   readonly filterChanged$: Observable<DataFilter | null> = this.filterChangedSubject.asObservable();
   private unsubscribeControls: Subject<void> | null      = new Subject<void>();
 
@@ -75,18 +76,21 @@ export class MatStringFilterSelectorComponent
 
     this.form.valueChanges
         .pipe(
-          distinctUntilChanged(),
           takeUntil(this.unsubscribeControls),
+          distinctUntilChanged(),
           map(value => {
             if (value.comparisonName === this.defaultFilter.comparisonName &&
               value.text == this.defaultFilter.values[0]) {
               return null;
             }
 
-            return { comparisonName: value.comparisonName, values: !!value.text ? [ value.text ] : [] } as DataFilter;
+            return {
+              comparisonName: value.comparisonName,
+              values        : !!value.text ? [ value.text ] : new Array<string>()
+            } as DataFilter;
           })
         )
-        .subscribe(filter => this.filterChangedSubject.next(filter));
+        .subscribe(filter => this.filterChangedSubject.next(this.form.valid ? filter : null));
   }
 
   protected unsubscribeFormControls(): void {

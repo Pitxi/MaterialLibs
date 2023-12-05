@@ -4,7 +4,7 @@ import { ValueListItem } from './value-list-item';
 import { Overlay, OverlayRef } from '@angular/cdk/overlay';
 import { DataFilterRegistry } from './data-filter-registry.service';
 import { DataFilter } from './data-filter';
-import { merge, Subject, takeUntil } from 'rxjs';
+import { combineLatest, merge, Subject, takeUntil } from 'rxjs';
 import { FILTER_SELECTOR_DATA, FilterSelectorData } from './filter-selector-data';
 import { FilterSelectorBase } from './filter-selector-base';
 import { ComponentPortal } from '@angular/cdk/portal';
@@ -38,20 +38,23 @@ export class CdkDataFilterDirective implements ControlValueAccessor {
   protected isOverlayVisible                             = false;
   protected overlayClosingActions$                       = merge(this.overlayRef.backdropClick(), this.overlayRef.detachments());
   protected overlayUnsubscribeSubject: Subject<void> | undefined;
+  protected _minValue: number | Date | null              = null;
+  protected _maxValue: number | Date | null              = null;
+  protected filterIsValid: boolean                       = true;
 
   constructor(private registry: DataFilterRegistry, private overlay: Overlay, private elementRef: ElementRef) {
   }
 
-  get inputReadonly(): boolean {
-    return this._inputReadonly;
+  @Input() set maxValue(value: number | Date | null) {
+    this._maxValue = value;
   }
 
   @Input() set inputReadonly(value: boolean) {
     this._inputReadonly = value;
   }
 
-  get inputMask(): FilterInputMask | null {
-    return this._inputMask;
+  @Input() set minValue(value: number | Date | null) {
+    this._minValue = value;
   }
 
   @Input() set inputMask(value: FilterInputMask | null) {
@@ -174,7 +177,9 @@ export class CdkDataFilterDirective implements ControlValueAccessor {
       filter        : this.dataFilter,
       valueListItems: this.valueListItems,
       inputMask     : this._inputMask,
-      inputReadonly : this._inputReadonly
+      inputReadonly : this._inputReadonly,
+      minValue      : this._minValue,
+      maxValue      : this._maxValue
     };
 
     const injector     = Injector.create({ providers: [ { provide: FILTER_SELECTOR_DATA, useValue: data } ] });
@@ -182,14 +187,21 @@ export class CdkDataFilterDirective implements ControlValueAccessor {
     const componentRef = this.overlayRef.attach(portal);
 
     if (!!this.overlayUnsubscribeSubject) {
-      componentRef.instance.filterChanged$
-                  .pipe(takeUntil(this.overlayUnsubscribeSubject))
-                  .subscribe(filter => {
-                    this.dataFilter = filter;
+      combineLatest([
+                      componentRef.instance.filterIsValid$,
+                      componentRef.instance.filterChanged$
+                    ])
+        .pipe(takeUntil(this.overlayUnsubscribeSubject))
+        .subscribe(([ isValid, filter ]) => {
+          this.filterIsValid = isValid;
 
-                    this.overlayRef.updatePosition();
-                    this.propagateTouched();
-                  });
+          if (isValid) {
+            this.dataFilter = filter;
+          }
+
+          this.overlayRef.updatePosition();
+          this.propagateTouched();
+        });
     }
   }
 
@@ -204,10 +216,12 @@ export class CdkDataFilterDirective implements ControlValueAccessor {
       this.propagateChanged(this.dataFilter);
     }
 
-    this.overlayUnsubscribeSubject?.next();
-    this.overlayUnsubscribeSubject?.complete();
-    this.overlayRef.detach();
+    if (this.filterIsValid) {
+      this.overlayUnsubscribeSubject?.next();
+      this.overlayUnsubscribeSubject?.complete();
+      this.overlayRef.detach();
 
-    this.isOverlayVisible = false;
+      this.isOverlayVisible = false;
+    }
   }
 }

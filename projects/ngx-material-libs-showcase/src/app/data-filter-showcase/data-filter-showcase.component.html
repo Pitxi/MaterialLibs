@@ -13,6 +13,7 @@
             ID
             <button #filter="ngxMatDataFilter"
                     [color]="filter.filterIsEmpty ? 'primary' : 'accent'"
+                    [minValue]="1"
                     formControlName="id"
                     mat-icon-button
                     ngxMatDataFilter="number">
@@ -62,6 +63,7 @@
             <button #filter="ngxMatDataFilter"
                     [color]="filter.filterIsEmpty ? 'primary' : 'accent'"
                     formControlName="email"
+                    [inputMask]="emailRegexp"
                     mat-icon-button
                     ngxMatDataFilter="string">
               <mat-icon>filter_list</mat-icon>

@@ -16,7 +16,9 @@ export class SpanishNgxMatDataFilterIntl extends NgxMatDataFilterIntl {
   override all                                                = 'Todo';
   override none                                               = 'Nada';
   override toggle                                             = 'Invertir';
-  override datefilterErrorMessage                             = 'Formato de fecha no válido';
+  override dateFilterErrorMessage                             = 'Formato de fecha no válido';
+  override minValueErrorMessage                               = 'El valor es demasiado bajo';
+  override maxValueErrorMessage                               = 'El valor es demasiado alto';
   override comparisons: { [key in FilterComparison]: string } = {
     'is-one-of'    : 'Es uno de',
     'is-not-one-of': 'No es uno de',

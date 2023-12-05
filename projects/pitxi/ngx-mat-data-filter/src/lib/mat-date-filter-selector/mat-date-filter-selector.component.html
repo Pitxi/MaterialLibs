@@ -11,7 +11,10 @@
 
       <div *ngIf="placeHolders$ | async as placeholders" class="filter-controls">
         <mat-form-field *ngIf="placeholders[1] == null" appearance="fill">
-          <input [matDatepicker]="datePicker"
+          <input #date1Input="matInput"
+                 [matDatepicker]="datePicker"
+                 [max]="maxValue"
+                 [min]="minValue"
                  [placeholder]="placeholders[0]"
                  [readonly]="inputReadonly"
                  formControlName="date1"
@@ -21,32 +24,31 @@
           <mat-datepicker #datePicker></mat-datepicker>
           <button (click)="clearControls()"
                   *ngIf="!!clearControlIcon"
-                  [disabled]="!form.value.date1 && !form.value.date2"
+                  [disabled]="date1Input.empty"
                   color="primary"
                   mat-icon-button
                   matSuffix>
             <mat-icon>{{ clearControlIcon }}</mat-icon>
           </button>
-          <mat-error *ngIf="form.hasError('matDatepickerParse', 'date1')">
-            {{ dateFilterErrorMessage }}
-          </mat-error>
+          <mat-error *ngIf="getErrorMessage([ 'date1' ]) as errorMessage">{{ errorMessage }}</mat-error>
         </mat-form-field>
 
         <mat-form-field *ngIf="placeholders[1] != null" appearance="fill">
-          <mat-date-range-input [rangePicker]="dateRangePicker">
-            <input [placeholder]="placeholders[0]" [readonly]="inputReadonly" formControlName="date1" matStartDate>
-            <input [placeholder]="placeholders[1]" [readonly]="inputReadonly" formControlName="date2" matEndDate>
+          <mat-date-range-input [max]="maxValue" [min]="minValue" [rangePicker]="dateRangePicker">
+            <input #date1Input [placeholder]="placeholders[0]" [readonly]="inputReadonly" formControlName="date1" matStartDate>
+            <input #date2Input [placeholder]="placeholders[1]" [readonly]="inputReadonly" formControlName="date2" matEndDate>
           </mat-date-range-input>
           <mat-datepicker-toggle [for]="dateRangePicker" matIconSuffix></mat-datepicker-toggle>
           <mat-date-range-picker #dateRangePicker></mat-date-range-picker>
           <button (click)="clearControls()"
                   *ngIf="!!clearControlIcon"
-                  [disabled]="!form.value.date1 && !form.value.date2"
+                  [disabled]="!date1Input.value && !date2Input.value"
                   color="primary"
                   mat-icon-button
                   matSuffix>
             <mat-icon>{{ clearControlIcon }}</mat-icon>
           </button>
+          <mat-error *ngIf="getErrorMessage([ 'date1', 'date2' ]) as errorMessage">{{ errorMessage }}</mat-error>
         </mat-form-field>
       </div>
     </div>

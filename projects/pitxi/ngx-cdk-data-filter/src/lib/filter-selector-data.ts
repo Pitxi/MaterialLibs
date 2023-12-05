@@ -11,4 +11,6 @@ export interface FilterSelectorData {
   valueListItems: ValueListItem[];
   inputMask: FilterInputMask | null;
   inputReadonly: boolean;
+  minValue: number | Date | null;
+  maxValue: number | Date | null;
 }

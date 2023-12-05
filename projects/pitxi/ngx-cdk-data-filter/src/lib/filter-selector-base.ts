@@ -8,5 +8,6 @@ import { FilterSelectorData } from './filter-selector-data';
 export abstract class FilterSelectorBase {
   readonly abstract comparisons: Map<string, string>;
   readonly abstract filterChanged$: Observable<DataFilter | null>;
+  readonly abstract filterIsValid$: Observable<boolean>;
   protected abstract data: FilterSelectorData;
 }
